@@ -1,0 +1,11 @@
+# Hashes of file build rules.
+aafc81c5f9e7a9cc5627e4b33151e3f2 BABAISYOU.vpk.out
+09587c7e7fe3c40fa5ff13f5674e7158 BABAISYOU.vpk_param.sfo
+e987c7142084d48f70ea8b5c16e74bc7 CMakeFiles/BABAISYOU.vpk-vpk
+54a6b69bf883f6314fcee4a5e915f667 CMakeFiles/dump
+658fe00bcc321a6bc9a0133b75cbba07 CMakeFiles/eboot.bin-self
+f78a7a181fc05388b7ddc3d4c588bbb9 CMakeFiles/reboot
+5abc5b159c576e0f6b723cd5d6245bbb CMakeFiles/send
+28374a911794329ba9d255c4491ee64e CMakeFiles/send_kvdb
+0eaf19f63a7de6f739eb186f44b81d1c eboot.bin.out
+3c1decd5ac75fdf4686ee2ce7b287d6f so_loader.velf

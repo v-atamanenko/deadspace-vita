@@ -1,0 +1,239 @@
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/vitasdk/bin/arm-vita-eabi-gcc 
+Build flags: ;-Wl,-q
+Id flags:  
+
+The output was:
+1
+arm-vita-eabi-gcc: fatal error: Killed: 9 signal terminated program as
+compilation terminated.
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/vitasdk/bin/arm-vita-eabi-gcc 
+Build flags: ;-Wl,-q
+Id flags: -c 
+
+The output was:
+1
+arm-vita-eabi-gcc: fatal error: Killed: 9 signal terminated program as
+compilation terminated.
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/vitasdk/bin/arm-vita-eabi-gcc 
+Build flags: ;-Wl,-q
+Id flags: -Aa 
+
+The output was:
+1
+<command-line>: error: missing '(' after predicate
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/vitasdk/bin/arm-vita-eabi-gcc 
+Build flags: ;-Wl,-q
+Id flags: -D__CLASSIC_C__ 
+
+The output was:
+1
+arm-vita-eabi-gcc: fatal error: Killed: 9 signal terminated program as
+compilation terminated.
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/vitasdk/bin/arm-vita-eabi-gcc 
+Build flags: ;-Wl,-q
+Id flags: --target=arm-arm-none-eabi;-mcpu=cortex-m3 
+
+The output was:
+1
+arm-vita-eabi-gcc: error: unrecognized command-line option '--target=arm-arm-none-eabi'
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/vitasdk/bin/arm-vita-eabi-gcc 
+Build flags: ;-Wl,-q
+Id flags: -c;-I__does_not_exist__ 
+
+The output was:
+1
+arm-vita-eabi-gcc: fatal error: Killed: 9 signal terminated program as
+compilation terminated.
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/vitasdk/bin/arm-vita-eabi-gcc 
+Build flags: 
+Id flags:  
+
+The output was:
+1
+arm-vita-eabi-gcc: fatal error: Killed: 9 signal terminated program as
+compilation terminated.
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/vitasdk/bin/arm-vita-eabi-gcc 
+Build flags: 
+Id flags: -c 
+
+The output was:
+1
+arm-vita-eabi-gcc: fatal error: Killed: 9 signal terminated program as
+compilation terminated.
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/vitasdk/bin/arm-vita-eabi-gcc 
+Build flags: 
+Id flags: -Aa 
+
+The output was:
+1
+<command-line>: error: missing '(' after predicate
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/vitasdk/bin/arm-vita-eabi-gcc 
+Build flags: 
+Id flags: -D__CLASSIC_C__ 
+
+The output was:
+1
+arm-vita-eabi-gcc: fatal error: Killed: 9 signal terminated program as
+compilation terminated.
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/vitasdk/bin/arm-vita-eabi-gcc 
+Build flags: 
+Id flags: --target=arm-arm-none-eabi;-mcpu=cortex-m3 
+
+The output was:
+1
+arm-vita-eabi-gcc: error: unrecognized command-line option '--target=arm-arm-none-eabi'
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/vitasdk/bin/arm-vita-eabi-gcc 
+Build flags: 
+Id flags: -c;-I__does_not_exist__ 
+
+The output was:
+1
+arm-vita-eabi-gcc: fatal error: Killed: 9 signal terminated program as
+compilation terminated.
+
+
+Checking whether the C compiler is IAR using "" terminated after 10 s due to timeout.Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+arm-vita-eabi-gcc: fatal error: no input files
+compilation terminated.
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/vitasdk/bin/arm-vita-eabi-g++ 
+Build flags: ;-Wl,-q
+Id flags:  
+
+The output was:
+Subprocess killed
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/vitasdk/bin/arm-vita-eabi-g++ 
+Build flags: ;-Wl,-q
+Id flags: -c 
+
+The output was:
+Subprocess killed
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/vitasdk/bin/arm-vita-eabi-g++ 
+Build flags: ;-Wl,-q
+Id flags: --c++ 
+
+The output was:
+1
+arm-vita-eabi-g++: error: unrecognized command-line option '--c++'
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/vitasdk/bin/arm-vita-eabi-g++ 
+Build flags: ;-Wl,-q
+Id flags: --ec++ 
+
+The output was:
+1
+arm-vita-eabi-g++: error: unrecognized command-line option '--ec++'; did you mean '-Weffc++'?
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/vitasdk/bin/arm-vita-eabi-g++ 
+Build flags: ;-Wl,-q
+Id flags: --target=arm-arm-none-eabi;-mcpu=cortex-m3 
+
+The output was:
+1
+arm-vita-eabi-g++: error: unrecognized command-line option '--target=arm-arm-none-eabi'
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/vitasdk/bin/arm-vita-eabi-g++ 
+Build flags: ;-Wl,-q
+Id flags: -c;-I__does_not_exist__ 
+
+The output was:
+1
+arm-vita-eabi-g++: fatal error: Killed: 9 signal terminated program cc1plus
+compilation terminated.
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/vitasdk/bin/arm-vita-eabi-g++ 
+Build flags: 
+Id flags:  
+
+The output was:
+1
+arm-vita-eabi-g++: fatal error: Killed: 9 signal terminated program cc1plus
+compilation terminated.
+
+
+Detecting C compiler ABI info failed to compile with the following output:
+Change Dir: /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/Applications/CLion.app/Contents/bin/ninja/mac/ninja cmTC_76916 && [1/2] Building C object CMakeFiles/cmTC_76916.dir/CMakeCCompilerABI.c.obj
+[2/2] Linking C executable cmTC_76916
+FAILED: cmTC_76916 
+: && /usr/local/vitasdk/bin/arm-vita-eabi-gcc -Wl,-q -Wl,-z,nocopyreloc CMakeFiles/cmTC_76916.dir/CMakeCCompilerABI.c.obj -o cmTC_76916   && :
+collect2: fatal error: ld terminated with signal 9 [Killed: 9]
+compilation terminated.
+ninja: build stopped: subcommand failed.
+
+
+
+
+Determining if the C compiler works failed with the following output:
+Change Dir: /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/Applications/CLion.app/Contents/bin/ninja/mac/ninja cmTC_1e30d && [1/2] Building C object CMakeFiles/cmTC_1e30d.dir/testCCompiler.c.obj
+[2/2] Linking C executable cmTC_1e30d
+FAILED: cmTC_1e30d 
+: && /usr/local/vitasdk/bin/arm-vita-eabi-gcc -Wl,-q -Wl,-z,nocopyreloc CMakeFiles/cmTC_1e30d.dir/testCCompiler.c.obj -o cmTC_1e30d   && :
+collect2: fatal error: ld terminated with signal 9 [Killed: 9]
+compilation terminated.
+ninja: build stopped: subcommand failed.
+
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/vitasdk/bin/arm-vita-eabi-gcc 
+Build flags: ;-Wl,-q
+Id flags:  
+
+The output was:
+1
+/usr/local/vitasdk/bin/../lib/gcc/arm-vita-eabi/10.3.0/../../../../arm-vita-eabi/bin/ld: /usr/local/vitasdk/bin/../lib/gcc/arm-vita-eabi/10.3.0/liblto_plugin.so: error loading plugin: dlopen(/usr/local/vitasdk/bin/../lib/gcc/arm-vita-eabi/10.3.0/liblto_plugin.so, 0x0002): tried: '/usr/local/vitasdk/bin/../lib/gcc/arm-vita-eabi/10.3.0/liblto_plugin.so' (code signature in <CF1AC287-EA58-3DF9-81BD-D9E87BD52441> '/usr/local/vitasdk/lib/gcc/arm-vita-eabi/10.3.0/liblto_plugin.0.so' not valid for use in process: library load disallowed by system policy), '/usr/local/lib/liblto_plugin.so' (no such file), '/usr/lib/liblto_plugin.so' (no such file), '/usr/local/vitasdk/lib/gcc/arm-vita-eabi/10.3.0/liblto_plugin.0.so' (code signature in <CF1AC287-EA58-3DF9-81BD-D9E87BD52441> '/usr/local/vitasdk/lib/gcc/arm-vita-eabi/10.3.0/liblto_plugin.0.so' not valid for use in process: library load disallowed by system policy), '/usr/local/lib/liblto_plugin.0.so' (no such file), '/usr/lib/liblto_plugin.0.so' (no such file)
+collect2: error: ld returned 1 exit status
+
+

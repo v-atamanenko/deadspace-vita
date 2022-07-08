@@ -1,0 +1,114 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.2"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "so_loader",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "BABAISYOU.vpk-vpk::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-BABAISYOU.vpk-vpk-Debug-79196c55eaba2968aafb.json",
+					"name" : "BABAISYOU.vpk-vpk",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "dump::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-dump-Debug-87b53ae3162f840c06c0.json",
+					"name" : "dump",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "eboot.bin-self::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-eboot.bin-self-Debug-25eaaa6c5d788e7b350c.json",
+					"name" : "eboot.bin-self",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "reboot::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-reboot-Debug-6b479747f24c7b6cab6c.json",
+					"name" : "reboot",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "send::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-send-Debug-1603aa4b085acb219e09.json",
+					"name" : "send",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "send_kvdb::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-send_kvdb-Debug-591357157be7adb2b8ff.json",
+					"name" : "send_kvdb",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "so_loader::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-so_loader-Debug-71730bbe9a0101bb4a4d.json",
+					"name" : "so_loader",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk",
+		"source" : "/Users/v/Repos/baba/goo_vita"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}
