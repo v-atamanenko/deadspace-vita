@@ -1,39 +1,23 @@
 CMakeFiles/so_loader.dir/loader/glutil.c.obj: \
- /Users/v/Repos/baba/goo_vita/loader/glutil.c \
- /Users/v/Repos/baba/goo_vita/loader/glutil.h \
- /Users/v/Repos/baba/goo_vita/loader/config.h \
- /Users/v/Repos/baba/goo_vita/loader/utils/utils.h \
- /Users/v/Repos/baba/goo_vita/loader/config.h \
- /usr/local/vitasdk/arm-vita-eabi/include/vitaGL.h \
- /usr/local/vitasdk/arm-vita-eabi/include/vitashark.h \
- /usr/local/vitasdk/arm-vita-eabi/include/psp2/gxm.h \
- /usr/local/vitasdk/arm-vita-eabi/include/psp2/types.h \
- /usr/local/vitasdk/arm-vita-eabi/include/psp2common/types.h \
- /usr/local/vitasdk/lib/gcc/arm-vita-eabi/10.3.0/include/stddef.h \
- /usr/local/vitasdk/lib/gcc/arm-vita-eabi/10.3.0/include/stdint.h \
- /usr/local/vitasdk/arm-vita-eabi/include/stdint.h \
- /usr/local/vitasdk/arm-vita-eabi/include/machine/_default_types.h \
- /usr/local/vitasdk/arm-vita-eabi/include/sys/features.h \
- /usr/local/vitasdk/arm-vita-eabi/include/_newlib_version.h \
- /usr/local/vitasdk/arm-vita-eabi/include/bits/posix_opt.h \
- /usr/local/vitasdk/lib/gcc/arm-vita-eabi/10.3.0/include-fixed/limits.h \
- /usr/local/vitasdk/arm-vita-eabi/include/sys/_intsup.h \
- /usr/local/vitasdk/arm-vita-eabi/include/sys/_stdint.h \
- /Users/v/Repos/baba/goo_vita/loader/utils/dialog.h \
- /Users/v/Repos/baba/goo_vita/lib/sha1/sha1.h \
- /usr/local/vitasdk/arm-vita-eabi/include/stdio.h \
+ /Users/v/Repos/deadspace-vita/loader/glutil.c \
+ /Users/v/Repos/deadspace-vita/loader/glutil.h \
+ /Users/v/Repos/deadspace-vita/loader/config.h \
+ /Users/v/Repos/deadspace-vita/loader/utils/utils.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/types.h \
  /usr/local/vitasdk/arm-vita-eabi/include/_ansi.h \
  /usr/local/vitasdk/arm-vita-eabi/include/newlib.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/_newlib_version.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/config.h \
  /usr/local/vitasdk/arm-vita-eabi/include/machine/ieeefp.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/features.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/bits/posix_opt.h \
+ /usr/local/vitasdk/lib/gcc/arm-vita-eabi/10.3.0/include-fixed/limits.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/cdefs.h \
- /usr/local/vitasdk/lib/gcc/arm-vita-eabi/10.3.0/include/stdarg.h \
- /usr/local/vitasdk/arm-vita-eabi/include/sys/reent.h \
- /usr/local/vitasdk/arm-vita-eabi/include/_ansi.h \
- /usr/local/vitasdk/arm-vita-eabi/include/sys/_types.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/machine/_default_types.h \
+ /usr/local/vitasdk/lib/gcc/arm-vita-eabi/10.3.0/include/stddef.h \
  /usr/local/vitasdk/arm-vita-eabi/include/machine/_types.h \
- /usr/local/vitasdk/arm-vita-eabi/include/sys/lock.h \
- /usr/local/vitasdk/arm-vita-eabi/include/sys/types.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/_types.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/_stdint.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/select.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/_sigset.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/_timeval.h \
@@ -44,6 +28,22 @@ CMakeFiles/so_loader.dir/loader/glutil.c.obj: \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/_pthreadtypes.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/sched.h \
  /usr/local/vitasdk/arm-vita-eabi/include/machine/types.h \
+ /Users/v/Repos/deadspace-vita/loader/config.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/vitaGL.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/vitashark.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/psp2/gxm.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/psp2/types.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/psp2common/types.h \
+ /usr/local/vitasdk/lib/gcc/arm-vita-eabi/10.3.0/include/stdint.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/stdint.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/_intsup.h \
+ /Users/v/Repos/deadspace-vita/loader/utils/dialog.h \
+ /Users/v/Repos/deadspace-vita/lib/sha1/sha1.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/stdio.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/_ansi.h \
+ /usr/local/vitasdk/lib/gcc/arm-vita-eabi/10.3.0/include/stdarg.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/reent.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/lock.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/stdio.h \
  /usr/local/vitasdk/arm-vita-eabi/include/malloc.h \
  /usr/local/vitasdk/arm-vita-eabi/include/machine/malloc.h

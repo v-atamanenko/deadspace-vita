@@ -56,37 +56,52 @@ typedef struct ldst_enc {
 #define PATCH_SZ 0x10000 //64 KB-ish arenas
 static so_module *head = NULL, *tail = NULL;
 
-void hook_thumb(uintptr_t addr, uintptr_t dst) {
+so_hook hook_thumb(uintptr_t addr, uintptr_t dst) {
+    so_hook h;
+    printf("THUMB HOOK\n");
     if (addr == 0)
         return;
+    h.thumb_addr = addr;
     addr &= ~1;
     if (addr & 2) {
         uint16_t nop = 0xbf00;
         kuKernelCpuUnrestrictedMemcpy((void *)addr, &nop, sizeof(nop));
         addr += 2;
+        printf("THUMB UNALIGNED\n");
     }
-    uint32_t hook[2];
-    hook[0] = 0xf000f8df; // LDR PC, [PC]
-    hook[1] = dst;
-    kuKernelCpuUnrestrictedMemcpy((void *)addr, hook, sizeof(hook));
+
+    h.addr = addr;
+    h.patch_instr[0] = 0xf000f8df; // LDR PC, [PC]
+    h.patch_instr[1] = dst;
+    kuKernelCpuUnrestrictedMemcpy(&h.orig_instr, (void *)addr, sizeof(h.orig_instr));
+    kuKernelCpuUnrestrictedMemcpy((void *)addr, h.patch_instr, sizeof(h.patch_instr));
+
+    return h;
 }
 
-void hook_arm(uintptr_t addr, uintptr_t dst) {
+so_hook hook_arm(uintptr_t addr, uintptr_t dst) {
+    printf("ARM HOOK\n");
     if (addr == 0)
         return;
     uint32_t hook[2];
-    hook[0] = 0xe51ff004; // LDR PC, [PC, #-0x4]
-    hook[1] = dst;
-    kuKernelCpuUnrestrictedMemcpy((void *)addr, hook, sizeof(hook));
+    so_hook h;
+    h.thumb_addr = 0;
+    h.addr = addr;
+    h.patch_instr[0] = 0xe51ff004; // LDR PC, [PC, #-0x4]
+    h.patch_instr[1] = dst;
+    kuKernelCpuUnrestrictedMemcpy(&h.orig_instr, (void *)addr, sizeof(h.orig_instr));
+    kuKernelCpuUnrestrictedMemcpy((void *)addr, h.patch_instr, sizeof(h.patch_instr));
+
+    return h;
 }
 
-void hook_addr(uintptr_t addr, uintptr_t dst) {
+so_hook hook_addr(uintptr_t addr, uintptr_t dst) {
     if (addr == 0)
         return;
     if (addr & 1)
-        hook_thumb(addr, dst);
+        return hook_thumb(addr, dst);
     else
-        hook_arm(addr, dst);
+        return hook_arm(addr, dst);
 }
 
 void so_flush_caches(so_module *mod) {
@@ -282,29 +297,22 @@ int so_file_load(so_module *mod, const char *filename, uintptr_t load_addr) {
     memset(mod, 0, sizeof(so_module));
 
     SceUID fd = sceIoOpen(filename, SCE_O_RDONLY, 0);
-    if (fd < 0) {
-        debugPrintf("sceIoOpen failed for %s\n", filename);
+    if (fd < 0)
         return fd;
-    }
-    debugPrintf("sceIoOpen succeeded for %s\n", filename);
 
     size_t so_size = sceIoLseek(fd, 0, SCE_SEEK_END);
     sceIoLseek(fd, 0, SCE_SEEK_SET);
 
     so_blockid = sceKernelAllocMemBlock("so block", SCE_KERNEL_MEMBLOCK_TYPE_USER_RW, (so_size + 0xfff) & ~0xfff, NULL);
-    if (so_blockid < 0) {
-        debugPrintf("sceIoOpen succeeded for %s\n", filename);
+    if (so_blockid < 0)
         return so_blockid;
-    }
 
     sceKernelGetMemBlockBase(so_blockid, &so_data);
 
     sceIoRead(fd, so_data, so_size);
     sceIoClose(fd);
 
-    int res = _so_load(mod, so_blockid, so_data, load_addr);
-    debugPrintf("_so_load res: %x / %i\n", res, res);
-    return res;
+    return _so_load(mod, so_blockid, so_data, load_addr);
 }
 
 int so_relocate(so_module *mod) {
@@ -318,8 +326,6 @@ int so_relocate(so_module *mod) {
             case R_ARM_ABS32:
                 if (sym->st_shndx != SHN_UNDEF)
                     *ptr += mod->text_base + sym->st_value;
-                else
-                    *ptr = mod->text_base + rel->r_offset; // make it crash for debugging
                 break;
             case R_ARM_RELATIVE:
                 *ptr += mod->text_base;
@@ -329,8 +335,6 @@ int so_relocate(so_module *mod) {
             {
                 if (sym->st_shndx != SHN_UNDEF)
                     *ptr = mod->text_base + sym->st_value;
-                else
-                    *ptr = mod->text_base + rel->r_offset; // make it crash for debugging
                 break;
             }
             default:
@@ -411,7 +415,7 @@ __attribute__((naked)) void plt0_stub()
     reloc_err(got0);
 }
 
-int     so_resolve(so_module *mod, so_default_dynlib *default_dynlib, int size_default_dynlib, int default_dynlib_only) {
+int so_resolve(so_module *mod, so_default_dynlib *default_dynlib, int size_default_dynlib, int default_dynlib_only) {
     for (int i = 0; i < mod->num_reldyn + mod->num_relplt; i++) {
         Elf32_Rel *rel = i < mod->num_reldyn ? &mod->reldyn[i] : &mod->relplt[i - mod->num_reldyn];
         Elf32_Sym *sym = &mod->dynsym[ELF32_R_SYM(rel->r_info)];
@@ -428,8 +432,11 @@ int     so_resolve(so_module *mod, so_default_dynlib *default_dynlib, int size_d
                     if (!default_dynlib_only) {
                         uintptr_t link = so_resolve_link(mod, mod->dynstr + sym->st_name);
                         if (link) {
-                            debugPrintf("Resolved from dependencies: %s\n", mod->dynstr + sym->st_name);
-                            *ptr = link;
+                            // debugPrintf("Resolved from dependencies: %s\n", mod->dynstr + sym->st_name);
+                            if (type == R_ARM_ABS32)
+                                *ptr += link;
+                            else
+                                *ptr = link;
                             resolved = 1;
                         }
                     }
@@ -444,12 +451,11 @@ int     so_resolve(so_module *mod, so_default_dynlib *default_dynlib, int size_d
 
                     if (!resolved) {
                         if (type == R_ARM_JUMP_SLOT) {
-                            debugPrintf("Unresolved import: %s\n", mod->dynstr + sym->st_name);
+                            printf("Unresolved import: %s\n", mod->dynstr + sym->st_name);
                             *ptr = (uintptr_t)&plt0_stub;
                         }
                         else {
-                            debugPrintf("Unresolved import: %s\n", mod->dynstr + sym->st_name);
-                            fatal_error("Unresolved import: %s\n", mod->dynstr + sym->st_name);
+                            //printf("Unresolved import: %s\n", mod->dynstr + sym->st_name);
                         }
                     }
                 }

@@ -1,6 +1,6 @@
 CMakeFiles/so_loader.dir/loader/reimpl/log.c.obj: \
- /Users/v/Repos/baba/goo_vita/loader/reimpl/log.c \
- /Users/v/Repos/baba/goo_vita/loader/reimpl/log.h \
+ /Users/v/Repos/deadspace-vita/loader/reimpl/log.c \
+ /Users/v/Repos/deadspace-vita/loader/reimpl/log.h \
  /usr/local/vitasdk/lib/gcc/arm-vita-eabi/10.3.0/include/stdarg.h \
  /usr/local/vitasdk/arm-vita-eabi/include/stdio.h \
  /usr/local/vitasdk/arm-vita-eabi/include/_ansi.h \
@@ -32,5 +32,5 @@ CMakeFiles/so_loader.dir/loader/reimpl/log.c.obj: \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/sched.h \
  /usr/local/vitasdk/arm-vita-eabi/include/machine/types.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/stdio.h \
- /Users/v/Repos/baba/goo_vita/loader/utils/utils.h \
- /Users/v/Repos/baba/goo_vita/loader/config.h
+ /Users/v/Repos/deadspace-vita/loader/utils/utils.h \
+ /Users/v/Repos/deadspace-vita/loader/config.h

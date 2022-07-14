@@ -53,10 +53,10 @@ RM = /usr/local/Cellar/cmake/3.22.1/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/v/Repos/baba/goo_vita
+CMAKE_SOURCE_DIR = /Users/v/Repos/deadspace-vita
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/v/Repos/baba/goo_vita/build
+CMAKE_BINARY_DIR = /Users/v/Repos/deadspace-vita/build
 
 # Utility rule file for reboot.
 
@@ -67,7 +67,7 @@ include CMakeFiles/reboot.dir/compiler_depend.make
 include CMakeFiles/reboot.dir/progress.make
 
 CMakeFiles/reboot:
-	echo reboot | nc 192.168.1.18 1338
+	echo reboot | nc 192.168.1.20 1338
 
 reboot: CMakeFiles/reboot
 reboot: CMakeFiles/reboot.dir/build.make
@@ -82,6 +82,6 @@ CMakeFiles/reboot.dir/clean:
 .PHONY : CMakeFiles/reboot.dir/clean
 
 CMakeFiles/reboot.dir/depend:
-	cd /Users/v/Repos/baba/goo_vita/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/v/Repos/baba/goo_vita /Users/v/Repos/baba/goo_vita /Users/v/Repos/baba/goo_vita/build /Users/v/Repos/baba/goo_vita/build /Users/v/Repos/baba/goo_vita/build/CMakeFiles/reboot.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/v/Repos/deadspace-vita/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/v/Repos/deadspace-vita /Users/v/Repos/deadspace-vita /Users/v/Repos/deadspace-vita/build /Users/v/Repos/deadspace-vita/build /Users/v/Repos/deadspace-vita/build/CMakeFiles/reboot.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/reboot.dir/depend
 

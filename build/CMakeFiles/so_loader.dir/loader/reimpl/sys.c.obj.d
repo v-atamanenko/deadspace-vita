@@ -1,5 +1,5 @@
 CMakeFiles/so_loader.dir/loader/reimpl/sys.c.obj: \
- /Users/v/Repos/baba/goo_vita/loader/reimpl/sys.c \
+ /Users/v/Repos/deadspace-vita/loader/reimpl/sys.c \
  /usr/local/vitasdk/arm-vita-eabi/include/string.h \
  /usr/local/vitasdk/arm-vita-eabi/include/_ansi.h \
  /usr/local/vitasdk/arm-vita-eabi/include/newlib.h \
@@ -43,12 +43,12 @@ CMakeFiles/so_loader.dir/loader/reimpl/sys.c.obj: \
  /usr/local/vitasdk/arm-vita-eabi/include/stdint.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/_intsup.h \
  /usr/local/vitasdk/arm-vita-eabi/include/psp2/kernel/cpu.h \
- /Users/v/Repos/baba/goo_vita/loader/reimpl/sys.h \
+ /Users/v/Repos/deadspace-vita/loader/reimpl/sys.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/time.h \
  /usr/local/vitasdk/arm-vita-eabi/include/time.h \
  /usr/local/vitasdk/arm-vita-eabi/include/machine/time.h \
  /usr/local/vitasdk/arm-vita-eabi/include/signal.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/signal.h \
  /usr/local/vitasdk/arm-vita-eabi/include/machine/_time.h \
- /Users/v/Repos/baba/goo_vita/loader/utils/utils.h \
- /Users/v/Repos/baba/goo_vita/loader/config.h
+ /Users/v/Repos/deadspace-vita/loader/utils/utils.h \
+ /Users/v/Repos/deadspace-vita/loader/config.h

@@ -1,5 +1,5 @@
 CMakeFiles/so_loader.dir/lib/sha1/sha1.c.obj: \
- /Users/v/Repos/baba/goo_vita/lib/sha1/sha1.c \
+ /Users/v/Repos/deadspace-vita/lib/sha1/sha1.c \
  /usr/local/vitasdk/arm-vita-eabi/include/stdlib.h \
  /usr/local/vitasdk/arm-vita-eabi/include/machine/ieeefp.h \
  /usr/local/vitasdk/arm-vita-eabi/include/_ansi.h \
@@ -23,4 +23,4 @@ CMakeFiles/so_loader.dir/lib/sha1/sha1.c.obj: \
  /usr/local/vitasdk/arm-vita-eabi/include/string.h \
  /usr/local/vitasdk/arm-vita-eabi/include/strings.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/string.h \
- /Users/v/Repos/baba/goo_vita/lib/sha1/sha1.h
+ /Users/v/Repos/deadspace-vita/lib/sha1/sha1.h

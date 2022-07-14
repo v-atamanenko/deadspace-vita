@@ -1,5 +1,5 @@
 CMakeFiles/so_loader.dir/lib/fios/fios.c.obj: \
- /Users/v/Repos/baba/goo_vita/lib/fios/fios.c \
+ /Users/v/Repos/deadspace-vita/lib/fios/fios.c \
  /usr/local/vitasdk/arm-vita-eabi/include/malloc.h \
  /usr/local/vitasdk/arm-vita-eabi/include/_ansi.h \
  /usr/local/vitasdk/arm-vita-eabi/include/newlib.h \
@@ -16,7 +16,7 @@ CMakeFiles/so_loader.dir/lib/fios/fios.c.obj: \
  /usr/local/vitasdk/arm-vita-eabi/include/machine/_default_types.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/lock.h \
  /usr/local/vitasdk/arm-vita-eabi/include/machine/malloc.h \
- /Users/v/Repos/baba/goo_vita/lib/fios/fios.h \
+ /Users/v/Repos/deadspace-vita/lib/fios/fios.h \
  /usr/local/vitasdk/lib/gcc/arm-vita-eabi/10.3.0/include/stdint.h \
  /usr/local/vitasdk/arm-vita-eabi/include/stdint.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/_intsup.h \

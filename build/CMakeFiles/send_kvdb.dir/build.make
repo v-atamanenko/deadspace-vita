@@ -53,10 +53,10 @@ RM = /usr/local/Cellar/cmake/3.22.1/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/v/Repos/baba/goo_vita
+CMAKE_SOURCE_DIR = /Users/v/Repos/deadspace-vita
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/v/Repos/baba/goo_vita/build
+CMAKE_BINARY_DIR = /Users/v/Repos/deadspace-vita/build
 
 # Utility rule file for send_kvdb.
 
@@ -67,9 +67,9 @@ include CMakeFiles/send_kvdb.dir/compiler_depend.make
 include CMakeFiles/send_kvdb.dir/progress.make
 
 CMakeFiles/send_kvdb: so_loader
-	echo destroy | nc 192.168.1.18 1338
-	curl -T eboot.bin ftp://192.168.1.18:1337/ux0:/app/BABAISYOU/
-	echo launch ux0:/app/BABAISYOU/eboot.bin | nc 192.168.1.18 1338
+	echo destroy | nc 192.168.1.20 1338
+	curl -T eboot.bin ftp://192.168.1.20:1337/ux0:/app/DEADSPACE/
+	echo launch ux0:/app/DEADSPACE/eboot.bin | nc 192.168.1.20 1338
 
 send_kvdb: CMakeFiles/send_kvdb
 send_kvdb: CMakeFiles/send_kvdb.dir/build.make
@@ -84,6 +84,6 @@ CMakeFiles/send_kvdb.dir/clean:
 .PHONY : CMakeFiles/send_kvdb.dir/clean
 
 CMakeFiles/send_kvdb.dir/depend:
-	cd /Users/v/Repos/baba/goo_vita/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/v/Repos/baba/goo_vita /Users/v/Repos/baba/goo_vita /Users/v/Repos/baba/goo_vita/build /Users/v/Repos/baba/goo_vita/build /Users/v/Repos/baba/goo_vita/build/CMakeFiles/send_kvdb.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/v/Repos/deadspace-vita/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/v/Repos/deadspace-vita /Users/v/Repos/deadspace-vita /Users/v/Repos/deadspace-vita/build /Users/v/Repos/deadspace-vita/build /Users/v/Repos/deadspace-vita/build/CMakeFiles/send_kvdb.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/send_kvdb.dir/depend
 

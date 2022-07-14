@@ -18,6 +18,10 @@
 #include <stdarg.h>
 #include <string.h>
 #include <sys/time.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <sys/dirent.h>
+#include <dirent.h>
 
 #pragma ide diagnostic ignored "bugprone-reserved-identifier"
 
@@ -59,10 +63,10 @@ void assert(int i) {
 int debugPrintf(char *text, ...) {
 #ifdef DEBUG
     va_list list;
-    static char string[0x8000];
+    char string[0x8000];
 
     va_start(list, text);
-    vsprintf(string, text, list);
+    vsnprintf(string, 0x8000, text, list);
     va_end(list);
 
     fprintf(stderr, "%s", string);
@@ -90,4 +94,73 @@ long long current_timestamp() {
     gettimeofday(&te, NULL); // get current time
     long long milliseconds = te.tv_sec*1000LL + te.tv_usec/1000; // calculate ms
     return milliseconds;
+}
+
+char* strremove(char *str, const char *sub) {
+    char *p, *q, *r;
+    if (*sub && (q = r = strstr(str, sub)) != NULL) {
+        size_t len = strlen(sub);
+        while ((r = strstr(p = r + len, sub)) != NULL) {
+            while (p < r)
+                *q++ = *p++;
+        }
+        while ((*q++ = *p++) != '\0')
+            continue;
+    }
+    return str;
+}
+
+char* strreplace(char *target, const char *needle, const char *replacement) {
+    char buffer[1024] = { 0 };
+    char *insert_point = &buffer[0];
+    const char *tmp = target;
+    size_t needle_len = strlen(needle);
+    size_t repl_len = strlen(replacement);
+
+    while (1) {
+        const char *p = strstr(tmp, needle);
+
+        // walked past last occurrence of needle; copy remaining part
+        if (p == NULL) {
+            strcpy(insert_point, tmp);
+            break;
+        }
+
+        // copy part before needle
+        memcpy(insert_point, tmp, p - tmp);
+        insert_point += p - tmp;
+
+        // copy replacement string
+        memcpy(insert_point, replacement, repl_len);
+        insert_point += repl_len;
+
+        // adjust pointers, move on
+        tmp = p + needle_len;
+    }
+
+    // write altered string back to target
+    strcpy(target, buffer);
+    return target;
+}
+
+void check_init_mutex(pthread_mutex_t* mut) {
+    if (!mut) {
+        fprintf(stderr, "MUTEX INIT!!!\n");
+        pthread_mutex_t initTmpNormal;
+        fprintf(stderr, "MUTEX INIT2!!!\n");
+        mut = calloc(1, sizeof(pthread_mutex_t));
+        fprintf(stderr, "MUTEX INIT3!!!\n");
+        memcpy(mut, &initTmpNormal, sizeof(pthread_mutex_t));
+        fprintf(stderr, "MUTEX INIT4!!!\n");
+        pthread_mutex_init(mut, NULL);
+    }
+}
+
+inline int8_t is_dir(char* p) {
+    DIR* filetest = opendir(p);
+    if (filetest != NULL) {
+        closedir(filetest);
+        return 1;
+    }
+    return 0;
 }

@@ -44,7 +44,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/so_loader.dir/DependInfo.cmake"
   "CMakeFiles/eboot.bin-self.dir/DependInfo.cmake"
-  "CMakeFiles/BABAISYOU.vpk-vpk.dir/DependInfo.cmake"
+  "CMakeFiles/DEADSPACE.vpk-vpk.dir/DependInfo.cmake"
   "CMakeFiles/send.dir/DependInfo.cmake"
   "CMakeFiles/send_kvdb.dir/DependInfo.cmake"
   "CMakeFiles/dump.dir/DependInfo.cmake"

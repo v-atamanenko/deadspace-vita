@@ -10,8 +10,17 @@
 #define SCE_KERNEL_MEMBLOCK_TYPE_USER_RX                 (0x0C20D050)
 #endif
 
+#include "elf.h"
+
 #define ALIGN_MEM(x, align) (((x) + ((align) - 1)) & ~((align) - 1))
 #define MAX_DATA_SEG 4
+
+typedef struct {
+    uintptr_t addr;
+    uintptr_t thumb_addr;
+    uint32_t orig_instr[2];
+    uint32_t patch_instr[2];
+} so_hook;
 
 typedef struct so_module {
     struct so_module *next;
@@ -49,9 +58,9 @@ typedef struct {
     uintptr_t func;
 } so_default_dynlib;
 
-void hook_thumb(uintptr_t addr, uintptr_t dst);
-void hook_arm(uintptr_t addr, uintptr_t dst);
-void hook_addr(uintptr_t addr, uintptr_t dst);
+so_hook hook_thumb(uintptr_t addr, uintptr_t dst);
+so_hook hook_arm(uintptr_t addr, uintptr_t dst);
+so_hook hook_addr(uintptr_t addr, uintptr_t dst);
 
 void so_flush_caches(so_module *mod);
 int so_file_load(so_module *mod, const char *filename, uintptr_t load_addr);
@@ -62,5 +71,14 @@ int so_resolve_with_dummy(so_module *mod, so_default_dynlib *default_dynlib, int
 void so_symbol_fix_ldmia(so_module *mod, const char *symbol);
 void so_initialize(so_module *mod);
 uintptr_t so_symbol(so_module *mod, const char *symbol);
+
+#define SO_CONTINUE(type, h, ...) ({ \
+  kuKernelCpuUnrestrictedMemcpy((void *)h.addr, h.orig_instr, sizeof(h.orig_instr)); \
+  kuKernelFlushCaches((void *)h.addr, sizeof(h.orig_instr)); \
+  type r = h.thumb_addr ? ((type(*)())h.thumb_addr)(__VA_ARGS__) : ((type(*)())h.addr)(__VA_ARGS__); \
+  kuKernelCpuUnrestrictedMemcpy((void *)h.addr, h.patch_instr, sizeof(h.patch_instr)); \
+  kuKernelFlushCaches((void *)h.addr, sizeof(h.patch_instr)); \
+  r; \
+})
 
 #endif

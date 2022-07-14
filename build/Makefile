@@ -57,10 +57,10 @@ RM = /usr/local/Cellar/cmake/3.22.1/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/v/Repos/baba/goo_vita
+CMAKE_SOURCE_DIR = /Users/v/Repos/deadspace-vita
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/v/Repos/baba/goo_vita/build
+CMAKE_BINARY_DIR = /Users/v/Repos/deadspace-vita/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/v/Repos/baba/goo_vita/build/CMakeFiles /Users/v/Repos/baba/goo_vita/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/v/Repos/deadspace-vita/build/CMakeFiles /Users/v/Repos/deadspace-vita/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/v/Repos/baba/goo_vita/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/v/Repos/deadspace-vita/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -143,17 +143,17 @@ eboot.bin-self/fast:
 .PHONY : eboot.bin-self/fast
 
 #=============================================================================
-# Target rules for targets named BABAISYOU.vpk-vpk
+# Target rules for targets named DEADSPACE.vpk-vpk
 
 # Build rule for target.
-BABAISYOU.vpk-vpk: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 BABAISYOU.vpk-vpk
-.PHONY : BABAISYOU.vpk-vpk
+DEADSPACE.vpk-vpk: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 DEADSPACE.vpk-vpk
+.PHONY : DEADSPACE.vpk-vpk
 
 # fast build rule for target.
-BABAISYOU.vpk-vpk/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BABAISYOU.vpk-vpk.dir/build.make CMakeFiles/BABAISYOU.vpk-vpk.dir/build
-.PHONY : BABAISYOU.vpk-vpk/fast
+DEADSPACE.vpk-vpk/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DEADSPACE.vpk-vpk.dir/build.make CMakeFiles/DEADSPACE.vpk-vpk.dir/build
+.PHONY : DEADSPACE.vpk-vpk/fast
 
 #=============================================================================
 # Target rules for targets named send
@@ -327,29 +327,53 @@ loader/glutil.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/so_loader.dir/build.make CMakeFiles/so_loader.dir/loader/glutil.c.s
 .PHONY : loader/glutil.c.s
 
-loader/jni.obj: loader/jni.c.obj
-.PHONY : loader/jni.obj
+loader/java.io.InputStream.obj: loader/java.io.InputStream.c.obj
+.PHONY : loader/java.io.InputStream.obj
 
 # target to build an object file
-loader/jni.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/so_loader.dir/build.make CMakeFiles/so_loader.dir/loader/jni.c.obj
-.PHONY : loader/jni.c.obj
+loader/java.io.InputStream.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/so_loader.dir/build.make CMakeFiles/so_loader.dir/loader/java.io.InputStream.c.obj
+.PHONY : loader/java.io.InputStream.c.obj
 
-loader/jni.i: loader/jni.c.i
-.PHONY : loader/jni.i
+loader/java.io.InputStream.i: loader/java.io.InputStream.c.i
+.PHONY : loader/java.io.InputStream.i
 
 # target to preprocess a source file
-loader/jni.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/so_loader.dir/build.make CMakeFiles/so_loader.dir/loader/jni.c.i
-.PHONY : loader/jni.c.i
+loader/java.io.InputStream.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/so_loader.dir/build.make CMakeFiles/so_loader.dir/loader/java.io.InputStream.c.i
+.PHONY : loader/java.io.InputStream.c.i
 
-loader/jni.s: loader/jni.c.s
-.PHONY : loader/jni.s
+loader/java.io.InputStream.s: loader/java.io.InputStream.c.s
+.PHONY : loader/java.io.InputStream.s
 
 # target to generate assembly for a file
-loader/jni.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/so_loader.dir/build.make CMakeFiles/so_loader.dir/loader/jni.c.s
-.PHONY : loader/jni.c.s
+loader/java.io.InputStream.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/so_loader.dir/build.make CMakeFiles/so_loader.dir/loader/java.io.InputStream.c.s
+.PHONY : loader/java.io.InputStream.c.s
+
+loader/jni_fake.obj: loader/jni_fake.c.obj
+.PHONY : loader/jni_fake.obj
+
+# target to build an object file
+loader/jni_fake.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/so_loader.dir/build.make CMakeFiles/so_loader.dir/loader/jni_fake.c.obj
+.PHONY : loader/jni_fake.c.obj
+
+loader/jni_fake.i: loader/jni_fake.c.i
+.PHONY : loader/jni_fake.i
+
+# target to preprocess a source file
+loader/jni_fake.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/so_loader.dir/build.make CMakeFiles/so_loader.dir/loader/jni_fake.c.i
+.PHONY : loader/jni_fake.c.i
+
+loader/jni_fake.s: loader/jni_fake.c.s
+.PHONY : loader/jni_fake.s
+
+# target to generate assembly for a file
+loader/jni_fake.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/so_loader.dir/build.make CMakeFiles/so_loader.dir/loader/jni_fake.c.s
+.PHONY : loader/jni_fake.c.s
 
 loader/main.obj: loader/main.c.obj
 .PHONY : loader/main.obj
@@ -398,6 +422,30 @@ loader/patch_game.s: loader/patch_game.c.s
 loader/patch_game.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/so_loader.dir/build.make CMakeFiles/so_loader.dir/loader/patch_game.c.s
 .PHONY : loader/patch_game.c.s
+
+loader/reimpl/ctype_patch.obj: loader/reimpl/ctype_patch.c.obj
+.PHONY : loader/reimpl/ctype_patch.obj
+
+# target to build an object file
+loader/reimpl/ctype_patch.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/so_loader.dir/build.make CMakeFiles/so_loader.dir/loader/reimpl/ctype_patch.c.obj
+.PHONY : loader/reimpl/ctype_patch.c.obj
+
+loader/reimpl/ctype_patch.i: loader/reimpl/ctype_patch.c.i
+.PHONY : loader/reimpl/ctype_patch.i
+
+# target to preprocess a source file
+loader/reimpl/ctype_patch.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/so_loader.dir/build.make CMakeFiles/so_loader.dir/loader/reimpl/ctype_patch.c.i
+.PHONY : loader/reimpl/ctype_patch.c.i
+
+loader/reimpl/ctype_patch.s: loader/reimpl/ctype_patch.c.s
+.PHONY : loader/reimpl/ctype_patch.s
+
+# target to generate assembly for a file
+loader/reimpl/ctype_patch.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/so_loader.dir/build.make CMakeFiles/so_loader.dir/loader/reimpl/ctype_patch.c.s
+.PHONY : loader/reimpl/ctype_patch.c.s
 
 loader/reimpl/env.obj: loader/reimpl/env.c.obj
 .PHONY : loader/reimpl/env.obj
@@ -623,7 +671,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... BABAISYOU.vpk-vpk"
+	@echo "... DEADSPACE.vpk-vpk"
 	@echo "... dump"
 	@echo "... eboot.bin-self"
 	@echo "... reboot"
@@ -645,15 +693,21 @@ help:
 	@echo "... loader/glutil.obj"
 	@echo "... loader/glutil.i"
 	@echo "... loader/glutil.s"
-	@echo "... loader/jni.obj"
-	@echo "... loader/jni.i"
-	@echo "... loader/jni.s"
+	@echo "... loader/java.io.InputStream.obj"
+	@echo "... loader/java.io.InputStream.i"
+	@echo "... loader/java.io.InputStream.s"
+	@echo "... loader/jni_fake.obj"
+	@echo "... loader/jni_fake.i"
+	@echo "... loader/jni_fake.s"
 	@echo "... loader/main.obj"
 	@echo "... loader/main.i"
 	@echo "... loader/main.s"
 	@echo "... loader/patch_game.obj"
 	@echo "... loader/patch_game.i"
 	@echo "... loader/patch_game.s"
+	@echo "... loader/reimpl/ctype_patch.obj"
+	@echo "... loader/reimpl/ctype_patch.i"
+	@echo "... loader/reimpl/ctype_patch.s"
 	@echo "... loader/reimpl/env.obj"
 	@echo "... loader/reimpl/env.i"
 	@echo "... loader/reimpl/env.s"

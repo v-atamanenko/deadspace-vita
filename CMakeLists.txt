@@ -11,7 +11,7 @@ endif()
 if(DEFINED ENV{PSVITAIP})
   set(PSVITAIP "$ENV{PSVITAIP}")
 else()
-  set(PSVITAIP "192.168.1.18")
+  set(PSVITAIP "192.168.1.20")
   message(WARNING "PSVITAIP environment variable is not set, using default IP ${PSVITAIP}")
 endif()
 
@@ -26,10 +26,10 @@ project(so_loader C CXX)
 
 include("${VITASDK}/share/vita.cmake" REQUIRED)
 
-set(VITA_APP_NAME "Baba Is You")
-set(VITA_TITLEID  "BABAISYOU")
-set(VITA_VPKNAME  "BABAISYOU")
-set(VITA_VERSION  "01.20")
+set(VITA_APP_NAME "Dead Space")
+set(VITA_TITLEID  "DEADSPACE")
+set(VITA_VPKNAME  "DEADSPACE")
+set(VITA_VERSION  "01.00")
 set(VITA_MKSFOEX_FLAGS "-d ATTRIBUTE2=12")
 
 option(DEBUG "Print debug information to stdout" OFF)
@@ -42,9 +42,9 @@ if (DEBUG_GL)
   add_definitions(-DDEBUG_GL)
 endif()
 
-SET(DATA_PATH "ux0:data/baba" CACHE STRING "Path to data files")
+SET(DATA_PATH "ux0:data/deadspace" CACHE STRING "Path to data files")
 SET(DATA_PATH_INT "${DATA_PATH}/assets" CACHE STRING "Path to assets folder")
-SET(SO_PATH "${DATA_PATH}/lib/armeabi-v7a/libChowdren.so" CACHE STRING "Path to .so")
+SET(SO_PATH "${DATA_PATH}/lib/armeabi/libDeadSpace.so" CACHE STRING "Path to .so")
 SET(GRAPHICS_API "VGL" CACHE STRING "\"VGL\" for VitaGL, \"PVR\" for PVR_PSP2")
 
 add_definitions(-DDATA_PATH="${DATA_PATH}")
@@ -53,18 +53,20 @@ add_definitions(-DSO_PATH="${SO_PATH}")
 
 add_definitions(-D_GNU_SOURCE) # makes sincos, sincosf, etc. visible
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -fsigned-char")
 set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -std=gnu++11")
 
 add_executable(so_loader
         loader/main.c
+        loader/java.io.InputStream.c
         loader/default_dynlib.c
         loader/utils/dialog.c
         loader/glutil.c
-        loader/jni.c
+        loader/jni_fake.c
         loader/utils/loading_screen.c
         loader/patch_game.c
         loader/utils/utils.c
+        loader/reimpl/ctype_patch.c
         loader/reimpl/env.c
         loader/reimpl/io.c
         loader/reimpl/log.c
@@ -108,6 +110,8 @@ else()
   set(GRAPHICS_LIBS
           vitaGL
           vitashark
+          SceShaccCgExt
+          taihen_stub
           SceShaccCg_stub
   )
   set(SDL_LIBS

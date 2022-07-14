@@ -39,13 +39,13 @@ include CMakeFiles/rules.ninja
 #############################################
 # Logical path to working directory; prefix for absolute paths.
 
-cmake_ninja_workdir = /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk/
+cmake_ninja_workdir = /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk/
 
 #############################################
 # Utility command for rebuild_cache
 
 build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake --regenerate-during-build -S/Users/v/Repos/baba/goo_vita -B/Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk
+  COMMAND = cd /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake --regenerate-during-build -S/Users/v/Repos/deadspace-vita -B/Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -57,17 +57,11 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # Utility command for edit_cache
 
 build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 
 build edit_cache: phony CMakeFiles/edit_cache.util
-
-
-#############################################
-# Utility command for reboot
-
-build reboot: phony CMakeFiles/reboot
 
 
 #############################################
@@ -84,139 +78,155 @@ build dump: phony CMakeFiles/dump
 
 build cmake_object_order_depends_target_so_loader: phony || CMakeFiles/so_loader.dir
 
-build CMakeFiles/so_loader.dir/loader/main.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/baba/goo_vita/loader/main.c || cmake_object_order_depends_target_so_loader
-  DEFINES = -DDATA_PATH=\"po\" -DDATA_PATH_INT=\"po/assets\" -DDEBUG -DGRAPHICS_API=0 -DSO_PATH=\"po/libChowdren.so\" -D_GNU_SOURCE
+build CMakeFiles/so_loader.dir/loader/main.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/deadspace-vita/loader/main.c || cmake_object_order_depends_target_so_loader
+  DEFINES = -DDATA_PATH=\"ux0:data/baba\" -DDATA_PATH_INT=\"ux0:data/baba/assets\" -DGRAPHICS_API=0 -DSO_PATH=\"ux0:data/baba/lib/armeabi-v7a/libChowdren.so\" -D_GNU_SOURCE
   DEP_FILE = CMakeFiles/so_loader.dir/loader/main.c.obj.d
-  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -O0 -g -DDEBUG -D_DEBUG
-  INCLUDES = -I/Users/v/Repos/baba/goo_vita/loader -isystem /Users/v/Repos/baba/goo_vita/lib/fios -isystem /Users/v/Repos/baba/goo_vita/lib/libc_bridge -isystem /Users/v/Repos/baba/goo_vita/lib/sha1 -isystem /Users/v/Repos/baba/goo_vita/lib/so_util -isystem /Users/v/Repos/baba/goo_vita/lib/stb
+  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -fsigned-char -O0 -g -DDEBUG -D_DEBUG
+  INCLUDES = -I/Users/v/Repos/deadspace-vita/loader -isystem /Users/v/Repos/deadspace-vita/lib/fios -isystem /Users/v/Repos/deadspace-vita/lib/libc_bridge -isystem /Users/v/Repos/deadspace-vita/lib/sha1 -isystem /Users/v/Repos/deadspace-vita/lib/so_util -isystem /Users/v/Repos/deadspace-vita/lib/stb
   OBJECT_DIR = CMakeFiles/so_loader.dir
   OBJECT_FILE_DIR = CMakeFiles/so_loader.dir/loader
 
-build CMakeFiles/so_loader.dir/loader/default_dynlib.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/baba/goo_vita/loader/default_dynlib.c || cmake_object_order_depends_target_so_loader
-  DEFINES = -DDATA_PATH=\"po\" -DDATA_PATH_INT=\"po/assets\" -DDEBUG -DGRAPHICS_API=0 -DSO_PATH=\"po/libChowdren.so\" -D_GNU_SOURCE
+build CMakeFiles/so_loader.dir/loader/java.io.InputStream.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/deadspace-vita/loader/java.io.InputStream.c || cmake_object_order_depends_target_so_loader
+  DEFINES = -DDATA_PATH=\"ux0:data/baba\" -DDATA_PATH_INT=\"ux0:data/baba/assets\" -DGRAPHICS_API=0 -DSO_PATH=\"ux0:data/baba/lib/armeabi-v7a/libChowdren.so\" -D_GNU_SOURCE
+  DEP_FILE = CMakeFiles/so_loader.dir/loader/java.io.InputStream.c.obj.d
+  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -fsigned-char -O0 -g -DDEBUG -D_DEBUG
+  INCLUDES = -I/Users/v/Repos/deadspace-vita/loader -isystem /Users/v/Repos/deadspace-vita/lib/fios -isystem /Users/v/Repos/deadspace-vita/lib/libc_bridge -isystem /Users/v/Repos/deadspace-vita/lib/sha1 -isystem /Users/v/Repos/deadspace-vita/lib/so_util -isystem /Users/v/Repos/deadspace-vita/lib/stb
+  OBJECT_DIR = CMakeFiles/so_loader.dir
+  OBJECT_FILE_DIR = CMakeFiles/so_loader.dir/loader
+
+build CMakeFiles/so_loader.dir/loader/default_dynlib.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/deadspace-vita/loader/default_dynlib.c || cmake_object_order_depends_target_so_loader
+  DEFINES = -DDATA_PATH=\"ux0:data/baba\" -DDATA_PATH_INT=\"ux0:data/baba/assets\" -DGRAPHICS_API=0 -DSO_PATH=\"ux0:data/baba/lib/armeabi-v7a/libChowdren.so\" -D_GNU_SOURCE
   DEP_FILE = CMakeFiles/so_loader.dir/loader/default_dynlib.c.obj.d
-  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -O0 -g -DDEBUG -D_DEBUG
-  INCLUDES = -I/Users/v/Repos/baba/goo_vita/loader -isystem /Users/v/Repos/baba/goo_vita/lib/fios -isystem /Users/v/Repos/baba/goo_vita/lib/libc_bridge -isystem /Users/v/Repos/baba/goo_vita/lib/sha1 -isystem /Users/v/Repos/baba/goo_vita/lib/so_util -isystem /Users/v/Repos/baba/goo_vita/lib/stb
+  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -fsigned-char -O0 -g -DDEBUG -D_DEBUG
+  INCLUDES = -I/Users/v/Repos/deadspace-vita/loader -isystem /Users/v/Repos/deadspace-vita/lib/fios -isystem /Users/v/Repos/deadspace-vita/lib/libc_bridge -isystem /Users/v/Repos/deadspace-vita/lib/sha1 -isystem /Users/v/Repos/deadspace-vita/lib/so_util -isystem /Users/v/Repos/deadspace-vita/lib/stb
   OBJECT_DIR = CMakeFiles/so_loader.dir
   OBJECT_FILE_DIR = CMakeFiles/so_loader.dir/loader
 
-build CMakeFiles/so_loader.dir/loader/utils/dialog.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/baba/goo_vita/loader/utils/dialog.c || cmake_object_order_depends_target_so_loader
-  DEFINES = -DDATA_PATH=\"po\" -DDATA_PATH_INT=\"po/assets\" -DDEBUG -DGRAPHICS_API=0 -DSO_PATH=\"po/libChowdren.so\" -D_GNU_SOURCE
+build CMakeFiles/so_loader.dir/loader/utils/dialog.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/deadspace-vita/loader/utils/dialog.c || cmake_object_order_depends_target_so_loader
+  DEFINES = -DDATA_PATH=\"ux0:data/baba\" -DDATA_PATH_INT=\"ux0:data/baba/assets\" -DGRAPHICS_API=0 -DSO_PATH=\"ux0:data/baba/lib/armeabi-v7a/libChowdren.so\" -D_GNU_SOURCE
   DEP_FILE = CMakeFiles/so_loader.dir/loader/utils/dialog.c.obj.d
-  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -O0 -g -DDEBUG -D_DEBUG
-  INCLUDES = -I/Users/v/Repos/baba/goo_vita/loader -isystem /Users/v/Repos/baba/goo_vita/lib/fios -isystem /Users/v/Repos/baba/goo_vita/lib/libc_bridge -isystem /Users/v/Repos/baba/goo_vita/lib/sha1 -isystem /Users/v/Repos/baba/goo_vita/lib/so_util -isystem /Users/v/Repos/baba/goo_vita/lib/stb
+  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -fsigned-char -O0 -g -DDEBUG -D_DEBUG
+  INCLUDES = -I/Users/v/Repos/deadspace-vita/loader -isystem /Users/v/Repos/deadspace-vita/lib/fios -isystem /Users/v/Repos/deadspace-vita/lib/libc_bridge -isystem /Users/v/Repos/deadspace-vita/lib/sha1 -isystem /Users/v/Repos/deadspace-vita/lib/so_util -isystem /Users/v/Repos/deadspace-vita/lib/stb
   OBJECT_DIR = CMakeFiles/so_loader.dir
   OBJECT_FILE_DIR = CMakeFiles/so_loader.dir/loader/utils
 
-build CMakeFiles/so_loader.dir/loader/glutil.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/baba/goo_vita/loader/glutil.c || cmake_object_order_depends_target_so_loader
-  DEFINES = -DDATA_PATH=\"po\" -DDATA_PATH_INT=\"po/assets\" -DDEBUG -DGRAPHICS_API=0 -DSO_PATH=\"po/libChowdren.so\" -D_GNU_SOURCE
+build CMakeFiles/so_loader.dir/loader/glutil.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/deadspace-vita/loader/glutil.c || cmake_object_order_depends_target_so_loader
+  DEFINES = -DDATA_PATH=\"ux0:data/baba\" -DDATA_PATH_INT=\"ux0:data/baba/assets\" -DGRAPHICS_API=0 -DSO_PATH=\"ux0:data/baba/lib/armeabi-v7a/libChowdren.so\" -D_GNU_SOURCE
   DEP_FILE = CMakeFiles/so_loader.dir/loader/glutil.c.obj.d
-  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -O0 -g -DDEBUG -D_DEBUG
-  INCLUDES = -I/Users/v/Repos/baba/goo_vita/loader -isystem /Users/v/Repos/baba/goo_vita/lib/fios -isystem /Users/v/Repos/baba/goo_vita/lib/libc_bridge -isystem /Users/v/Repos/baba/goo_vita/lib/sha1 -isystem /Users/v/Repos/baba/goo_vita/lib/so_util -isystem /Users/v/Repos/baba/goo_vita/lib/stb
+  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -fsigned-char -O0 -g -DDEBUG -D_DEBUG
+  INCLUDES = -I/Users/v/Repos/deadspace-vita/loader -isystem /Users/v/Repos/deadspace-vita/lib/fios -isystem /Users/v/Repos/deadspace-vita/lib/libc_bridge -isystem /Users/v/Repos/deadspace-vita/lib/sha1 -isystem /Users/v/Repos/deadspace-vita/lib/so_util -isystem /Users/v/Repos/deadspace-vita/lib/stb
   OBJECT_DIR = CMakeFiles/so_loader.dir
   OBJECT_FILE_DIR = CMakeFiles/so_loader.dir/loader
 
-build CMakeFiles/so_loader.dir/loader/jni.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/baba/goo_vita/loader/jni.c || cmake_object_order_depends_target_so_loader
-  DEFINES = -DDATA_PATH=\"po\" -DDATA_PATH_INT=\"po/assets\" -DDEBUG -DGRAPHICS_API=0 -DSO_PATH=\"po/libChowdren.so\" -D_GNU_SOURCE
-  DEP_FILE = CMakeFiles/so_loader.dir/loader/jni.c.obj.d
-  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -O0 -g -DDEBUG -D_DEBUG
-  INCLUDES = -I/Users/v/Repos/baba/goo_vita/loader -isystem /Users/v/Repos/baba/goo_vita/lib/fios -isystem /Users/v/Repos/baba/goo_vita/lib/libc_bridge -isystem /Users/v/Repos/baba/goo_vita/lib/sha1 -isystem /Users/v/Repos/baba/goo_vita/lib/so_util -isystem /Users/v/Repos/baba/goo_vita/lib/stb
+build CMakeFiles/so_loader.dir/loader/jni_fake.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/deadspace-vita/loader/jni_fake.c || cmake_object_order_depends_target_so_loader
+  DEFINES = -DDATA_PATH=\"ux0:data/baba\" -DDATA_PATH_INT=\"ux0:data/baba/assets\" -DGRAPHICS_API=0 -DSO_PATH=\"ux0:data/baba/lib/armeabi-v7a/libChowdren.so\" -D_GNU_SOURCE
+  DEP_FILE = CMakeFiles/so_loader.dir/loader/jni_fake.c.obj.d
+  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -fsigned-char -O0 -g -DDEBUG -D_DEBUG
+  INCLUDES = -I/Users/v/Repos/deadspace-vita/loader -isystem /Users/v/Repos/deadspace-vita/lib/fios -isystem /Users/v/Repos/deadspace-vita/lib/libc_bridge -isystem /Users/v/Repos/deadspace-vita/lib/sha1 -isystem /Users/v/Repos/deadspace-vita/lib/so_util -isystem /Users/v/Repos/deadspace-vita/lib/stb
   OBJECT_DIR = CMakeFiles/so_loader.dir
   OBJECT_FILE_DIR = CMakeFiles/so_loader.dir/loader
 
-build CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/baba/goo_vita/loader/utils/loading_screen.c || cmake_object_order_depends_target_so_loader
-  DEFINES = -DDATA_PATH=\"po\" -DDATA_PATH_INT=\"po/assets\" -DDEBUG -DGRAPHICS_API=0 -DSO_PATH=\"po/libChowdren.so\" -D_GNU_SOURCE
+build CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/deadspace-vita/loader/utils/loading_screen.c || cmake_object_order_depends_target_so_loader
+  DEFINES = -DDATA_PATH=\"ux0:data/baba\" -DDATA_PATH_INT=\"ux0:data/baba/assets\" -DGRAPHICS_API=0 -DSO_PATH=\"ux0:data/baba/lib/armeabi-v7a/libChowdren.so\" -D_GNU_SOURCE
   DEP_FILE = CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.obj.d
-  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -O0 -g -DDEBUG -D_DEBUG
-  INCLUDES = -I/Users/v/Repos/baba/goo_vita/loader -isystem /Users/v/Repos/baba/goo_vita/lib/fios -isystem /Users/v/Repos/baba/goo_vita/lib/libc_bridge -isystem /Users/v/Repos/baba/goo_vita/lib/sha1 -isystem /Users/v/Repos/baba/goo_vita/lib/so_util -isystem /Users/v/Repos/baba/goo_vita/lib/stb
+  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -fsigned-char -O0 -g -DDEBUG -D_DEBUG
+  INCLUDES = -I/Users/v/Repos/deadspace-vita/loader -isystem /Users/v/Repos/deadspace-vita/lib/fios -isystem /Users/v/Repos/deadspace-vita/lib/libc_bridge -isystem /Users/v/Repos/deadspace-vita/lib/sha1 -isystem /Users/v/Repos/deadspace-vita/lib/so_util -isystem /Users/v/Repos/deadspace-vita/lib/stb
   OBJECT_DIR = CMakeFiles/so_loader.dir
   OBJECT_FILE_DIR = CMakeFiles/so_loader.dir/loader/utils
 
-build CMakeFiles/so_loader.dir/loader/patch_game.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/baba/goo_vita/loader/patch_game.c || cmake_object_order_depends_target_so_loader
-  DEFINES = -DDATA_PATH=\"po\" -DDATA_PATH_INT=\"po/assets\" -DDEBUG -DGRAPHICS_API=0 -DSO_PATH=\"po/libChowdren.so\" -D_GNU_SOURCE
+build CMakeFiles/so_loader.dir/loader/patch_game.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/deadspace-vita/loader/patch_game.c || cmake_object_order_depends_target_so_loader
+  DEFINES = -DDATA_PATH=\"ux0:data/baba\" -DDATA_PATH_INT=\"ux0:data/baba/assets\" -DGRAPHICS_API=0 -DSO_PATH=\"ux0:data/baba/lib/armeabi-v7a/libChowdren.so\" -D_GNU_SOURCE
   DEP_FILE = CMakeFiles/so_loader.dir/loader/patch_game.c.obj.d
-  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -O0 -g -DDEBUG -D_DEBUG
-  INCLUDES = -I/Users/v/Repos/baba/goo_vita/loader -isystem /Users/v/Repos/baba/goo_vita/lib/fios -isystem /Users/v/Repos/baba/goo_vita/lib/libc_bridge -isystem /Users/v/Repos/baba/goo_vita/lib/sha1 -isystem /Users/v/Repos/baba/goo_vita/lib/so_util -isystem /Users/v/Repos/baba/goo_vita/lib/stb
+  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -fsigned-char -O0 -g -DDEBUG -D_DEBUG
+  INCLUDES = -I/Users/v/Repos/deadspace-vita/loader -isystem /Users/v/Repos/deadspace-vita/lib/fios -isystem /Users/v/Repos/deadspace-vita/lib/libc_bridge -isystem /Users/v/Repos/deadspace-vita/lib/sha1 -isystem /Users/v/Repos/deadspace-vita/lib/so_util -isystem /Users/v/Repos/deadspace-vita/lib/stb
   OBJECT_DIR = CMakeFiles/so_loader.dir
   OBJECT_FILE_DIR = CMakeFiles/so_loader.dir/loader
 
-build CMakeFiles/so_loader.dir/loader/utils/utils.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/baba/goo_vita/loader/utils/utils.c || cmake_object_order_depends_target_so_loader
-  DEFINES = -DDATA_PATH=\"po\" -DDATA_PATH_INT=\"po/assets\" -DDEBUG -DGRAPHICS_API=0 -DSO_PATH=\"po/libChowdren.so\" -D_GNU_SOURCE
+build CMakeFiles/so_loader.dir/loader/utils/utils.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/deadspace-vita/loader/utils/utils.c || cmake_object_order_depends_target_so_loader
+  DEFINES = -DDATA_PATH=\"ux0:data/baba\" -DDATA_PATH_INT=\"ux0:data/baba/assets\" -DGRAPHICS_API=0 -DSO_PATH=\"ux0:data/baba/lib/armeabi-v7a/libChowdren.so\" -D_GNU_SOURCE
   DEP_FILE = CMakeFiles/so_loader.dir/loader/utils/utils.c.obj.d
-  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -O0 -g -DDEBUG -D_DEBUG
-  INCLUDES = -I/Users/v/Repos/baba/goo_vita/loader -isystem /Users/v/Repos/baba/goo_vita/lib/fios -isystem /Users/v/Repos/baba/goo_vita/lib/libc_bridge -isystem /Users/v/Repos/baba/goo_vita/lib/sha1 -isystem /Users/v/Repos/baba/goo_vita/lib/so_util -isystem /Users/v/Repos/baba/goo_vita/lib/stb
+  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -fsigned-char -O0 -g -DDEBUG -D_DEBUG
+  INCLUDES = -I/Users/v/Repos/deadspace-vita/loader -isystem /Users/v/Repos/deadspace-vita/lib/fios -isystem /Users/v/Repos/deadspace-vita/lib/libc_bridge -isystem /Users/v/Repos/deadspace-vita/lib/sha1 -isystem /Users/v/Repos/deadspace-vita/lib/so_util -isystem /Users/v/Repos/deadspace-vita/lib/stb
   OBJECT_DIR = CMakeFiles/so_loader.dir
   OBJECT_FILE_DIR = CMakeFiles/so_loader.dir/loader/utils
 
-build CMakeFiles/so_loader.dir/loader/reimpl/env.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/baba/goo_vita/loader/reimpl/env.c || cmake_object_order_depends_target_so_loader
-  DEFINES = -DDATA_PATH=\"po\" -DDATA_PATH_INT=\"po/assets\" -DDEBUG -DGRAPHICS_API=0 -DSO_PATH=\"po/libChowdren.so\" -D_GNU_SOURCE
+build CMakeFiles/so_loader.dir/loader/reimpl/ctype_patch.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/deadspace-vita/loader/reimpl/ctype_patch.c || cmake_object_order_depends_target_so_loader
+  DEFINES = -DDATA_PATH=\"ux0:data/baba\" -DDATA_PATH_INT=\"ux0:data/baba/assets\" -DGRAPHICS_API=0 -DSO_PATH=\"ux0:data/baba/lib/armeabi-v7a/libChowdren.so\" -D_GNU_SOURCE
+  DEP_FILE = CMakeFiles/so_loader.dir/loader/reimpl/ctype_patch.c.obj.d
+  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -fsigned-char -O0 -g -DDEBUG -D_DEBUG
+  INCLUDES = -I/Users/v/Repos/deadspace-vita/loader -isystem /Users/v/Repos/deadspace-vita/lib/fios -isystem /Users/v/Repos/deadspace-vita/lib/libc_bridge -isystem /Users/v/Repos/deadspace-vita/lib/sha1 -isystem /Users/v/Repos/deadspace-vita/lib/so_util -isystem /Users/v/Repos/deadspace-vita/lib/stb
+  OBJECT_DIR = CMakeFiles/so_loader.dir
+  OBJECT_FILE_DIR = CMakeFiles/so_loader.dir/loader/reimpl
+
+build CMakeFiles/so_loader.dir/loader/reimpl/env.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/deadspace-vita/loader/reimpl/env.c || cmake_object_order_depends_target_so_loader
+  DEFINES = -DDATA_PATH=\"ux0:data/baba\" -DDATA_PATH_INT=\"ux0:data/baba/assets\" -DGRAPHICS_API=0 -DSO_PATH=\"ux0:data/baba/lib/armeabi-v7a/libChowdren.so\" -D_GNU_SOURCE
   DEP_FILE = CMakeFiles/so_loader.dir/loader/reimpl/env.c.obj.d
-  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -O0 -g -DDEBUG -D_DEBUG
-  INCLUDES = -I/Users/v/Repos/baba/goo_vita/loader -isystem /Users/v/Repos/baba/goo_vita/lib/fios -isystem /Users/v/Repos/baba/goo_vita/lib/libc_bridge -isystem /Users/v/Repos/baba/goo_vita/lib/sha1 -isystem /Users/v/Repos/baba/goo_vita/lib/so_util -isystem /Users/v/Repos/baba/goo_vita/lib/stb
+  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -fsigned-char -O0 -g -DDEBUG -D_DEBUG
+  INCLUDES = -I/Users/v/Repos/deadspace-vita/loader -isystem /Users/v/Repos/deadspace-vita/lib/fios -isystem /Users/v/Repos/deadspace-vita/lib/libc_bridge -isystem /Users/v/Repos/deadspace-vita/lib/sha1 -isystem /Users/v/Repos/deadspace-vita/lib/so_util -isystem /Users/v/Repos/deadspace-vita/lib/stb
   OBJECT_DIR = CMakeFiles/so_loader.dir
   OBJECT_FILE_DIR = CMakeFiles/so_loader.dir/loader/reimpl
 
-build CMakeFiles/so_loader.dir/loader/reimpl/io.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/baba/goo_vita/loader/reimpl/io.c || cmake_object_order_depends_target_so_loader
-  DEFINES = -DDATA_PATH=\"po\" -DDATA_PATH_INT=\"po/assets\" -DDEBUG -DGRAPHICS_API=0 -DSO_PATH=\"po/libChowdren.so\" -D_GNU_SOURCE
+build CMakeFiles/so_loader.dir/loader/reimpl/io.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/deadspace-vita/loader/reimpl/io.c || cmake_object_order_depends_target_so_loader
+  DEFINES = -DDATA_PATH=\"ux0:data/baba\" -DDATA_PATH_INT=\"ux0:data/baba/assets\" -DGRAPHICS_API=0 -DSO_PATH=\"ux0:data/baba/lib/armeabi-v7a/libChowdren.so\" -D_GNU_SOURCE
   DEP_FILE = CMakeFiles/so_loader.dir/loader/reimpl/io.c.obj.d
-  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -O0 -g -DDEBUG -D_DEBUG
-  INCLUDES = -I/Users/v/Repos/baba/goo_vita/loader -isystem /Users/v/Repos/baba/goo_vita/lib/fios -isystem /Users/v/Repos/baba/goo_vita/lib/libc_bridge -isystem /Users/v/Repos/baba/goo_vita/lib/sha1 -isystem /Users/v/Repos/baba/goo_vita/lib/so_util -isystem /Users/v/Repos/baba/goo_vita/lib/stb
+  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -fsigned-char -O0 -g -DDEBUG -D_DEBUG
+  INCLUDES = -I/Users/v/Repos/deadspace-vita/loader -isystem /Users/v/Repos/deadspace-vita/lib/fios -isystem /Users/v/Repos/deadspace-vita/lib/libc_bridge -isystem /Users/v/Repos/deadspace-vita/lib/sha1 -isystem /Users/v/Repos/deadspace-vita/lib/so_util -isystem /Users/v/Repos/deadspace-vita/lib/stb
   OBJECT_DIR = CMakeFiles/so_loader.dir
   OBJECT_FILE_DIR = CMakeFiles/so_loader.dir/loader/reimpl
 
-build CMakeFiles/so_loader.dir/loader/reimpl/log.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/baba/goo_vita/loader/reimpl/log.c || cmake_object_order_depends_target_so_loader
-  DEFINES = -DDATA_PATH=\"po\" -DDATA_PATH_INT=\"po/assets\" -DDEBUG -DGRAPHICS_API=0 -DSO_PATH=\"po/libChowdren.so\" -D_GNU_SOURCE
+build CMakeFiles/so_loader.dir/loader/reimpl/log.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/deadspace-vita/loader/reimpl/log.c || cmake_object_order_depends_target_so_loader
+  DEFINES = -DDATA_PATH=\"ux0:data/baba\" -DDATA_PATH_INT=\"ux0:data/baba/assets\" -DGRAPHICS_API=0 -DSO_PATH=\"ux0:data/baba/lib/armeabi-v7a/libChowdren.so\" -D_GNU_SOURCE
   DEP_FILE = CMakeFiles/so_loader.dir/loader/reimpl/log.c.obj.d
-  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -O0 -g -DDEBUG -D_DEBUG
-  INCLUDES = -I/Users/v/Repos/baba/goo_vita/loader -isystem /Users/v/Repos/baba/goo_vita/lib/fios -isystem /Users/v/Repos/baba/goo_vita/lib/libc_bridge -isystem /Users/v/Repos/baba/goo_vita/lib/sha1 -isystem /Users/v/Repos/baba/goo_vita/lib/so_util -isystem /Users/v/Repos/baba/goo_vita/lib/stb
+  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -fsigned-char -O0 -g -DDEBUG -D_DEBUG
+  INCLUDES = -I/Users/v/Repos/deadspace-vita/loader -isystem /Users/v/Repos/deadspace-vita/lib/fios -isystem /Users/v/Repos/deadspace-vita/lib/libc_bridge -isystem /Users/v/Repos/deadspace-vita/lib/sha1 -isystem /Users/v/Repos/deadspace-vita/lib/so_util -isystem /Users/v/Repos/deadspace-vita/lib/stb
   OBJECT_DIR = CMakeFiles/so_loader.dir
   OBJECT_FILE_DIR = CMakeFiles/so_loader.dir/loader/reimpl
 
-build CMakeFiles/so_loader.dir/loader/reimpl/mem.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/baba/goo_vita/loader/reimpl/mem.c || cmake_object_order_depends_target_so_loader
-  DEFINES = -DDATA_PATH=\"po\" -DDATA_PATH_INT=\"po/assets\" -DDEBUG -DGRAPHICS_API=0 -DSO_PATH=\"po/libChowdren.so\" -D_GNU_SOURCE
+build CMakeFiles/so_loader.dir/loader/reimpl/mem.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/deadspace-vita/loader/reimpl/mem.c || cmake_object_order_depends_target_so_loader
+  DEFINES = -DDATA_PATH=\"ux0:data/baba\" -DDATA_PATH_INT=\"ux0:data/baba/assets\" -DGRAPHICS_API=0 -DSO_PATH=\"ux0:data/baba/lib/armeabi-v7a/libChowdren.so\" -D_GNU_SOURCE
   DEP_FILE = CMakeFiles/so_loader.dir/loader/reimpl/mem.c.obj.d
-  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -O0 -g -DDEBUG -D_DEBUG
-  INCLUDES = -I/Users/v/Repos/baba/goo_vita/loader -isystem /Users/v/Repos/baba/goo_vita/lib/fios -isystem /Users/v/Repos/baba/goo_vita/lib/libc_bridge -isystem /Users/v/Repos/baba/goo_vita/lib/sha1 -isystem /Users/v/Repos/baba/goo_vita/lib/so_util -isystem /Users/v/Repos/baba/goo_vita/lib/stb
+  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -fsigned-char -O0 -g -DDEBUG -D_DEBUG
+  INCLUDES = -I/Users/v/Repos/deadspace-vita/loader -isystem /Users/v/Repos/deadspace-vita/lib/fios -isystem /Users/v/Repos/deadspace-vita/lib/libc_bridge -isystem /Users/v/Repos/deadspace-vita/lib/sha1 -isystem /Users/v/Repos/deadspace-vita/lib/so_util -isystem /Users/v/Repos/deadspace-vita/lib/stb
   OBJECT_DIR = CMakeFiles/so_loader.dir
   OBJECT_FILE_DIR = CMakeFiles/so_loader.dir/loader/reimpl
 
-build CMakeFiles/so_loader.dir/loader/reimpl/pthr.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/baba/goo_vita/loader/reimpl/pthr.c || cmake_object_order_depends_target_so_loader
-  DEFINES = -DDATA_PATH=\"po\" -DDATA_PATH_INT=\"po/assets\" -DDEBUG -DGRAPHICS_API=0 -DSO_PATH=\"po/libChowdren.so\" -D_GNU_SOURCE
+build CMakeFiles/so_loader.dir/loader/reimpl/pthr.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/deadspace-vita/loader/reimpl/pthr.c || cmake_object_order_depends_target_so_loader
+  DEFINES = -DDATA_PATH=\"ux0:data/baba\" -DDATA_PATH_INT=\"ux0:data/baba/assets\" -DGRAPHICS_API=0 -DSO_PATH=\"ux0:data/baba/lib/armeabi-v7a/libChowdren.so\" -D_GNU_SOURCE
   DEP_FILE = CMakeFiles/so_loader.dir/loader/reimpl/pthr.c.obj.d
-  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -O0 -g -DDEBUG -D_DEBUG
-  INCLUDES = -I/Users/v/Repos/baba/goo_vita/loader -isystem /Users/v/Repos/baba/goo_vita/lib/fios -isystem /Users/v/Repos/baba/goo_vita/lib/libc_bridge -isystem /Users/v/Repos/baba/goo_vita/lib/sha1 -isystem /Users/v/Repos/baba/goo_vita/lib/so_util -isystem /Users/v/Repos/baba/goo_vita/lib/stb
+  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -fsigned-char -O0 -g -DDEBUG -D_DEBUG
+  INCLUDES = -I/Users/v/Repos/deadspace-vita/loader -isystem /Users/v/Repos/deadspace-vita/lib/fios -isystem /Users/v/Repos/deadspace-vita/lib/libc_bridge -isystem /Users/v/Repos/deadspace-vita/lib/sha1 -isystem /Users/v/Repos/deadspace-vita/lib/so_util -isystem /Users/v/Repos/deadspace-vita/lib/stb
   OBJECT_DIR = CMakeFiles/so_loader.dir
   OBJECT_FILE_DIR = CMakeFiles/so_loader.dir/loader/reimpl
 
-build CMakeFiles/so_loader.dir/loader/reimpl/sys.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/baba/goo_vita/loader/reimpl/sys.c || cmake_object_order_depends_target_so_loader
-  DEFINES = -DDATA_PATH=\"po\" -DDATA_PATH_INT=\"po/assets\" -DDEBUG -DGRAPHICS_API=0 -DSO_PATH=\"po/libChowdren.so\" -D_GNU_SOURCE
+build CMakeFiles/so_loader.dir/loader/reimpl/sys.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/deadspace-vita/loader/reimpl/sys.c || cmake_object_order_depends_target_so_loader
+  DEFINES = -DDATA_PATH=\"ux0:data/baba\" -DDATA_PATH_INT=\"ux0:data/baba/assets\" -DGRAPHICS_API=0 -DSO_PATH=\"ux0:data/baba/lib/armeabi-v7a/libChowdren.so\" -D_GNU_SOURCE
   DEP_FILE = CMakeFiles/so_loader.dir/loader/reimpl/sys.c.obj.d
-  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -O0 -g -DDEBUG -D_DEBUG
-  INCLUDES = -I/Users/v/Repos/baba/goo_vita/loader -isystem /Users/v/Repos/baba/goo_vita/lib/fios -isystem /Users/v/Repos/baba/goo_vita/lib/libc_bridge -isystem /Users/v/Repos/baba/goo_vita/lib/sha1 -isystem /Users/v/Repos/baba/goo_vita/lib/so_util -isystem /Users/v/Repos/baba/goo_vita/lib/stb
+  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -fsigned-char -O0 -g -DDEBUG -D_DEBUG
+  INCLUDES = -I/Users/v/Repos/deadspace-vita/loader -isystem /Users/v/Repos/deadspace-vita/lib/fios -isystem /Users/v/Repos/deadspace-vita/lib/libc_bridge -isystem /Users/v/Repos/deadspace-vita/lib/sha1 -isystem /Users/v/Repos/deadspace-vita/lib/so_util -isystem /Users/v/Repos/deadspace-vita/lib/stb
   OBJECT_DIR = CMakeFiles/so_loader.dir
   OBJECT_FILE_DIR = CMakeFiles/so_loader.dir/loader/reimpl
 
-build CMakeFiles/so_loader.dir/lib/fios/fios.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/baba/goo_vita/lib/fios/fios.c || cmake_object_order_depends_target_so_loader
-  DEFINES = -DDATA_PATH=\"po\" -DDATA_PATH_INT=\"po/assets\" -DDEBUG -DGRAPHICS_API=0 -DSO_PATH=\"po/libChowdren.so\" -D_GNU_SOURCE
+build CMakeFiles/so_loader.dir/lib/fios/fios.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/deadspace-vita/lib/fios/fios.c || cmake_object_order_depends_target_so_loader
+  DEFINES = -DDATA_PATH=\"ux0:data/baba\" -DDATA_PATH_INT=\"ux0:data/baba/assets\" -DGRAPHICS_API=0 -DSO_PATH=\"ux0:data/baba/lib/armeabi-v7a/libChowdren.so\" -D_GNU_SOURCE
   DEP_FILE = CMakeFiles/so_loader.dir/lib/fios/fios.c.obj.d
-  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -O0 -g -DDEBUG -D_DEBUG
-  INCLUDES = -I/Users/v/Repos/baba/goo_vita/loader -isystem /Users/v/Repos/baba/goo_vita/lib/fios -isystem /Users/v/Repos/baba/goo_vita/lib/libc_bridge -isystem /Users/v/Repos/baba/goo_vita/lib/sha1 -isystem /Users/v/Repos/baba/goo_vita/lib/so_util -isystem /Users/v/Repos/baba/goo_vita/lib/stb
+  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -fsigned-char -O0 -g -DDEBUG -D_DEBUG
+  INCLUDES = -I/Users/v/Repos/deadspace-vita/loader -isystem /Users/v/Repos/deadspace-vita/lib/fios -isystem /Users/v/Repos/deadspace-vita/lib/libc_bridge -isystem /Users/v/Repos/deadspace-vita/lib/sha1 -isystem /Users/v/Repos/deadspace-vita/lib/so_util -isystem /Users/v/Repos/deadspace-vita/lib/stb
   OBJECT_DIR = CMakeFiles/so_loader.dir
   OBJECT_FILE_DIR = CMakeFiles/so_loader.dir/lib/fios
 
-build CMakeFiles/so_loader.dir/lib/sha1/sha1.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/baba/goo_vita/lib/sha1/sha1.c || cmake_object_order_depends_target_so_loader
-  DEFINES = -DDATA_PATH=\"po\" -DDATA_PATH_INT=\"po/assets\" -DDEBUG -DGRAPHICS_API=0 -DSO_PATH=\"po/libChowdren.so\" -D_GNU_SOURCE
+build CMakeFiles/so_loader.dir/lib/sha1/sha1.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/deadspace-vita/lib/sha1/sha1.c || cmake_object_order_depends_target_so_loader
+  DEFINES = -DDATA_PATH=\"ux0:data/baba\" -DDATA_PATH_INT=\"ux0:data/baba/assets\" -DGRAPHICS_API=0 -DSO_PATH=\"ux0:data/baba/lib/armeabi-v7a/libChowdren.so\" -D_GNU_SOURCE
   DEP_FILE = CMakeFiles/so_loader.dir/lib/sha1/sha1.c.obj.d
-  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -O0 -g -DDEBUG -D_DEBUG
-  INCLUDES = -I/Users/v/Repos/baba/goo_vita/loader -isystem /Users/v/Repos/baba/goo_vita/lib/fios -isystem /Users/v/Repos/baba/goo_vita/lib/libc_bridge -isystem /Users/v/Repos/baba/goo_vita/lib/sha1 -isystem /Users/v/Repos/baba/goo_vita/lib/so_util -isystem /Users/v/Repos/baba/goo_vita/lib/stb
+  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -fsigned-char -O0 -g -DDEBUG -D_DEBUG
+  INCLUDES = -I/Users/v/Repos/deadspace-vita/loader -isystem /Users/v/Repos/deadspace-vita/lib/fios -isystem /Users/v/Repos/deadspace-vita/lib/libc_bridge -isystem /Users/v/Repos/deadspace-vita/lib/sha1 -isystem /Users/v/Repos/deadspace-vita/lib/so_util -isystem /Users/v/Repos/deadspace-vita/lib/stb
   OBJECT_DIR = CMakeFiles/so_loader.dir
   OBJECT_FILE_DIR = CMakeFiles/so_loader.dir/lib/sha1
 
-build CMakeFiles/so_loader.dir/lib/so_util/so_util.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/baba/goo_vita/lib/so_util/so_util.c || cmake_object_order_depends_target_so_loader
-  DEFINES = -DDATA_PATH=\"po\" -DDATA_PATH_INT=\"po/assets\" -DDEBUG -DGRAPHICS_API=0 -DSO_PATH=\"po/libChowdren.so\" -D_GNU_SOURCE
+build CMakeFiles/so_loader.dir/lib/so_util/so_util.c.obj: C_COMPILER__so_loader_Debug /Users/v/Repos/deadspace-vita/lib/so_util/so_util.c || cmake_object_order_depends_target_so_loader
+  DEFINES = -DDATA_PATH=\"ux0:data/baba\" -DDATA_PATH_INT=\"ux0:data/baba/assets\" -DGRAPHICS_API=0 -DSO_PATH=\"ux0:data/baba/lib/armeabi-v7a/libChowdren.so\" -D_GNU_SOURCE
   DEP_FILE = CMakeFiles/so_loader.dir/lib/so_util/so_util.c.obj.d
-  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -O0 -g -DDEBUG -D_DEBUG
-  INCLUDES = -I/Users/v/Repos/baba/goo_vita/loader -isystem /Users/v/Repos/baba/goo_vita/lib/fios -isystem /Users/v/Repos/baba/goo_vita/lib/libc_bridge -isystem /Users/v/Repos/baba/goo_vita/lib/sha1 -isystem /Users/v/Repos/baba/goo_vita/lib/so_util -isystem /Users/v/Repos/baba/goo_vita/lib/stb
+  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -fsigned-char -O0 -g -DDEBUG -D_DEBUG
+  INCLUDES = -I/Users/v/Repos/deadspace-vita/loader -isystem /Users/v/Repos/deadspace-vita/lib/fios -isystem /Users/v/Repos/deadspace-vita/lib/libc_bridge -isystem /Users/v/Repos/deadspace-vita/lib/sha1 -isystem /Users/v/Repos/deadspace-vita/lib/so_util -isystem /Users/v/Repos/deadspace-vita/lib/stb
   OBJECT_DIR = CMakeFiles/so_loader.dir
   OBJECT_FILE_DIR = CMakeFiles/so_loader.dir/lib/so_util
 
@@ -228,13 +238,13 @@ build CMakeFiles/so_loader.dir/lib/so_util/so_util.c.obj: C_COMPILER__so_loader_
 #############################################
 # Link the executable so_loader
 
-build so_loader: C_EXECUTABLE_LINKER__so_loader_Debug CMakeFiles/so_loader.dir/loader/main.c.obj CMakeFiles/so_loader.dir/loader/default_dynlib.c.obj CMakeFiles/so_loader.dir/loader/utils/dialog.c.obj CMakeFiles/so_loader.dir/loader/glutil.c.obj CMakeFiles/so_loader.dir/loader/jni.c.obj CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.obj CMakeFiles/so_loader.dir/loader/patch_game.c.obj CMakeFiles/so_loader.dir/loader/utils/utils.c.obj CMakeFiles/so_loader.dir/loader/reimpl/env.c.obj CMakeFiles/so_loader.dir/loader/reimpl/io.c.obj CMakeFiles/so_loader.dir/loader/reimpl/log.c.obj CMakeFiles/so_loader.dir/loader/reimpl/mem.c.obj CMakeFiles/so_loader.dir/loader/reimpl/pthr.c.obj CMakeFiles/so_loader.dir/loader/reimpl/sys.c.obj CMakeFiles/so_loader.dir/lib/fios/fios.c.obj CMakeFiles/so_loader.dir/lib/sha1/sha1.c.obj CMakeFiles/so_loader.dir/lib/so_util/so_util.c.obj | ../lib/kubridge/libkubridge_stub.a ../lib/libc_bridge/out/libSceLibcBridge_stub.a ../lib/libc_bridge/out/libSceLibcBridge_stub.a
-  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -O0 -g -DDEBUG -D_DEBUG
+build so_loader: C_EXECUTABLE_LINKER__so_loader_Debug CMakeFiles/so_loader.dir/loader/main.c.obj CMakeFiles/so_loader.dir/loader/java.io.InputStream.c.obj CMakeFiles/so_loader.dir/loader/default_dynlib.c.obj CMakeFiles/so_loader.dir/loader/utils/dialog.c.obj CMakeFiles/so_loader.dir/loader/glutil.c.obj CMakeFiles/so_loader.dir/loader/jni_fake.c.obj CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.obj CMakeFiles/so_loader.dir/loader/patch_game.c.obj CMakeFiles/so_loader.dir/loader/utils/utils.c.obj CMakeFiles/so_loader.dir/loader/reimpl/ctype_patch.c.obj CMakeFiles/so_loader.dir/loader/reimpl/env.c.obj CMakeFiles/so_loader.dir/loader/reimpl/io.c.obj CMakeFiles/so_loader.dir/loader/reimpl/log.c.obj CMakeFiles/so_loader.dir/loader/reimpl/mem.c.obj CMakeFiles/so_loader.dir/loader/reimpl/pthr.c.obj CMakeFiles/so_loader.dir/loader/reimpl/sys.c.obj CMakeFiles/so_loader.dir/lib/fios/fios.c.obj CMakeFiles/so_loader.dir/lib/sha1/sha1.c.obj CMakeFiles/so_loader.dir/lib/so_util/so_util.c.obj | ../lib/kubridge/libkubridge_stub.a ../lib/libc_bridge/out/libSceLibcBridge_stub.a ../lib/libc_bridge/out/libSceLibcBridge_stub.a
+  FLAGS = -Wl,-q -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -fsigned-char -O0 -g -DDEBUG -D_DEBUG
   LINK_FLAGS = -Wl,-z,nocopyreloc
-  LINK_LIBRARIES = -lSDL2d  -lSDL2maind  -Wl,--whole-archive  -lpthread  -Wl,--no-whole-archive  -lz  -lm  -lstdc++  -lOpenSLES  -lsndfile  -lvorbis  -lvorbisenc  -lvorbisfile  -logg  -lFLAC  -lvitaGL  -lvitashark  -lSceShaccCg_stub  -lvita2d  -lScePgf_stub  -lmathneon  ../lib/kubridge/libkubridge_stub.a  -lSceHid_stub  -lSceTouch_stub  -lSceMotion_stub  -lSceAppMgr_stub  -lSceAppUtil_stub  -lSceAudio_stub  -lSceAudioIn_stub  -lSceCommonDialog_stub  -lSceDisplay_stub  -lSceKernelDmacMgr_stub  -lSceFios2_stub  ../lib/libc_bridge/out/libSceLibcBridge_stub.a  -lSceCtrl_stub  -lSceGxm_stub  -lScePower_stub  -lSceTouch_stub  -lSceVshBridge_stub  -lSceMotion_stub  -lSceAppMgr_stub  -lSceAppUtil_stub  -lSceAudio_stub  -lSceAudioIn_stub  -lSceCommonDialog_stub  -lSceDisplay_stub  -lSceKernelDmacMgr_stub  -lSceFios2_stub  ../lib/libc_bridge/out/libSceLibcBridge_stub.a  -lSceCtrl_stub  -lSceGxm_stub  -lScePower_stub  -lSceVshBridge_stub
+  LINK_LIBRARIES = -lSDL2d  -lSDL2maind  -Wl,--whole-archive  -lpthread  -Wl,--no-whole-archive  -lz  -lm  -lstdc++  -lOpenSLES  -lsndfile  -lvorbis  -lvorbisenc  -lvorbisfile  -logg  -lFLAC  -lvitaGL  -lvitashark  -lSceShaccCgExt  -ltaihen_stub  -lSceShaccCg_stub  -lvita2d  -lScePgf_stub  -lmathneon  ../lib/kubridge/libkubridge_stub.a  -lSceHid_stub  -lSceTouch_stub  -lSceMotion_stub  -lSceAppMgr_stub  -lSceAppUtil_stub  -lSceAudio_stub  -lSceAudioIn_stub  -lSceCommonDialog_stub  -lSceDisplay_stub  -lSceKernelDmacMgr_stub  -lSceFios2_stub  ../lib/libc_bridge/out/libSceLibcBridge_stub.a  -lSceCtrl_stub  -lSceGxm_stub  -lScePower_stub  -lSceTouch_stub  -lSceVshBridge_stub  -lSceMotion_stub  -lSceAppMgr_stub  -lSceAppUtil_stub  -lSceAudio_stub  -lSceAudioIn_stub  -lSceCommonDialog_stub  -lSceDisplay_stub  -lSceKernelDmacMgr_stub  -lSceFios2_stub  ../lib/libc_bridge/out/libSceLibcBridge_stub.a  -lSceCtrl_stub  -lSceGxm_stub  -lScePower_stub  -lSceVshBridge_stub
   OBJECT_DIR = CMakeFiles/so_loader.dir
   POST_BUILD = :
-  PRE_LINK = cd /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk && cd /Users/v/Repos/baba/goo_vita && make -C lib/libc_bridge && cd /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk
+  PRE_LINK = cd /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk && cd /Users/v/Repos/deadspace-vita && make -C lib/libc_bridge && cd /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk
   TARGET_FILE = so_loader
   TARGET_PDB = so_loader.dbg
 
@@ -252,36 +262,35 @@ build send_kvdb: phony CMakeFiles/send_kvdb so_loader
 
 
 #############################################
-# Utility command for BABAISYOU.vpk-vpk
+# Utility command for reboot
 
-build BABAISYOU.vpk-vpk: phony CMakeFiles/BABAISYOU.vpk-vpk BABAISYOU.vpk BABAISYOU.vpk.out BABAISYOU.vpk_param.sfo eboot.bin-self
+build reboot: phony CMakeFiles/reboot
+
+
+#############################################
+# Utility command for DEADSPACE.vpk-vpk
+
+build DEADSPACE.vpk-vpk: phony CMakeFiles/DEADSPACE.vpk-vpk DEADSPACE.vpk DEADSPACE.vpk.out DEADSPACE.vpk_param.sfo eboot.bin-self
 
 
 #############################################
 # Utility command for send
 
-build send: phony CMakeFiles/send BABAISYOU.vpk-vpk
-
-
-#############################################
-# Custom command for CMakeFiles/reboot
-
-build CMakeFiles/reboot | ${cmake_ninja_workdir}CMakeFiles/reboot: CUSTOM_COMMAND
-  COMMAND = cd /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk && echo reboot | nc 192.168.1.17 1338
+build send: phony CMakeFiles/send DEADSPACE.vpk-vpk
 
 
 #############################################
 # Custom command for CMakeFiles/dump
 
 build CMakeFiles/dump | ${cmake_ninja_workdir}CMakeFiles/dump: CUSTOM_COMMAND
-  COMMAND = cd /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk && /Users/v/Repos/baba/goo_vita/get_dump.sh 192.168.1.17 && python3 /Users/v/Repos/vitasdk/vita-parse-core/main.py coredump so_loader
+  COMMAND = cd /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk && /Users/v/Repos/deadspace-vita/get_dump.sh 192.168.1.20 && python3 /Users/v/Repos/vitasdk/vita-parse-core/main.py coredump so_loader
 
 
 #############################################
 # Custom command for CMakeFiles/eboot.bin-self
 
 build CMakeFiles/eboot.bin-self eboot.bin | ${cmake_ninja_workdir}CMakeFiles/eboot.bin-self ${cmake_ninja_workdir}eboot.bin: CUSTOM_COMMAND eboot.bin.out || so_loader
-  COMMAND = cd /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E copy /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk/eboot.bin.out eboot.bin
+  COMMAND = cd /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E copy /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk/eboot.bin.out eboot.bin
   restat = 1
 
 
@@ -289,7 +298,7 @@ build CMakeFiles/eboot.bin-self eboot.bin | ${cmake_ninja_workdir}CMakeFiles/ebo
 # Custom command for eboot.bin.out
 
 build eboot.bin.out | ${cmake_ninja_workdir}eboot.bin.out: CUSTOM_COMMAND so_loader.velf || so_loader
-  COMMAND = cd /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk && /usr/local/vitasdk/bin/vita-make-fself -c /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk/so_loader.velf /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk/eboot.bin.out
+  COMMAND = cd /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk && /usr/local/vitasdk/bin/vita-make-fself -c /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk/so_loader.velf /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk/eboot.bin.out
   DESC = Creating SELF eboot.bin
   restat = 1
 
@@ -298,7 +307,7 @@ build eboot.bin.out | ${cmake_ninja_workdir}eboot.bin.out: CUSTOM_COMMAND so_loa
 # Custom command for so_loader.velf
 
 build so_loader.velf | ${cmake_ninja_workdir}so_loader.velf: CUSTOM_COMMAND so_loader || so_loader
-  COMMAND = cd /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk && /usr/local/vitasdk/bin/vita-elf-create /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk/so_loader /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk/so_loader.velf
+  COMMAND = cd /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk && /usr/local/vitasdk/bin/vita-elf-create /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk/so_loader /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk/so_loader.velf
   DESC = Converting to Sony ELF so_loader.velf
   restat = 1
 
@@ -307,40 +316,47 @@ build so_loader.velf | ${cmake_ninja_workdir}so_loader.velf: CUSTOM_COMMAND so_l
 # Custom command for CMakeFiles/send_kvdb
 
 build CMakeFiles/send_kvdb | ${cmake_ninja_workdir}CMakeFiles/send_kvdb: CUSTOM_COMMAND so_loader || so_loader
-  COMMAND = cd /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk && echo destroy | nc 192.168.1.17 1338 && curl -T eboot.bin ftp://192.168.1.17:1337/ux0:/app/BABAISYOU/ && echo launch ux0:/app/BABAISYOU/eboot.bin | nc 192.168.1.17 1338
+  COMMAND = cd /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk && echo destroy | nc 192.168.1.20 1338 && curl -T eboot.bin ftp://192.168.1.20:1337/ux0:/app/DEADSPACE/ && echo launch ux0:/app/DEADSPACE/eboot.bin | nc 192.168.1.20 1338
 
 
 #############################################
-# Custom command for CMakeFiles/BABAISYOU.vpk-vpk
+# Custom command for CMakeFiles/reboot
 
-build CMakeFiles/BABAISYOU.vpk-vpk BABAISYOU.vpk | ${cmake_ninja_workdir}CMakeFiles/BABAISYOU.vpk-vpk ${cmake_ninja_workdir}BABAISYOU.vpk: CUSTOM_COMMAND BABAISYOU.vpk.out || eboot.bin-self so_loader
-  COMMAND = cd /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E copy /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk/BABAISYOU.vpk.out BABAISYOU.vpk
+build CMakeFiles/reboot | ${cmake_ninja_workdir}CMakeFiles/reboot: CUSTOM_COMMAND
+  COMMAND = cd /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk && echo reboot | nc 192.168.1.20 1338
+
+
+#############################################
+# Custom command for CMakeFiles/DEADSPACE.vpk-vpk
+
+build CMakeFiles/DEADSPACE.vpk-vpk DEADSPACE.vpk | ${cmake_ninja_workdir}CMakeFiles/DEADSPACE.vpk-vpk ${cmake_ninja_workdir}DEADSPACE.vpk: CUSTOM_COMMAND DEADSPACE.vpk.out || eboot.bin-self so_loader
+  COMMAND = cd /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E copy /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk/DEADSPACE.vpk.out DEADSPACE.vpk
   restat = 1
 
 
 #############################################
-# Custom command for BABAISYOU.vpk.out
+# Custom command for DEADSPACE.vpk.out
 
-build BABAISYOU.vpk.out | ${cmake_ninja_workdir}BABAISYOU.vpk.out: CUSTOM_COMMAND BABAISYOU.vpk_param.sfo eboot.bin ../livearea/icon0.png ../livearea/default_gate.png ../livearea/bg0.png ../livearea/template.xml ../shaders || eboot.bin-self so_loader
-  COMMAND = cd /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk && /usr/local/vitasdk/bin/vita-pack-vpk -a /Users/v/Repos/baba/goo_vita/livearea/icon0.png=sce_sys/icon0.png -a /Users/v/Repos/baba/goo_vita/livearea/default_gate.png=sce_sys/livearea/contents/default_gate.png -a /Users/v/Repos/baba/goo_vita/livearea/bg0.png=sce_sys/livearea/contents/bg0.png -a /Users/v/Repos/baba/goo_vita/livearea/template.xml=sce_sys/livearea/contents/template.xml -a /Users/v/Repos/baba/goo_vita/shaders=shaders -s /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk/BABAISYOU.vpk_param.sfo -b /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk/eboot.bin /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk/BABAISYOU.vpk.out
-  DESC = Building vpk BABAISYOU.vpk
+build DEADSPACE.vpk.out | ${cmake_ninja_workdir}DEADSPACE.vpk.out: CUSTOM_COMMAND DEADSPACE.vpk_param.sfo eboot.bin ../livearea/icon0.png ../livearea/default_gate.png ../livearea/bg0.png ../livearea/template.xml ../shaders || eboot.bin-self so_loader
+  COMMAND = cd /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk && /usr/local/vitasdk/bin/vita-pack-vpk -a /Users/v/Repos/deadspace-vita/livearea/icon0.png=sce_sys/icon0.png -a /Users/v/Repos/deadspace-vita/livearea/default_gate.png=sce_sys/livearea/contents/default_gate.png -a /Users/v/Repos/deadspace-vita/livearea/bg0.png=sce_sys/livearea/contents/bg0.png -a /Users/v/Repos/deadspace-vita/livearea/template.xml=sce_sys/livearea/contents/template.xml -a /Users/v/Repos/deadspace-vita/shaders=shaders -s /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk/DEADSPACE.vpk_param.sfo -b /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk/eboot.bin /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk/DEADSPACE.vpk.out
+  DESC = Building vpk DEADSPACE.vpk
   restat = 1
 
 
 #############################################
-# Custom command for BABAISYOU.vpk_param.sfo
+# Custom command for DEADSPACE.vpk_param.sfo
 
-build BABAISYOU.vpk_param.sfo | ${cmake_ninja_workdir}BABAISYOU.vpk_param.sfo: CUSTOM_COMMAND eboot.bin || eboot.bin-self so_loader
-  COMMAND = cd /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk && /usr/local/vitasdk/bin/vita-mksfoex -d ATTRIBUTE2=12 -s APP_VER=01.10 -s TITLE_ID=BABAISYOU "Baba Is You" /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk/BABAISYOU.vpk_param.sfo
-  DESC = Generating param.sfo for BABAISYOU.vpk
+build DEADSPACE.vpk_param.sfo | ${cmake_ninja_workdir}DEADSPACE.vpk_param.sfo: CUSTOM_COMMAND eboot.bin || eboot.bin-self so_loader
+  COMMAND = cd /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk && /usr/local/vitasdk/bin/vita-mksfoex -d ATTRIBUTE2=12 -s APP_VER=01.00 -s TITLE_ID=DEADSPACE "Dead Space" /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk/DEADSPACE.vpk_param.sfo
+  DESC = Generating param.sfo for DEADSPACE.vpk
   restat = 1
 
 
 #############################################
 # Custom command for CMakeFiles/send
 
-build CMakeFiles/send | ${cmake_ninja_workdir}CMakeFiles/send: CUSTOM_COMMAND || BABAISYOU.vpk-vpk eboot.bin-self so_loader
-  COMMAND = cd /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk && echo destroy | nc 192.168.1.17 1338 && curl -T eboot.bin ftp://192.168.1.17:1337/ux0:/app/BABAISYOU/ && echo launch BABAISYOU | nc 192.168.1.17 1338
+build CMakeFiles/send | ${cmake_ninja_workdir}CMakeFiles/send: CUSTOM_COMMAND || DEADSPACE.vpk-vpk eboot.bin-self so_loader
+  COMMAND = cd /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk && echo destroy | nc 192.168.1.20 1338 && curl -T eboot.bin ftp://192.168.1.20:1337/ux0:/app/DEADSPACE/ && echo launch DEADSPACE | nc 192.168.1.20 1338
 
 # =============================================================================
 # Target aliases.
@@ -351,9 +367,9 @@ build CMakeFiles/send | ${cmake_ninja_workdir}CMakeFiles/send: CUSTOM_COMMAND ||
 # =============================================================================
 
 #############################################
-# Folder: /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk
+# Folder: /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk
 
-build all: phony so_loader eboot.bin-self BABAISYOU.vpk-vpk
+build all: phony so_loader eboot.bin-self DEADSPACE.vpk-vpk
 
 # =============================================================================
 # Built-in targets

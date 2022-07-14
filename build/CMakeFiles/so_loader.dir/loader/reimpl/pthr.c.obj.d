@@ -1,6 +1,6 @@
 CMakeFiles/so_loader.dir/loader/reimpl/pthr.c.obj: \
- /Users/v/Repos/baba/goo_vita/loader/reimpl/pthr.c \
- /Users/v/Repos/baba/goo_vita/loader/reimpl/pthr.h \
+ /Users/v/Repos/deadspace-vita/loader/reimpl/pthr.c \
+ /Users/v/Repos/deadspace-vita/loader/reimpl/pthr.h \
  /usr/local/vitasdk/arm-vita-eabi/include/pthread.h \
  /usr/local/vitasdk/arm-vita-eabi/include/pte_types.h \
  /usr/local/vitasdk/arm-vita-eabi/include/errno.h \

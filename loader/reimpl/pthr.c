@@ -30,24 +30,27 @@ static void init_static_mutex(pthread_mutex_t **mutex)
     pthread_mutex_t *mtxMem = NULL;
 
     switch ((int)*mutex) {
-        case MUTEX_TYPE_NORMAL:;
+        case MUTEX_TYPE_NORMAL: {
             pthread_mutex_t initTmpNormal = PTHREAD_MUTEX_INITIALIZER;
             mtxMem = calloc(1, sizeof(pthread_mutex_t));
             sceClibMemcpy(mtxMem, &initTmpNormal, sizeof(pthread_mutex_t));
             *mutex = mtxMem;
             break;
-        case MUTEX_TYPE_RECURSIVE:;
+        }
+        case MUTEX_TYPE_RECURSIVE: {
             pthread_mutex_t initTmpRec = PTHREAD_RECURSIVE_MUTEX_INITIALIZER;
             mtxMem = calloc(1, sizeof(pthread_mutex_t));
             sceClibMemcpy(mtxMem, &initTmpRec, sizeof(pthread_mutex_t));
             *mutex = mtxMem;
             break;
-        case MUTEX_TYPE_ERRORCHECK:;
+        }
+        case MUTEX_TYPE_ERRORCHECK: {
             pthread_mutex_t initTmpErr = PTHREAD_ERRORCHECK_MUTEX_INITIALIZER;
             mtxMem = calloc(1, sizeof(pthread_mutex_t));
             sceClibMemcpy(mtxMem, &initTmpErr, sizeof(pthread_mutex_t));
             *mutex = mtxMem;
             break;
+        }
         default:
             break;
     }
@@ -63,10 +66,19 @@ static void init_static_cond(pthread_cond_t **cond)
     }
 }
 
+static void init_static_sem(sem_t **sema)
+{
+    if (*sema == NULL) {
+        sem_t initTmp;
+        sem_t *semaMem = calloc(1, sizeof(sem_t));
+        sceClibMemcpy(semaMem, &initTmp, sizeof(sem_t));
+        *sema = semaMem;
+    }
+}
+
 int pthread_attr_destroy_soloader(pthread_attr_t **attr)
 {
-    int ret = 0;
-    ret = pthread_attr_destroy(*attr);
+    int ret = pthread_attr_destroy(*attr);
     free(*attr);
     return ret;
 }
@@ -80,8 +92,7 @@ __attribute__((unused)) int pthread_condattr_init_soloader(pthread_condattr_t **
 
 __attribute__((unused)) int pthread_condattr_destroy_soloader(pthread_condattr_t **attr)
 {
-    int ret = 0;
-    ret = pthread_condattr_destroy(*attr);
+    int ret = pthread_condattr_destroy(*attr);
     free(*attr);
     return ret;
 }
@@ -99,8 +110,7 @@ int pthread_cond_init_soloader(pthread_cond_t **cond,
 
 int pthread_cond_destroy_soloader(pthread_cond_t **cond)
 {
-    int ret = 0;
-    ret = pthread_cond_destroy(*cond);
+    int ret = pthread_cond_destroy(*cond);
     free(*cond);
     return ret;
 }
@@ -145,18 +155,21 @@ int pthread_mutexattr_settype_soloader(pthread_mutexattr_t **attr, int type)
     return pthread_mutexattr_settype(*attr, type);
 }
 
+int pthread_mutexattr_setpshared_soloader(pthread_mutexattr_t **attr, int pshared)
+{
+    return pthread_mutexattr_setpshared(*attr, pshared);
+}
+
 int pthread_mutexattr_destroy_soloader(pthread_mutexattr_t **attr)
 {
-    int ret = 0;
-    ret = pthread_mutexattr_destroy(*attr);
+    int ret = pthread_mutexattr_destroy(*attr);
     free(*attr);
     return ret;
 }
 
 int pthread_mutex_destroy_soloader(pthread_mutex_t **mutex)
 {
-    int ret = 0;
-    ret = pthread_mutex_destroy(*mutex);
+    int ret = pthread_mutex_destroy(*mutex);
     free(*mutex);
     return ret;
 }
@@ -189,7 +202,7 @@ int pthread_mutex_unlock_soloader(pthread_mutex_t **mutex)
     return pthread_mutex_unlock(*mutex);
 }
 
-int pthread_join_soloader(pthread_t *thread, void **value_ptr)
+int pthread_join_soloader(const pthread_t *thread, void **value_ptr)
 {
     return pthread_join(*thread, value_ptr);
 }
@@ -221,24 +234,24 @@ int pthread_attr_setstacksize_soloader(pthread_attr_t **attr, size_t stacksize)
     return pthread_attr_setstacksize(*attr, stacksize);
 }
 
-int pthread_setschedparam_soloader(pthread_t *thread, int policy,
+int pthread_setschedparam_soloader(const pthread_t *thread, int policy,
                                    const struct sched_param *param)
 {
     return pthread_setschedparam(*thread, policy, param);
 }
 
-int pthread_getschedparam_soloader(pthread_t *thread, int *policy,
+int pthread_getschedparam_soloader(const pthread_t *thread, int *policy,
                                    struct sched_param *param)
 {
     return pthread_getschedparam(*thread, policy, param);
 }
 
-int pthread_detach_soloader(pthread_t *thread)
+int pthread_detach_soloader(const pthread_t *thread)
 {
     return pthread_detach(*thread);
 }
 
-int pthread_equal_soloader(pthread_t *t1, pthread_t *t2)
+int pthread_equal_soloader(const pthread_t *t1, const pthread_t *t2)
 {
     return pthread_equal(*t1, *t2);
 }
@@ -253,7 +266,7 @@ pthread_t *pthread_self_soloader()
 #define MAX_TASK_COMM_LEN 16
 #endif
 
-int pthread_setname_np_soloader(pthread_t *thread, const char* thread_name) {
+int pthread_setname_np_soloader(const pthread_t *thread, const char* thread_name) {
     if (thread == 0 || thread_name == NULL) {
         return EINVAL;
     }
@@ -268,37 +281,47 @@ int pthread_setname_np_soloader(pthread_t *thread, const char* thread_name) {
     return 0;
 }
 
-int sem_destroy_soloader(sem_t * sem) {
-    fprintf(stderr, "SEMA: CALLED sem_destroy_soloader\n");
-    return sem_destroy(sem);
+int sem_destroy_soloader(sem_t ** sem) {
+    //fprintf(stderr, "SEMA: CALLED sem_destroy_soloader\n");
+    int ret = sem_destroy(*sem);
+    //printf("this free\n");
+    //free(sem);
+    //printf("this free2\n");
+    return ret;
 }
 
-int sem_getvalue_soloader (sem_t * sem, int * sval) {
-    fprintf(stderr, "SEMA: CALLED sem_getvalue_soloader\n");
-    return sem_getvalue(sem, sval);
+int sem_getvalue_soloader (sem_t ** sem, int * sval) {
+    //fprintf(stderr, "SEMA: CALLED sem_getvalue_soloader\n");
+    init_static_sem(sem);
+    return sem_getvalue(*sem, sval);
 }
 
-int sem_init_soloader (sem_t * sem, int pshared, unsigned int value) {
-    fprintf(stderr, "SEMA: CALLED sem_init_soloader\n");
-    return sem_init(sem, pshared, value);
+int sem_init_soloader (sem_t ** sem, int pshared, unsigned int value) {
+    //fprintf(stderr, "SEMA: CALLED sem_init_soloader\n");
+    init_static_sem(sem);
+    return sem_init(*sem, pshared, value);
 }
 
-int sem_post_soloader (sem_t * sem) {
-    fprintf(stderr, "SEMA: CALLED sem_post_soloader\n");
-    return sem_post(sem);
+int sem_post_soloader (sem_t ** sem) {
+    //fprintf(stderr, "SEMA: CALLED sem_post_soloader\n");
+    init_static_sem(sem);
+    return sem_post(*sem);
 }
 
-int sem_timedwait_soloader (sem_t * sem, const struct timespec * abstime) {
-    fprintf(stderr, "SEMA: CALLED sem_timedwait_soloader\n");
-    return sem_timedwait(sem, abstime);
+int sem_timedwait_soloader (sem_t ** sem, const struct timespec * abstime) {
+    //fprintf(stderr, "SEMA: CALLED sem_timedwait_soloader\n");
+    init_static_sem(sem);
+    return sem_timedwait(*sem, abstime);
 }
 
-int sem_trywait_soloader (sem_t * sem) {
-    fprintf(stderr, "SEMA: CALLED sem_trywait_soloader\n");
-    return sem_trywait(sem);
+int sem_trywait_soloader (sem_t ** sem) {
+    //fprintf(stderr, "SEMA: CALLED sem_trywait_soloader\n");
+    init_static_sem(sem);
+    return sem_trywait(*sem);
 }
 
-int sem_wait_soloader (sem_t * sem) {
-    fprintf(stderr, "SEMA: CALLED sem_wait_soloader\n");
-    return sem_wait(sem);
+int sem_wait_soloader (sem_t ** sem) {
+    //fprintf(stderr, "SEMA: CALLED sem_wait_soloader\n");
+    init_static_sem(sem);
+    return sem_wait(*sem);
 }

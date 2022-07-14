@@ -53,10 +53,10 @@ RM = /usr/local/Cellar/cmake/3.22.1/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/v/Repos/baba/goo_vita
+CMAKE_SOURCE_DIR = /Users/v/Repos/deadspace-vita
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/v/Repos/baba/goo_vita/build
+CMAKE_BINARY_DIR = /Users/v/Repos/deadspace-vita/build
 
 # Utility rule file for dump.
 
@@ -67,7 +67,7 @@ include CMakeFiles/dump.dir/compiler_depend.make
 include CMakeFiles/dump.dir/progress.make
 
 CMakeFiles/dump:
-	../get_dump.sh 192.168.1.18
+	../get_dump.sh 192.168.1.20
 	python3 /Users/v/Repos/vitasdk/vita-parse-core/main.py coredump so_loader
 
 dump: CMakeFiles/dump
@@ -83,6 +83,6 @@ CMakeFiles/dump.dir/clean:
 .PHONY : CMakeFiles/dump.dir/clean
 
 CMakeFiles/dump.dir/depend:
-	cd /Users/v/Repos/baba/goo_vita/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/v/Repos/baba/goo_vita /Users/v/Repos/baba/goo_vita /Users/v/Repos/baba/goo_vita/build /Users/v/Repos/baba/goo_vita/build /Users/v/Repos/baba/goo_vita/build/CMakeFiles/dump.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/v/Repos/deadspace-vita/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/v/Repos/deadspace-vita /Users/v/Repos/deadspace-vita /Users/v/Repos/deadspace-vita/build /Users/v/Repos/deadspace-vita/build /Users/v/Repos/deadspace-vita/build/CMakeFiles/dump.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/dump.dir/depend
 

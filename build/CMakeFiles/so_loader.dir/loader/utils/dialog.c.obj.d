@@ -1,5 +1,5 @@
 CMakeFiles/so_loader.dir/loader/utils/dialog.c.obj: \
- /Users/v/Repos/baba/goo_vita/loader/utils/dialog.c \
+ /Users/v/Repos/deadspace-vita/loader/utils/dialog.c \
  /usr/local/vitasdk/arm-vita-eabi/include/psp2/kernel/processmgr.h \
  /usr/local/vitasdk/arm-vita-eabi/include/psp2/kernel/threadmgr.h \
  /usr/local/vitasdk/arm-vita-eabi/include/psp2/types.h \
@@ -51,8 +51,8 @@ CMakeFiles/so_loader.dir/loader/utils/dialog.c.obj: \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/sched.h \
  /usr/local/vitasdk/arm-vita-eabi/include/machine/types.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/stdio.h \
- /Users/v/Repos/baba/goo_vita/loader/utils/dialog.h \
- /Users/v/Repos/baba/goo_vita/loader/utils/utils.h \
- /Users/v/Repos/baba/goo_vita/loader/config.h \
+ /Users/v/Repos/deadspace-vita/loader/utils/dialog.h \
+ /Users/v/Repos/deadspace-vita/loader/utils/utils.h \
+ /Users/v/Repos/deadspace-vita/loader/config.h \
  /usr/local/vitasdk/arm-vita-eabi/include/vitaGL.h \
  /usr/local/vitasdk/arm-vita-eabi/include/vitashark.h

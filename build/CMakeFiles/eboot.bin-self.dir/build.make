@@ -53,10 +53,10 @@ RM = /usr/local/Cellar/cmake/3.22.1/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/v/Repos/baba/goo_vita
+CMAKE_SOURCE_DIR = /Users/v/Repos/deadspace-vita
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/v/Repos/baba/goo_vita/build
+CMAKE_BINARY_DIR = /Users/v/Repos/deadspace-vita/build
 
 # Utility rule file for eboot.bin-self.
 
@@ -67,15 +67,15 @@ include CMakeFiles/eboot.bin-self.dir/compiler_depend.make
 include CMakeFiles/eboot.bin-self.dir/progress.make
 
 CMakeFiles/eboot.bin-self: eboot.bin.out
-	/usr/local/Cellar/cmake/3.22.1/bin/cmake -E copy /Users/v/Repos/baba/goo_vita/build/eboot.bin.out eboot.bin
+	/usr/local/Cellar/cmake/3.22.1/bin/cmake -E copy /Users/v/Repos/deadspace-vita/build/eboot.bin.out eboot.bin
 
 eboot.bin.out: so_loader.velf
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/v/Repos/baba/goo_vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Creating SELF eboot.bin"
-	/usr/local/vitasdk/bin/vita-make-fself -c /Users/v/Repos/baba/goo_vita/build/so_loader.velf /Users/v/Repos/baba/goo_vita/build/eboot.bin.out
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/v/Repos/deadspace-vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Creating SELF eboot.bin"
+	/usr/local/vitasdk/bin/vita-make-fself -c /Users/v/Repos/deadspace-vita/build/so_loader.velf /Users/v/Repos/deadspace-vita/build/eboot.bin.out
 
 so_loader.velf: so_loader
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/v/Repos/baba/goo_vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Converting to Sony ELF so_loader.velf"
-	/usr/local/vitasdk/bin/vita-elf-create /Users/v/Repos/baba/goo_vita/build/so_loader /Users/v/Repos/baba/goo_vita/build/so_loader.velf
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/v/Repos/deadspace-vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Converting to Sony ELF so_loader.velf"
+	/usr/local/vitasdk/bin/vita-elf-create /Users/v/Repos/deadspace-vita/build/so_loader /Users/v/Repos/deadspace-vita/build/so_loader.velf
 
 eboot.bin-self: CMakeFiles/eboot.bin-self
 eboot.bin-self: eboot.bin.out
@@ -92,6 +92,6 @@ CMakeFiles/eboot.bin-self.dir/clean:
 .PHONY : CMakeFiles/eboot.bin-self.dir/clean
 
 CMakeFiles/eboot.bin-self.dir/depend:
-	cd /Users/v/Repos/baba/goo_vita/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/v/Repos/baba/goo_vita /Users/v/Repos/baba/goo_vita /Users/v/Repos/baba/goo_vita/build /Users/v/Repos/baba/goo_vita/build /Users/v/Repos/baba/goo_vita/build/CMakeFiles/eboot.bin-self.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/v/Repos/deadspace-vita/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/v/Repos/deadspace-vita /Users/v/Repos/deadspace-vita /Users/v/Repos/deadspace-vita/build /Users/v/Repos/deadspace-vita/build /Users/v/Repos/deadspace-vita/build/CMakeFiles/eboot.bin-self.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/eboot.bin-self.dir/depend
 

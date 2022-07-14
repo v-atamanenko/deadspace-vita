@@ -1,6 +1,6 @@
 CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.obj: \
- /Users/v/Repos/baba/goo_vita/loader/utils/loading_screen.c \
- /Users/v/Repos/baba/goo_vita/loader/utils/loading_screen.h \
+ /Users/v/Repos/deadspace-vita/loader/utils/loading_screen.c \
+ /Users/v/Repos/deadspace-vita/loader/utils/loading_screen.h \
  /usr/local/vitasdk/lib/gcc/arm-vita-eabi/10.3.0/include/stdint.h \
  /usr/local/vitasdk/arm-vita-eabi/include/stdint.h \
  /usr/local/vitasdk/arm-vita-eabi/include/machine/_default_types.h \

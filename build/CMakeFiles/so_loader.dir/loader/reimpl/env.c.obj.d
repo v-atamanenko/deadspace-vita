@@ -1,5 +1,5 @@
 CMakeFiles/so_loader.dir/loader/reimpl/env.c.obj: \
- /Users/v/Repos/baba/goo_vita/loader/reimpl/env.c \
+ /Users/v/Repos/deadspace-vita/loader/reimpl/env.c \
  /usr/local/vitasdk/arm-vita-eabi/include/string.h \
  /usr/local/vitasdk/arm-vita-eabi/include/_ansi.h \
  /usr/local/vitasdk/arm-vita-eabi/include/newlib.h \
@@ -20,6 +20,18 @@ CMakeFiles/so_loader.dir/loader/reimpl/env.c.obj: \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/_locale.h \
  /usr/local/vitasdk/arm-vita-eabi/include/strings.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/string.h \
- /Users/v/Repos/baba/goo_vita/loader/reimpl/env.h \
- /Users/v/Repos/baba/goo_vita/loader/utils/utils.h \
- /Users/v/Repos/baba/goo_vita/loader/config.h
+ /Users/v/Repos/deadspace-vita/loader/reimpl/env.h \
+ /Users/v/Repos/deadspace-vita/loader/utils/utils.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/types.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/_stdint.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/select.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/_sigset.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/_timeval.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/timespec.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/_timespec.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/machine/endian.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/machine/_endian.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/_pthreadtypes.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/sched.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/machine/types.h \
+ /Users/v/Repos/deadspace-vita/loader/config.h

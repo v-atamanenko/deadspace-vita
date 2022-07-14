@@ -34,9 +34,7 @@
 #include <sys/time.h>
 
 #include <psp2/kernel/clib.h>
-
-#include <SLES/OpenSLES.h>
-#include <SLES/OpenSLES_Android.h>
+#include <dirent.h>
 
 #include "glutil.h"
 #include "libc_bridge.h"
@@ -69,551 +67,1530 @@ extern void *_ZTVN10__cxxabiv120__si_class_type_infoE;
 extern void *_ZTVN10__cxxabiv121__vmi_class_type_infoE;
 extern void *_Znwj;
 extern void *__aeabi_atexit;
+extern void *__aeabi_memclr;
+extern void *__aeabi_memcpy;
+extern void *__aeabi_memmove;
+extern void *__aeabi_memset;
+
 extern void *__cxa_atexit;
 extern void *__cxa_finalize;
 extern void *__cxa_pure_virtual;
+extern void *__cxa_call_unexpected;
+extern void *__cxa_guard_acquire;
+extern void *__cxa_guard_release;
 extern void *__gnu_unwind_frame;
 extern void *__stack_chk_fail;
 extern void *__stack_chk_guard;
+extern void *__dso_handle;
 
-static char *__ctype_ = (char *)&_ctype_; // NOLINT(cppcoreguidelines-interfaces-global-init)
 static FILE __sF_fake[0x100][3];
+
+extern const char *BIONIC_ctype_;
+extern const short *BIONIC_tolower_tab_;
+extern const short *BIONIC_toupper_tab_;
+
+int __atomic_swap(int new_value, volatile int *ptr)
+{
+    int old_value;
+    do {
+        old_value = *ptr;
+    } while (__sync_val_compare_and_swap(ptr, old_value, new_value) != old_value);
+    return old_value;
+}
+
+int __atomic_inc(volatile int *ptr)
+{
+    return __sync_fetch_and_add (ptr, 1);
+}
+
+int __atomic_dec(volatile int *ptr)
+{
+    return __sync_fetch_and_sub (ptr, 1);
+}
+
+int __atomic_cmpxchg(int old_value, int new_value, volatile int* ptr)
+{
+    /* We must return 0 on success */
+    return __sync_val_compare_and_swap(ptr, old_value, new_value) != old_value;
+}
+
+int glDrawTexfOES_tempwrap() { fprintf(stderr, "ret0d call!!! glDrawTexfOES_tempwrap\n"); return 0; }
+int glDrawTexsvOES_tempwrap() { fprintf(stderr, "ret0d call!!! glDrawTexsvOES_tempwrap\n"); return 0; }
+int glIsRenderbufferOES_tempwrap() { fprintf(stderr, "ret0d call!!! glIsRenderbufferOES_tempwrap\n"); return 0; }
+int glDrawTexxvOES_tempwrap() { fprintf(stderr, "ret0d call!!! glDrawTexxvOES_tempwrap\n"); return 0; }
+int glTexGenxvOES_tempwrap() { fprintf(stderr, "ret0d call!!! glTexGenxvOES_tempwrap\n"); return 0; }
+int glDrawTexivOES_tempwrap() { fprintf(stderr, "ret0d call!!! glDrawTexivOES_tempwrap\n"); return 0; }
+int glTexGenfOES_tempwrap() { fprintf(stderr, "ret0d call!!! glTexGenfOES_tempwrap\n"); return 0; }
+int glGetTexGenxvOES_tempwrap() { fprintf(stderr, "ret0d call!!! glGetTexGenxvOES_tempwrap\n"); return 0; }
+int glGetTexGenivOES_tempwrap() { fprintf(stderr, "ret0d call!!! glGetTexGenivOES_tempwrap\n"); return 0; }
+int glMatrixIndexPointerOES_tempwrap() { fprintf(stderr, "ret0d call!!! glMatrixIndexPointerOES_tempwrap\n"); return 0; }
+int glTexGenfvOES_tempwrap() { fprintf(stderr, "ret0d call!!! glTexGenfvOES_tempwrap\n"); return 0; }
+int glWeightPointerOES_tempwrap() { fprintf(stderr, "ret0d call!!! glWeightPointerOES_tempwrap\n"); return 0; }
+int glCurrentPaletteMatrixOES_tempwrap() { fprintf(stderr, "ret0d call!!! glCurrentPaletteMatrixOES_tempwrap\n"); return 0; }
+int glGetBufferPointervOES_tempwrap() { fprintf(stderr, "ret0d call!!! glGetBufferPointervOES_tempwrap\n"); return 0; }
+int glEGLImageTargetRenderbufferStorageOES_tempwrap() { fprintf(stderr, "ret0d call!!! glEGLImageTargetRenderbufferStorageOES_tempwrap\n"); return 0; }
+int glLoadPaletteFromModelViewMatrixOES_tempwrap() { fprintf(stderr, "ret0d call!!! glLoadPaletteFromModelViewMatrixOES_tempwrap\n"); return 0; }
+int __gnu_Unwind_Find_exidx_tempwrap() { fprintf(stderr, "ret0d call!!! __gnu_Unwind_Find_exidx_tempwrap\n"); return 0; }
+int glDrawTexsOES_tempwrap() { fprintf(stderr, "ret0d call!!! glDrawTexsOES_tempwrap\n"); return 0; }
+int __page_size_tempwrap() { fprintf(stderr, "ret0d call!!! __page_size_tempwrap\n"); return 0; }
+int glGetTexGenfvOES_tempwrap() { fprintf(stderr, "ret0d call!!! glGetTexGenfvOES_tempwrap\n"); return 0; }
+int glDrawTexiOES_tempwrap() { fprintf(stderr, "ret0d call!!! glDrawTexiOES_tempwrap\n"); return 0; }
+int glEGLImageTargetTexture2DOES_tempwrap() { fprintf(stderr, "ret0d call!!! glEGLImageTargetTexture2DOES_tempwrap\n"); return 0; }
+int glQueryMatrixxOES_tempwrap() { fprintf(stderr, "ret0d call!!! glQueryMatrixxOES_tempwrap\n"); return 0; }
+int glTexGenxOES_tempwrap() { fprintf(stderr, "ret0d call!!! glTexGenxOES_tempwrap\n"); return 0; }
+int glDrawTexxOES_tempwrap() { fprintf(stderr, "ret0d call!!! glDrawTexxOES_tempwrap\n"); return 0; }
+int glTexGenivOES_tempwrap() { fprintf(stderr, "ret0d call!!! glTexGenivOES_tempwrap\n"); return 0; }
+int glDrawTexfvOES_tempwrap() { fprintf(stderr, "ret0d call!!! glDrawTexfvOES_tempwrap\n"); return 0; }
+int glTexGeniOES_tempwrap() { fprintf(stderr, "ret0d call!!! glTexGeniOES_tempwrap\n"); return 0; }
+int glGetPointerv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetPointerv_tempwrap\n"); return 0; }
+int glCompressedTexSubImage2D_tempwrap() { fprintf(stderr, "ret0d call!!! glCompressedTexSubImage2D_tempwrap\n"); return 0; }
+int glSampleCoverage_tempwrap() { fprintf(stderr, "ret0d call!!! glSampleCoverage_tempwrap\n"); return 0; }
+int glTexParameteriv_tempwrap() { fprintf(stderr, "ret0d call!!! glTexParameteriv_tempwrap\n"); return 0; }
+int glPointSizePointerOES_tempwrap() { fprintf(stderr, "ret0d call!!! glPointSizePointerOES_tempwrap\n"); return 0; }
+int glDepthRangex_tempwrap() { fprintf(stderr, "ret0d call!!! glDepthRangex_tempwrap\n"); return 0; }
+int glLoadMatrixx_tempwrap() { fprintf(stderr, "ret0d call!!! glLoadMatrixx_tempwrap\n"); return 0; }
+int glLightf_tempwrap() { fprintf(stderr, "ret0d call!!! glLightf_tempwrap\n"); return 0; }
+int glPointSizex_tempwrap() { fprintf(stderr, "ret0d call!!! glPointSizex_tempwrap\n"); return 0; }
+int glGetLightfv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetLightfv_tempwrap\n"); return 0; }
+int glPointParameterf_tempwrap() { fprintf(stderr, "ret0d call!!! glPointParameterf_tempwrap\n"); return 0; }
+int glPointParameterxv_tempwrap() { fprintf(stderr, "ret0d call!!! glPointParameterxv_tempwrap\n"); return 0; }
+int glMultiTexCoord4x_tempwrap() { fprintf(stderr, "ret0d call!!! glMultiTexCoord4x_tempwrap\n"); return 0; }
+int glTexEnviv_tempwrap() { fprintf(stderr, "ret0d call!!! glTexEnviv_tempwrap\n"); return 0; }
+int glGetLightxv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetLightxv_tempwrap\n"); return 0; }
+int glSampleCoveragex_tempwrap() { fprintf(stderr, "ret0d call!!! glSampleCoveragex_tempwrap\n"); return 0; }
+int glMaterialx_tempwrap() { fprintf(stderr, "ret0d call!!! glMaterialx_tempwrap\n"); return 0; }
+int poll_tempwrap() { fprintf(stderr, "ret0d call!!! poll_tempwrap\n"); return 0; }
+int glPointParameterfv_tempwrap() { fprintf(stderr, "ret0d call!!! glPointParameterfv_tempwrap\n"); return 0; }
+int glPolygonOffsetx_tempwrap() { fprintf(stderr, "ret0d call!!! glPolygonOffsetx_tempwrap\n"); return 0; }
+int glTexParameterxv_tempwrap() { fprintf(stderr, "ret0d call!!! glTexParameterxv_tempwrap\n"); return 0; }
+int glFogx_tempwrap() { fprintf(stderr, "ret0d call!!! glFogx_tempwrap\n"); return 0; }
+int glGetTexParameterfv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetTexParameterfv_tempwrap\n"); return 0; }
+int __cxa_type_match_tempwrap() { fprintf(stderr, "ret0d call!!! __cxa_type_match_tempwrap\n"); return 0; }
+int glCopyTexImage2D_tempwrap() { fprintf(stderr, "ret0d call!!! glCopyTexImage2D_tempwrap\n"); return 0; }
+int glMaterialf_tempwrap() { fprintf(stderr, "ret0d call!!! glMaterialf_tempwrap\n"); return 0; }
+int glTexParameterx_tempwrap() { fprintf(stderr, "ret0d call!!! glTexParameterx_tempwrap\n"); return 0; }
+int glGetTexEnvxv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetTexEnvxv_tempwrap\n"); return 0; }
+int glOrthox_tempwrap() { fprintf(stderr, "ret0d call!!! glOrthox_tempwrap\n"); return 0; }
+int glFogxv_tempwrap() { fprintf(stderr, "ret0d call!!! glFogxv_tempwrap\n"); return 0; }
+int glGetTexParameterxv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetTexParameterxv_tempwrap\n"); return 0; }
+int glGetMaterialxv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetMaterialxv_tempwrap\n"); return 0; }
+int glGetClipPlanef_tempwrap() { fprintf(stderr, "ret0d call!!! glGetClipPlanef_tempwrap\n"); return 0; }
+int glGetFixedv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetFixedv_tempwrap\n"); return 0; }
+int glClipPlanex_tempwrap() { fprintf(stderr, "ret0d call!!! glClipPlanex_tempwrap\n"); return 0; }
+int glGetMaterialfv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetMaterialfv_tempwrap\n"); return 0; }
+int glNormal3x_tempwrap() { fprintf(stderr, "ret0d call!!! glNormal3x_tempwrap\n"); return 0; }
+int glGetTexParameteriv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetTexParameteriv_tempwrap\n"); return 0; }
+int glLightModelf_tempwrap() { fprintf(stderr, "ret0d call!!! glLightModelf_tempwrap\n"); return 0; }
+int glClipPlanef_tempwrap() { fprintf(stderr, "ret0d call!!! glClipPlanef_tempwrap\n"); return 0; }
+int glTexParameterfv_tempwrap() { fprintf(stderr, "ret0d call!!! glTexParameterfv_tempwrap\n"); return 0; }
+int glIsBuffer_tempwrap() { fprintf(stderr, "ret0d call!!! glIsBuffer_tempwrap\n"); return 0; }
+int glLineWidthx_tempwrap() { fprintf(stderr, "ret0d call!!! glLineWidthx_tempwrap\n"); return 0; }
+int glGetTexEnviv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetTexEnviv_tempwrap\n"); return 0; }
+int glGetClipPlanex_tempwrap() { fprintf(stderr, "ret0d call!!! glGetClipPlanex_tempwrap\n"); return 0; }
+int glLightx_tempwrap() { fprintf(stderr, "ret0d call!!! glLightx_tempwrap\n"); return 0; }
+int __cxa_begin_cleanup_tempwrap() { fprintf(stderr, "ret0d call!!! __cxa_begin_cleanup_tempwrap\n"); return 0; }
+int glMultiTexCoord4f_tempwrap() { fprintf(stderr, "ret0d call!!! glMultiTexCoord4f_tempwrap\n"); return 0; }
+int __isinf_tempwrap() { fprintf(stderr, "ret0d call!!! __isinf_tempwrap\n"); return 0; }
+int prctl_tempwrap() { fprintf(stderr, "ret0d call!!! prctl_tempwrap\n"); return 0; }
+int glPointParameterx_tempwrap() { fprintf(stderr, "ret0d call!!! glPointParameterx_tempwrap\n"); return 0; }
+int glGetTexEnvfv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetTexEnvfv_tempwrap\n"); return 0; }
+int glLightModelx_tempwrap() { fprintf(stderr, "ret0d call!!! glLightModelx_tempwrap\n"); return 0; }
+int glLogicOp_tempwrap() { fprintf(stderr, "ret0d call!!! glLogicOp_tempwrap\n"); return 0; }
+int sysconf_tempwrap() { fprintf(stderr, "ret0d call!!! sysconf_tempwrap\n"); return 0; }
+int setenv_ret0() { fprintf(stderr, "ret0d call!!! setenv_ret0\n"); return 0; }
+int glPixelStorei_tempwrap() { fprintf(stderr, "ret0d call!!! glPixelStorei_tempwrap\n"); return 0; }
+int glCopyTexSubImage2D_tempwrap() { fprintf(stderr, "ret0d call!!! glCopyTexSubImage2D_tempwrap\n"); return 0; }
+
+char * strstr_soloader(char *__haystack,char *__needle) {
+    fprintf(stderr, "strstr(\"%s\", \"%s\")\n", __haystack, __needle);
+
+    if (strcmp("appbundle:/", __needle) == 0) {
+        fprintf(stderr, "strstr: force NULL\n");
+        return NULL;
+    }
+
+    return strstr(__haystack, __needle);
+}
+
+
+
+void glActiveTexture_dbg(GLenum texture) {
+    fprintf(stderr, "[GL][DBG] glActiveTexture(0x%x)\n", (int)texture);
+    return glActiveTexture(texture);
+}
+
+void glAlphaFunc_dbg(GLenum func, GLfloat ref) {
+    fprintf(stderr, "[GL][DBG] glAlphaFunc(0x%x, 0x%x)\n", func, (int)ref);
+    return glAlphaFunc(func, ref);
+}
+
+void glAlphaFuncx_dbg(GLenum func, GLfixed ref) {
+    fprintf(stderr, "[GL][DBG] glAlphaFuncx(0x%x, 0x%x)\n", func, (int)ref);
+    return glAlphaFuncx(func, ref);
+}
+
+void glAttachShader_dbg(GLuint prog, GLuint shad) {
+    fprintf(stderr, "[GL][DBG] glAttachShader(0x%x, 0x%x)\n", (int)prog, (int)shad);
+    return glAttachShader(prog, shad);
+}
+
+void glBindAttribLocation_dbg(GLuint program, GLuint index, const GLchar *name) {
+    fprintf(stderr, "[GL][DBG] glBindAttribLocation(0x%x, 0x%x, 0x%x)\n", (int)program, (int)index, (int)name);
+    return glBindAttribLocation(program, index, name);
+}
+
+void glBindBuffer_dbg(GLenum target, GLuint buffer) {
+    fprintf(stderr, "[GL][DBG] glBindBuffer(0x%x, 0x%x)\n", (int)target, (int)buffer);
+    return glBindBuffer(target, buffer);
+}
+
+void glBindFramebuffer_dbg(GLenum target, GLuint framebuffer) {
+    fprintf(stderr, "[GL][DBG] glBindFramebuffer(0x%x, 0x%x)\n", (int)target, (int)framebuffer);
+    return glBindFramebuffer(target, framebuffer);
+}
+
+void glBindRenderbuffer_dbg(GLenum target, GLuint renderbuffer) {
+    fprintf(stderr, "[GL][DBG] glBindRenderbuffer(0x%x, 0x%x)\n", (int)target, (int)renderbuffer);
+    return glBindRenderbuffer(target, renderbuffer);
+}
+
+void glBindTexture_dbg(GLenum target, GLuint texture) {
+    fprintf(stderr, "[GL][DBG] glBindTexture(0x%x, 0x%x)\n", target, texture);
+    return glBindTexture(target, texture);
+}
+
+void glBlendEquation_dbg(GLenum mode) {
+    fprintf(stderr, "[GL][DBG] glBlendEquation(0x%x)\n", mode);
+    return glBlendEquation(mode);
+}
+
+void glBlendEquationSeparate_dbg(GLenum modeRGB, GLenum modeAlpha) {
+    fprintf(stderr, "[GL][DBG] glBlendEquationSeparate(0x%x, 0x%x)\n", modeRGB, modeAlpha);
+    return glBlendEquationSeparate(modeRGB, modeAlpha);
+}
+
+void glBlendFunc_dbg(GLenum sfactor, GLenum dfactor) {
+    fprintf(stderr, "[GL][DBG] glBlendFunc(0x%x, 0x%x)\n", sfactor, dfactor);
+    return glBlendFunc(sfactor, dfactor);
+}
+
+void glBlendFuncSeparate_dbg(GLenum srcRGB, GLenum dstRGB, GLenum srcAlpha, GLenum dstAlpha) {
+    fprintf(stderr, "[GL][DBG] glBlendFuncSeparate(0x%x, 0x%x, 0x%x, 0x%x)\n", srcRGB, dstRGB, srcAlpha, dstAlpha);
+    return glBlendFuncSeparate(srcRGB, dstRGB, srcAlpha, dstAlpha);
+}
+
+void glBufferData_dbg(GLenum target, GLsizei size, const GLvoid *data, GLenum usage) {
+    fprintf(stderr, "[GL][DBG] glBufferData(0x%x, 0x%x, 0x%x, 0x%x)\n", target, size, (int)data, usage);
+    return glBufferData(target, size, data, usage);
+}
+
+void glBufferSubData_dbg(GLenum target, GLintptr offset, GLsizeiptr size, const void *data) {
+    fprintf(stderr, "[GL][DBG] glBufferSubData(0x%x, 0x%x, 0x%x, 0x%x)\n", target, offset, size, (int)data);
+    return glBufferSubData(target, offset, size, data);
+}
+
+GLenum glCheckFramebufferStatus_dbg(GLenum target) {
+    fprintf(stderr, "[GL][DBG] glCheckFramebufferStatus(0x%x)\n", target);
+    return glCheckFramebufferStatus(target);
+}
+
+void glClear_dbg(GLbitfield mask) {
+    fprintf(stderr, "[GL][DBG] glClear(0x%x)\n", mask);
+    return glClear(mask);
+}
+
+void glClearColor_dbg(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) {
+    fprintf(stderr, "[GL][DBG] glClearColor(%f,%f,%f,%f)\n", red, green, blue, alpha);
+    return glClearColor(red, green, blue, alpha);
+}
+
+void glClearColorx_dbg(GLclampx red, GLclampx green, GLclampx blue, GLclampx alpha) {
+    fprintf(stderr, "[GL][DBG] glClearColorx(0x%x,0x%x,0x%x,0x%x)\n", red, green, blue, alpha);
+    return glClearColorx(red,green,blue,alpha);
+}
+
+void glClearDepthf_dbg(GLclampf depth) {
+    fprintf(stderr, "[GL][DBG] glClearDepthf(%f)\n", depth);
+    return glClearDepthf(depth);
+}
+
+void glClearDepthx_dbg(GLclampx depth) {
+    fprintf(stderr, "[GL][DBG] glClearDepthx(0x%x)\n", depth);
+    return glClearDepthx(depth);
+}
+
+void glClearStencil_dbg(GLint s) {
+    fprintf(stderr, "[GL][DBG] glClearStencil(0x%x)\n", s);
+    return glClearStencil(s);
+}
+
+void glClientActiveTexture_dbg(GLenum texture) {
+    fprintf(stderr, "[GL][DBG] glClientActiveTexture(0x%x)\n", texture);
+    return glClientActiveTexture(texture);
+}
+
+void glColor4f_dbg(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) {
+    fprintf(stderr, "[GL][DBG] glColor4f(%f, %f, %f, %f)\n",red,green,blue,alpha);
+    return glColor4f(red,green,blue,alpha);
+}
+
+void glColor4ub_dbg(GLubyte red, GLubyte green, GLubyte blue, GLubyte alpha) {
+    fprintf(stderr, "[GL][DBG] glColor4ub(0x%x,0x%x,0x%x,0x%x)\n",red,green,blue,alpha);
+    return glColor4ub(red,green,blue,alpha);
+}
+
+void glColor4x_dbg(GLfixed red, GLfixed green, GLfixed blue, GLfixed alpha) {
+    fprintf(stderr, "[GL][DBG] glColor4x(0x%x,0x%x,0x%x,0x%x)\n",red,green,blue,alpha);
+    return glColor4x(red,green,blue,alpha);
+}
+
+void glColorMask_dbg(GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha) {
+    fprintf(stderr, "[GL][DBG] glColorMask(0x%x,0x%x,0x%x,0x%x)\n",red,green,blue,alpha);
+    return glColorMask(red,green,blue,alpha);
+}
+
+void glColorPointer_dbg(GLint size, GLenum type, GLsizei stride, const GLvoid *pointer) {
+    fprintf(stderr, "[GL][DBG] glColorPointer(0x%x,0x%x,0x%x,0x%x)\n",size,type,stride,(int)pointer);
+    return glColorPointer(size,type,stride,pointer);
+}
+
+void glCompressedTexImage2D_dbg(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLint border, GLsizei imageSize, const void *data) {
+    fprintf(stderr, "[GL][DBG] glCompressedTexImage2D(0x%x,0x%x,0x%x,0x%x,0x%x,0x%x,0x%x,0x%x)\n",target, level, internalformat, width, height, border, imageSize, (int)data);
+    return glCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data);
+}
+
+GLuint glCreateProgram_dbg(void) {
+    fprintf(stderr, "[GL][DBG] glCreateProgram()\n");
+    return glCreateProgram();
+}
+
+GLuint glCreateShader_dbg(GLenum shaderType) {
+    fprintf(stderr, "[GL][DBG] glCreateShader(0x%x)\n", shaderType);
+    return glCreateShader(shaderType);
+}
+
+void glCullFace_dbg(GLenum mode) {
+    fprintf(stderr, "[GL][DBG] glCullFace(0x%x)\n", (int)mode);
+    return glCullFace(mode);
+}
+
+void glDeleteBuffers_dbg(GLsizei n, const GLuint *gl_buffers) {
+    fprintf(stderr, "[GL][DBG] glDeleteBuffers(0x%x, 0x%x)\n", n, (int)gl_buffers);
+    return glDeleteBuffers(n, gl_buffers);
+}
+
+void glDeleteFramebuffers_dbg(GLsizei n, const GLuint *framebuffers) {
+    fprintf(stderr, "[GL][DBG] glDeleteFramebuffers(0x%x, 0x%x)\n", n, (int)framebuffers);
+    return glDeleteFramebuffers(n, framebuffers);
+}
+
+
+void glDeleteRenderbuffers_dbg(GLsizei n, const GLuint *renderbuffers) {
+    fprintf(stderr, "[GL][DBG] glDeleteRenderbuffers(0x%x, 0x%x)\n", n, (int)renderbuffers);
+    return glDeleteRenderbuffers(n, renderbuffers);
+}
+
+void glDeleteTextures_dbg(GLsizei n, const GLuint *textures) {
+    fprintf(stderr, "[GL][DBG] glDeleteTextures(0x%x, 0x%x)\n", n, (int)textures);
+    return glDeleteTextures(n, textures);
+}
+
+void glDepthFunc_dbg(GLenum func) {
+    fprintf(stderr, "[GL][DBG] glDepthFunc(0x%x)\n", func);
+    return glDepthFunc(func);
+}
+
+void glDepthMask_dbg(GLboolean flag) {
+    fprintf(stderr, "[GL][DBG] glDepthMask(0x%x)\n", flag);
+    return glDepthMask(flag);
+}
+
+void glDepthRangef_dbg(GLfloat nearVal, GLfloat farVal) {
+    fprintf(stderr, "[GL][DBG] glDepthRangef(%f, %f)\n", nearVal, farVal);
+    return glDepthRangef(nearVal, farVal);
+}
+
+void glDisable_dbg(GLenum cap) {
+    fprintf(stderr, "[GL][DBG] glDisable(0x%x)\n", cap);
+    return glDisable(cap);
+}
+
+void glDisableClientState_dbg(GLenum array) {
+    fprintf(stderr, "[GL][DBG] glDisableClientState(0x%x)\n", array);
+    return glDisableClientState(array);
+}
+
+void glDrawArrays_dbg(GLenum mode, GLint first, GLsizei count) {
+    fprintf(stderr, "[GL][DBG] glDrawArrays(0x%x,0x%x,0x%x)\n", mode, first, count);
+    return glDrawArrays(mode, first, count);
+}
+
+void glDrawElements_dbg(GLenum mode, GLsizei count, GLenum type, const GLvoid *indices) {
+    fprintf(stderr, "[GL][DBG] glDrawElements(0x%x,0x%x,0x%x,0x%x)\n", mode, count, type, (int)indices);
+    return glDrawElements(mode, count, type, indices);
+}
+
+void glEnable_dbg(GLenum cap) {
+    fprintf(stderr, "[GL][DBG] glEnable(0x%x)\n", cap);
+    return glEnable(cap);
+}
+
+void glEnableClientState_dbg(GLenum array) {
+    fprintf(stderr, "[GL][DBG] glEnableClientState(0x%x)\n", array);
+    return glEnableClientState(array);
+}
+
+void glEnableVertexAttribArray_dbg(GLuint index) {
+    fprintf(stderr, "[GL][DBG] glEnableVertexAttribArray(0x%x)\n", index);
+    return glEnableVertexAttribArray(index);
+}
+
+void glFinish_dbg(void) {
+    fprintf(stderr, "[GL][DBG] glFinish()\n");
+    return glFinish();
+}
+
+void glFlush_dbg(void) {
+    fprintf(stderr, "[GL][DBG] glFlush()\n");
+    return glFlush();
+}
+
+void glFogf_dbg(GLenum pname, GLfloat param) {
+    fprintf(stderr, "[GL][DBG] glFogf(0x%x,%f)\n", pname, param);
+    return glFogf(pname, param);
+}
+
+void glFogfv_dbg(GLenum pname, const GLfloat *params) {
+    fprintf(stderr, "[GL][DBG] glFogfv(0x%x,0x%x)\n", pname, (int)params);
+    return glFogfv(pname, params);
+}
+
+void glFramebufferRenderbuffer_dbg(GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer) {
+    fprintf(stderr, "[GL][DBG] glFramebufferRenderbuffer(0x%x,0x%x,0x%x,0x%x)\n", target, attachment, renderbuffertarget, renderbuffer);
+    return glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer);
+}
+
+void glFramebufferTexture2D_dbg(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level) {
+    fprintf(stderr, "[GL][DBG] glFramebufferTexture2D(0x%x,0x%x,0x%x,0x%x,0x%x)\n", target, attachment, textarget, texture, level);
+    return glFramebufferTexture2D(target, attachment, textarget, texture, level);
+}
+
+
+void glFrontFace_dbg(GLenum mode) {
+    fprintf(stderr, "[GL][DBG] glFrontFace(0x%x)\n", mode);
+    return glFrontFace(mode);
+}
+
+void glFrustumf_dbg(GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat nearVal, GLfloat farVal) {
+    fprintf(stderr, "[GL][DBG] glFrustumf(%f,%f,%f,%f,%f,%f)\n", left, right, bottom, top, nearVal, farVal);
+    return glFrustumf(left, right, bottom, top, nearVal, farVal);
+}
+
+void glFrustumx_dbg(GLfixed left, GLfixed right, GLfixed bottom, GLfixed top, GLfixed nearVal, GLfixed farVal) {
+    fprintf(stderr, "[GL][DBG] glFrustumx(0x%x,0x%x,0x%x,0x%x,0x%x,0x%x)\n", left, right, bottom, top, nearVal, farVal);
+    return glFrustumx(left, right, bottom, top, nearVal, farVal);
+}
+
+void glGenBuffers_dbg(GLsizei n, GLuint *buffers) {
+    fprintf(stderr, "[GL][DBG] glGenBuffers(0x%x,0x%x)\n", n, (int)buffers);
+    return glGenBuffers(n, buffers);
+}
+
+void glGenFramebuffers_dbg(GLsizei n, GLuint *framebuffers) {
+    fprintf(stderr, "[GL][DBG] glGenFramebuffers(0x%x,0x%x)\n", n, (int)framebuffers);
+    return glGenFramebuffers(n, framebuffers);
+}
+
+void glGenRenderbuffers_dbg(GLsizei n, GLuint *renderbuffers) {
+    fprintf(stderr, "[GL][DBG] glGenRenderbuffers(0x%x,0x%x)\n", n, (int)renderbuffers);
+    return glGenRenderbuffers(n, renderbuffers);
+}
+
+void glGenTextures_dbg(GLsizei n, GLuint *textures) {
+    fprintf(stderr, "[GL][DBG] glGenTextures(0x%x,0x%x)\n", n, (int)textures);
+    return glGenTextures(n, textures);
+}
+
+void glGenerateMipmap_dbg(GLenum target) {
+    fprintf(stderr, "[GL][DBG] glGenerateMipmap(0x%x)\n", target);
+    return glGenerateMipmap(target);
+}
+
+void glGetBooleanv_dbg(GLenum pname, GLboolean *params) {
+    fprintf(stderr, "[GL][DBG] glGetBooleanv(0x%x,0x%x)\n", pname, (int)params);
+    return glGetBooleanv(pname, params);
+}
+
+void glGetBufferParameteriv_dbg(GLenum target, GLenum pname, GLint *params) {
+    fprintf(stderr, "[GL][DBG] glGetBufferParameteriv(0x%x,0x%x,0x%x)\n", target, pname, (int)params);
+    return glGetBufferParameteriv(target, pname, params);
+}
+
+GLenum glGetError_dbg(void) {
+    fprintf(stderr, "[GL][DBG] glGetError()\n");
+    return glGetError();
+}
+
+void glGetFloatv_dbg(GLenum pname, GLfloat *data) {
+    fprintf(stderr, "[GL][DBG] glGetFloatv(0x%x,0x%x)\n", pname, (int)data);
+    return glGetFloatv(pname, data);
+}
+
+void glGetFramebufferAttachmentParameteriv_dbg(GLenum target, GLenum attachment, GLenum pname, GLint *params) {
+    fprintf(stderr, "[GL][DBG] glGetFramebufferAttachmentParameteriv(0x%x,0x%x,0x%x,0x%x)\n", target, attachment, pname, (int)params);
+    return glGetFramebufferAttachmentParameteriv(target, attachment, pname, params);
+}
+
+void glGetIntegerv_dbg(GLenum pname, GLint *data) {
+    fprintf(stderr, "[GL][DBG] glGetIntegerv(0x%x,0x%x)\n", pname, (int)data);
+    return glGetIntegerv(pname, data);
+}
+
+void glGetProgramInfoLog_dbg(GLuint program, GLsizei maxLength, GLsizei *length, GLchar *infoLog) {
+    fprintf(stderr, "[GL][DBG] glGetProgramInfoLog(0x%x,0x%x,0x%x,0x%x)\n", program, maxLength, (int)length, (int)infoLog);
+    return glGetProgramInfoLog(program, maxLength, length, infoLog);
+}
+
+void glGetProgramiv_dbg(GLuint program, GLenum pname, GLint *params) {
+    fprintf(stderr, "[GL][DBG] glGetProgramiv(0x%x,0x%x,0x%x)\n", program, pname, (int)params);
+    return glGetProgramiv(program, pname, params);
+}
+
+void glGetShaderInfoLog_dbg(GLuint handle, GLsizei maxLength, GLsizei *length, GLchar *infoLog) {
+    fprintf(stderr, "[GL][DBG] glGetShaderInfoLog(0x%x,0x%x,0x%x,0x%x)\n", handle, maxLength, (int)length, (int)infoLog);
+    return glGetShaderInfoLog(handle, maxLength, length, infoLog);
+}
+
+void glGetShaderiv_dbg(GLuint handle, GLenum pname, GLint *params) {
+    fprintf(stderr, "[GL][DBG] glGetShaderiv(0x%x,0x%x,0x%x)\n", handle, pname, (int)params);
+    return glGetShaderiv(handle, pname, params);
+}
+
+const GLubyte *glGetString_dbg(GLenum name) {
+    fprintf(stderr, "[GL][DBG] glGetString(0x%x)\n", name);
+    return glGetString(name);
+}
+
+GLint glGetUniformLocation_dbg(GLuint prog, const GLchar *name) {
+    fprintf(stderr, "[GL][DBG] glGetUniformLocation(0x%x,0x%x)\n", prog, (int)name);
+    return glGetUniformLocation(prog, name);
+}
+
+void glHint_dbg(GLenum target, GLenum mode) {
+    fprintf(stderr, "[GL][DBG] glHint(0x%x,0x%x)\n", target, mode);
+    return glHint(target, mode);
+}
+
+GLboolean glIsEnabled_dbg(GLenum cap) {
+    fprintf(stderr, "[GL][DBG] glIsEnabled(0x%x)\n", cap);
+    return glIsEnabled(cap);
+}
+
+GLboolean glIsFramebuffer_dbg(GLuint fb) {
+    fprintf(stderr, "[GL][DBG] glIsFramebuffer(0x%x)\n", fb);
+    return glIsFramebuffer(fb);
+}
+
+GLboolean glIsTexture_dbg(GLuint texture) {
+    fprintf(stderr, "[GL][DBG] glIsTexture(0x%x)\n", texture);
+    return glIsTexture(texture);
+}
+
+void glLightModelfv_dbg(GLenum pname, const GLfloat *params) {
+    fprintf(stderr, "[GL][DBG] glLightModelfv(0x%x,0x%x)\n", pname, (int)params);
+    return glLightModelfv(pname, params);
+}
+
+void glLightModelxv_dbg(GLenum pname, const GLfixed *params) {
+    fprintf(stderr, "[GL][DBG] glLightModelxv(0x%x,0x%x)\n", pname, (int)params);
+    return glLightModelxv(pname, params);
+}
+
+void glLightfv_dbg(GLenum light, GLenum pname, const GLfloat *params) {
+    fprintf(stderr, "[GL][DBG] glLightfv(0x%x,0x%x,0x%x)\n", light, pname, (int)params);
+    return glLightfv(light, pname, params);
+}
+
+void glLightxv_dbg(GLenum light, GLenum pname, const GLfixed *params) {
+    fprintf(stderr, "[GL][DBG] glLightxv(0x%x,0x%x,0x%x)\n", light, pname, (int)params);
+    return glLightxv(light, pname, params);
+}
+
+void glLineWidth_dbg(GLfloat width) {
+    fprintf(stderr, "[GL][DBG] glLineWidth(%f)\n", width);
+    return glLineWidth(width);
+}
+
+void glLinkProgram_dbg(GLuint progr) {
+    fprintf(stderr, "[GL][DBG] glLinkProgram(0x%x)\n", progr);
+    return glLinkProgram(progr);
+}
+
+void glLoadIdentity_dbg(void) {
+    fprintf(stderr, "[GL][DBG] glLoadIdentity()\n");
+    return glLoadIdentity();
+}
+
+void glLoadMatrixf_dbg(const GLfloat *m) {
+    fprintf(stderr, "[GL][DBG] glLoadMatrixf(0x%x)\n",(int)m);
+    return glLoadMatrixf(m);
+}
+
+void *glMapBuffer_dbg(GLenum target, GLbitfield access) {
+    fprintf(stderr, "[GL][DBG] glMapBuffer(0x%x,0x%x)\n", target, access);
+    return glMapBuffer(target, access);
+}
+
+void glMaterialfv_dbg(GLenum face, GLenum pname, const GLfloat *params) {
+    fprintf(stderr, "[GL][DBG] glMaterialfv(0x%x,0x%x,0x%x)\n", face, pname, (int)params);
+    return glMaterialfv(face, pname, params);
+}
+
+void glMaterialxv_dbg(GLenum face, GLenum pname, const GLfixed *params) {
+    fprintf(stderr, "[GL][DBG] glMaterialxv(0x%x,0x%x,0x%x)\n", face, pname, (int)params);
+    return glMaterialxv(face, pname, params);
+}
+
+void glMatrixMode_dbg(GLenum mode) {
+    fprintf(stderr, "[GL][DBG] glMatrixMode(0x%x)\n", mode);
+    return glMatrixMode(mode);
+}
+
+void glMultMatrixf_dbg(const GLfloat *m) {
+    fprintf(stderr, "[GL][DBG] glMultMatrixf(0x%x)\n", (int)m);
+    return glMultMatrixf(m);
+}
+
+void glMultMatrixx_dbg(const GLfixed *m) {
+    fprintf(stderr, "[GL][DBG] glMultMatrixx(0x%x)\n", (int)m);
+    return glMultMatrixx(m);
+}
+
+void glNormal3f_dbg(GLfloat x, GLfloat y, GLfloat z) {
+    fprintf(stderr, "[GL][DBG] glNormal3f(%f,%f,%f)\n",x,y,z);
+    return glNormal3f(x,y,z);
+}
+
+void glNormalPointer_dbg(GLenum type, GLsizei stride, const void *pointer) {
+    fprintf(stderr, "[GL][DBG] glNormalPointer(0x%x,0x%x,0x%x)\n", type, stride, (int)pointer);
+    return glNormalPointer(type, stride, pointer);
+}
+
+void glOrthof_dbg(GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat nearVal, GLfloat farVal) {
+    fprintf(stderr, "[GL][DBG] glOrthof(%f, %f, %f, %f, %f, %f)\n", left, right, bottom, top, nearVal, farVal);
+    return glOrthof(left, right, bottom, top, nearVal, farVal);
+}
+
+void glPointSize_dbg(GLfloat size) {
+    fprintf(stderr, "[GL][DBG] glPointSize(%f)\n", size);
+    return glPointSize(size);
+}
+
+void glPolygonOffset_dbg(GLfloat factor, GLfloat units) {
+    fprintf(stderr, "[GL][DBG] glPolygonOffset(%f,%f)\n", factor, units);
+    return glPolygonOffset(factor, units);
+}
+
+void glPopMatrix_dbg() {
+    fprintf(stderr, "[GL][DBG] glPopMatrix()\n");
+    return glPopMatrix();
+}
+
+void glPushMatrix_dbg() {
+    fprintf(stderr, "[GL][DBG] glPushMatrix()\n");
+    return glPushMatrix();
+}
+
+void glReadPixels_dbg(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, GLvoid *data) {
+    fprintf(stderr, "[GL][DBG] glReadPixels(0x%x,0x%x,0x%x,0x%x,0x%x,0x%x,0x%x)\n", x, y, width, height, format, type, (int)data);
+    return glReadPixels(x, y, width, height, format, type, data);
+}
+
+void glRenderbufferStorage_dbg(GLenum target, GLenum internalformat, GLsizei width, GLsizei height) {
+    fprintf(stderr, "[GL][DBG] glRenderbufferStorage(0x%x,0x%x,0x%x,0x%x)\n", target, internalformat, width, height);
+    return glRenderbufferStorage(target, internalformat, width, height);
+}
+
+void glRotatef_dbg(GLfloat angle, GLfloat x, GLfloat y, GLfloat z) {
+    fprintf(stderr, "[GL][DBG] glRotatef(%f,%f,%f,%f)\n", angle, x, y, z);
+    return glRotatef(angle, x, y, z);
+}
+
+void glRotatex_dbg(GLfixed angle, GLfixed x, GLfixed y, GLfixed z) {
+    fprintf(stderr, "[GL][DBG] glRotatex(0x%x,0x%x,0x%x,0x%x)\n", angle, x, y, z);
+    return glRotatex(angle, x, y, z);
+}
+
+void glScalef_dbg(GLfloat x, GLfloat y, GLfloat z) {
+    fprintf(stderr, "[GL][DBG] glScalef(%f,%f,%f)\n", x, y, z);
+    return glScalef(x, y, z);
+}
+
+void glScalex_dbg(GLfixed x, GLfixed y, GLfixed z) {
+    fprintf(stderr, "[GL][DBG] glScalex(0x%x,0x%x,0x%x)\n", x, y, z);
+    return glScalex(x, y, z);
+}
+
+void glScissor_dbg(GLint x, GLint y, GLsizei width, GLsizei height) {
+    fprintf(stderr, "[GL][DBG] glScissor(0x%x,0x%x,0x%x,0x%x)\n", x, y, width, height);
+    return glScissor(x, y, width, height);
+}
+
+void glShadeModel_dbg(GLenum mode) {
+    fprintf(stderr, "[GL][DBG] glShadeModel(0x%x)\n", mode);
+    return glShadeModel(mode);
+}
+
+void glShaderSourceHook_dbg(GLuint shader, GLsizei count, const GLchar **string,
+                            const GLint *length) {
+    fprintf(stderr, "[GL][DBG] glShaderSourceHook(0x%x,0x%x,0x%x,0x%x)\n", shader, count, (int)string, (int)length);
+    return glShaderSourceHook(shader, count, string, length);
+}
+
+void glShaderSource_dbg(GLuint handle, GLsizei count, const GLchar *const *string, const GLint *length) {
+    fprintf(stderr, "[GL][DBG] glShaderSource(0x%x,0x%x,0x%x,0x%x)\n", handle, count, (int)string, (int)length );
+    return glShaderSource(handle, count, string, length);
+}
+
+void glStencilFunc_dbg(GLenum func, GLint ref, GLuint mask) {
+    fprintf(stderr, "[GL][DBG] glStencilFunc(0x%x,0x%x,0x%x)\n", func, ref, mask);
+    return glStencilFunc(func, ref, mask);
+}
+
+void glStencilMask_dbg(GLuint mask) {
+    fprintf(stderr, "[GL][DBG] glStencilMask(0x%x)\n", mask);
+    return glStencilMask(mask);
+}
+
+void glStencilOp_dbg(GLenum sfail, GLenum dpfail, GLenum dppass) {
+    fprintf(stderr, "[GL][DBG] glStencilOp(0x%x,0x%x,0x%x)\n", sfail, dpfail, dppass);
+    return glStencilOp(sfail, dpfail, dppass);
+}
+
+void glTexCoordPointer_dbg(GLint size, GLenum type, GLsizei stride, const GLvoid *pointer) {
+    fprintf(stderr, "[GL][DBG] glTexCoordPointer(0x%x,0x%x,0x%x,0x%x)\n", size, type, stride, (int)pointer);
+    return glTexCoordPointer(size, type, stride, pointer);
+}
+
+void glTexEnvf_dbg(GLenum target, GLenum pname, GLfloat param) {
+    fprintf(stderr, "[GL][DBG] glTexEnvf(0x%x,0x%x,0x%x)\n", target, pname, (int)param);
+    return glTexEnvf(target, pname, param);
+}
+
+void glTexEnvfv_dbg(GLenum target, GLenum pname, GLfloat *param) {
+    fprintf(stderr, "[GL][DBG] glTexEnvfv(0x%x,0x%x,0x%x)\n", target, pname, (int)param);
+    return glTexEnvfv(target, pname, param);
+}
+
+void glTexEnvi_dbg(GLenum target, GLenum pname, GLint param) {
+    fprintf(stderr, "[GL][DBG] glTexEnvi(0x%x,0x%x,0x%x)\n", target, pname, param);
+    return glTexEnvi(target, pname, param);
+}
+
+void glTexEnvx_dbg(GLenum target, GLenum pname, GLfixed param) {
+    fprintf(stderr, "[GL][DBG] glTexEnvx(0x%x,0x%x,0x%x)\n", target, pname, param);
+    return glTexEnvx(target, pname, param);
+}
+
+void glTexEnvxv_dbg(GLenum target, GLenum pname, GLfixed *param) {
+    fprintf(stderr, "[GL][DBG] glTexEnvxv(0x%x,0x%x,0x%x)\n", target, pname, (int)param);
+    return glTexEnvxv(target, pname, param);
+}
+
+void glTexImage2D_dbg(GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid *data) {
+    fprintf(stderr, "[GL][DBG] glTexImage2D(0x%x,0x%x,0x%x,0x%x,0x%x,0x%x,0x%x,0x%x,0x%x)\n", target, level, internalFormat, width, height, border, format, type, (int)data);
+    return glTexImage2D(target, level, internalFormat, width, height, border, format, type, data);
+}
+
+void glTexParameterf_dbg(GLenum target, GLenum pname, GLfloat param) {
+    fprintf(stderr, "[GL][DBG] glTexParameterf(0x%x, 0x%x, %f)\n", target, pname, param);
+    return glTexParameterf(target, pname, param);
+}
+
+void glTexParameteri_dbg(GLenum target, GLenum pname, GLint param) {
+    fprintf(stderr, "[GL][DBG] glTexParameteri(0x%x, 0x%x, 0x%x)\n", target, pname, param);
+    return glTexParameteri(target, pname, param);
+}
+
+void glTexSubImage2D_dbg(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid *pixels) {
+    fprintf(stderr, "[GL][DBG] glTexSubImage2D(0x%x,0x%x,0x%x,0x%x,0x%x,0x%x,0x%x,0x%x,0x%x)\n", target, level, xoffset, yoffset, width, height, format, type, (int)pixels);
+    return glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels);
+}
+
+void glTranslatef_dbg(GLfloat x, GLfloat y, GLfloat z) {
+    fprintf(stderr, "[GL][DBG] glTranslatef(%f,%f,%f)\n", x, y, z);
+    return glTranslatef(x, y, z);
+}
+
+void glTranslatex_dbg(GLfixed x, GLfixed y, GLfixed z) {
+    fprintf(stderr, "[GL][DBG] glTranslatex(0x%x,0x%x,0x%x)\n", x, y, z);
+    return glTranslatex(x, y, z);
+}
+
+void glUniform1f_dbg(GLint location, GLfloat v0) {
+    fprintf(stderr, "[GL][DBG] glUniform1f(0x%x, %f)\n", location, v0);
+    return glUniform1f(location, v0);
+}
+
+void glUniform1i_dbg(GLint location, GLint v0) {
+    fprintf(stderr, "[GL][DBG] glUniform1i(0x%x, 0x%x)\n", location, v0);
+    return glUniform1i(location, v0);
+}
+
+void glUniform2f_dbg(GLint location, GLfloat v0, GLfloat v1) {
+    fprintf(stderr, "[GL][DBG] glUniform2f(0x%x, %f, %f)\n", location, v0, v1);
+    return glUniform2f(location, v0, v1);
+}
+
+void glUniform4f_dbg(GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3) {
+    fprintf(stderr, "[GL][DBG] glUniform4f(0x%x, %f, %f, %f, %f)\n", location, v0, v1, v2, v3);
+    return glUniform4f(location, v0, v1, v2, v3);
+}
+
+GLboolean glUnmapBuffer_dbg(GLenum target) {
+    fprintf(stderr, "[GL][DBG] glUnmapBuffer(0x%x)\n", target);
+    return glUnmapBuffer(target);
+}
+
+void glUseProgram_dbg(GLuint program) {
+    fprintf(stderr, "[GL][DBG] glUseProgram(0x%x)\n", program);
+    return glUseProgram(program);
+}
+
+void glVertexAttribPointer_dbg(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void *pointer) {
+    fprintf(stderr, "[GL][DBG] glVertexAttribPointer(0x%x,0x%x,0x%x,0x%x,0x%x,0x%x)\n", index, size, type, normalized, stride, (int)pointer);
+    return glVertexAttribPointer(index, size, type, normalized, stride, pointer);
+}
+
+void glVertexPointer_dbg(GLint size, GLenum type, GLsizei stride, const GLvoid *pointer) {
+    fprintf(stderr, "[GL][DBG] glVertexPointer(0x%x,0x%x,0x%x,0x%x)\n", size, type, stride, (int)pointer);
+    return glVertexPointer(size, type, stride, pointer);
+}
+
+void glViewport_dbg(GLint x, GLint y, GLsizei width, GLsizei height) {
+    fprintf(stderr, "[GL][DBG] glViewport(0x%x,0x%x,0x%x,0x%x)\n", x, y, width, height);
+    return glViewport(x, y, width, height);
+}
+
+
+
+
 
 // NOLINT(cppcoreguidelines-interfaces-global-init)
 so_default_dynlib default_dynlib[SO_DYNLIB_LENGTH] = {
-    { "AAssetManager_fromJava", (uintptr_t)&retNULL},
-    { "AAssetManager_open", (uintptr_t)&AAssetManager_open},
-    { "AAsset_close", (uintptr_t)&retNULL},
-    { "AAsset_getLength", (uintptr_t)&retNULL},
-    { "AAsset_getLength64", (uintptr_t)&retNULL},
-    { "AAsset_getRemainingLength", (uintptr_t)&retNULL},
-    { "AAsset_read", (uintptr_t)&retNULL},
-    { "AAsset_seek", (uintptr_t)&retNULL},
-    { "AAsset_seek64", (uintptr_t)&retNULL},
-    { "AConfiguration_delete", (uintptr_t)&retNULL},
-    { "AConfiguration_fromAssetManager", (uintptr_t)&retNULL},
-    { "AConfiguration_getCountry", (uintptr_t)&retNULL},
-    { "AConfiguration_getLanguage", (uintptr_t)&retNULL},
-    { "AConfiguration_getUiModeType", (uintptr_t)&retNULL},
-    { "AConfiguration_new", (uintptr_t)&retNULL},
-    { "ALooper_forThread", (uintptr_t)&retNULL},
-    { "ALooper_pollAll", (uintptr_t)&retNULL},
-    { "ALooper_prepare", (uintptr_t)&retNULL},
-    { "ANativeWindow_fromSurface", (uintptr_t)&retNULL},
-    { "ANativeWindow_getHeight", (uintptr_t)&retNULL},
-    { "ANativeWindow_getWidth", (uintptr_t)&retNULL},
-    { "ANativeWindow_release", (uintptr_t)&retNULL},
-    { "ANativeWindow_setBuffersGeometry", (uintptr_t)&retNULL},
-    { "ASensorEventQueue_disableSensor", (uintptr_t)&retNULL},
-    { "ASensorEventQueue_enableSensor", (uintptr_t)&retNULL},
-    { "ASensorEventQueue_getEvents", (uintptr_t)&retNULL},
-    { "ASensorEventQueue_setEventRate", (uintptr_t)&retNULL},
-    { "ASensorManager_createEventQueue", (uintptr_t)&retNULL},
-    { "ASensorManager_destroyEventQueue", (uintptr_t)&retNULL},
-    { "ASensorManager_getInstance", (uintptr_t)&retNULL},
-    { "ASensorManager_getSensorList", (uintptr_t)&retNULL},
-    { "ASensor_getMinDelay", (uintptr_t)&retNULL},
-    { "ASensor_getName", (uintptr_t)&retNULL},
-    { "ASensor_getType", (uintptr_t)&retNULL},
-    { "SL_IID_ANDROIDSIMPLEBUFFERQUEUE", (uintptr_t)&SL_IID_ANDROIDSIMPLEBUFFERQUEUE },
-    { "SL_IID_ENGINE", (uintptr_t)&SL_IID_ENGINE },
-    { "SL_IID_PLAY", (uintptr_t)&SL_IID_PLAY },
-    { "SL_IID_RECORD", (uintptr_t)&SL_IID_RECORD },
-    { "SL_IID_VOLUME", (uintptr_t)&SL_IID_VOLUME },
-    { "_ZNSt8bad_castD1Ev", (uintptr_t)&_ZNSt8bad_castD1Ev },
-    { "_ZNSt9exceptionD2Ev", (uintptr_t)&_ZNSt9exceptionD2Ev},
-    { "_ZSt17__throw_bad_allocv", (uintptr_t)&_ZSt17__throw_bad_allocv},
-    { "_ZSt9terminatev", (uintptr_t)&_ZSt9terminatev},
-    { "_ZTISt8bad_cast", (uintptr_t)&_ZTISt8bad_cast },
-    { "_ZTISt9exception", (uintptr_t)&_ZTISt9exception },
-    { "_ZTVN10__cxxabiv117__class_type_infoE", (uintptr_t)&_ZTVN10__cxxabiv117__class_type_infoE },
-    { "_ZTVN10__cxxabiv120__si_class_type_infoE", (uintptr_t)&_ZTVN10__cxxabiv120__si_class_type_infoE },
-    { "_ZTVN10__cxxabiv121__vmi_class_type_infoE", (uintptr_t)&_ZTVN10__cxxabiv121__vmi_class_type_infoE },
-    { "_ZdaPv", (uintptr_t)&_ZdaPv},
-    { "_ZdlPv", (uintptr_t)&_ZdlPv},
-    { "_Znaj", (uintptr_t)&_Znaj},
-    { "_Znwj", (uintptr_t)&_Znwj},
-    { "__aeabi_atexit", (uintptr_t)&__aeabi_atexit },
-    { "__aeabi_memclr", (uintptr_t)&sceClibMemclr},
-    { "__aeabi_memclr4", (uintptr_t)&sceClibMemclr},
-    { "__aeabi_memclr8", (uintptr_t)&sceClibMemclr},
-    { "__aeabi_memcpy", (uintptr_t)&sceClibMemcpy },
-    { "__aeabi_memcpy4", (uintptr_t)&sceClibMemcpy},
-    { "__aeabi_memcpy8", (uintptr_t)&sceClibMemcpy},
-    { "__aeabi_memmove", (uintptr_t)&sceClibMemmove},
-    { "__aeabi_memmove4", (uintptr_t)&sceClibMemmove},
-    { "__aeabi_memmove8", (uintptr_t)&sceClibMemmove},
-    { "__aeabi_memset", (uintptr_t)&sceClibMemset},
-    { "__aeabi_memset8", (uintptr_t)&sceClibMemset},
-    { "__android_log_print", (uintptr_t)&android_log_print },
-    { "__android_log_vprint", (uintptr_t)&android_log_vprint },
-    { "__android_log_write", (uintptr_t)&android_log_write },
-    { "__assert2", (uintptr_t)&assert2},
-    { "__cxa_allocate_exception", (uintptr_t)&__cxa_allocate_exception},
-    { "__cxa_atexit", (uintptr_t)&__cxa_atexit },
-    { "__cxa_begin_catch", (uintptr_t)&__cxa_begin_catch},
-    { "__cxa_end_catch", (uintptr_t)&__cxa_end_catch},
-    { "__cxa_finalize", (uintptr_t)&__cxa_finalize },
-    { "__cxa_free_exception", (uintptr_t)&__cxa_free_exception},
-    { "__cxa_pure_virtual", (uintptr_t)&__cxa_pure_virtual },
-    { "__cxa_rethrow", (uintptr_t)&__cxa_rethrow},
-    { "__cxa_throw", (uintptr_t)&__cxa_throw},
-    { "__errno", (uintptr_t)&__errno },
-    { "__gnu_unwind_frame", (uintptr_t)&__gnu_unwind_frame },
-    { "__gxx_personality_v0", (uintptr_t)&__gxx_personality_v0},
-    { "__mmap2", (uintptr_t)&mmap},
-    { "__sF", (uintptr_t)&__sF_fake },
-    { "__stack_chk_fail", (uintptr_t)&__stack_chk_fail },
-    { "__stack_chk_guard", (uintptr_t)&__stack_chk_guard },
-    { "__system_property_get", (uintptr_t)&system_property_get},
-    { "_ctype_", (uintptr_t)&__ctype_ },
-    { "_exit", (uintptr_t)&_exit},
-    { "abort", (uintptr_t)&abort },
-    { "acos", (uintptr_t)&acos },
-    { "acosf", (uintptr_t)&acosf },
-    { "asin", (uintptr_t)&asin },
-    { "asinf", (uintptr_t)&asinf },
-    { "atan", (uintptr_t)&atan },
-    { "atan2", (uintptr_t)&atan2 },
-    { "atan2f", (uintptr_t)&atan2f },
-    { "atanf", (uintptr_t)&atanf },
-    { "atoi", (uintptr_t)&atoi },
-    { "atoll", (uintptr_t)&atoll },
-    { "bsd_signal", (uintptr_t)&signal},
-    { "bsearch", (uintptr_t)&bsearch },
-    { "btowc", (uintptr_t)&btowc },
-    { "calloc", (uintptr_t)&calloc },
-    { "ceil", (uintptr_t)&ceil },
-    { "ceilf", (uintptr_t)&ceilf },
-    { "clearerr", (uintptr_t)&clearerr },
-    { "clock_gettime", (uintptr_t)&clock_gettime_soloader },
-    { "close", (uintptr_t)&close_soloader },
-    { "connect", (uintptr_t)&connect},
-    { "cos", (uintptr_t)&cos },
-    { "cosf", (uintptr_t)&cosf },
-    { "cosh", (uintptr_t)&cosh },
-    { "crc32", (uintptr_t)&crc32 },
-    { "dlopen", (uintptr_t)&ret0 },
-    { "exit", (uintptr_t)&exit },
-    { "exp", (uintptr_t)&exp },
-    { "exp2", (uintptr_t)&exp2 },
-    { "expf", (uintptr_t)&expf },
-    { "fclose", (uintptr_t)&fclose },
-    { "fcntl", (uintptr_t)&ret0 },
-    { "fdopen", (uintptr_t)&fdopen },
-    { "feof", (uintptr_t)&feof},
-    { "ferror", (uintptr_t)&ferror },
-    { "fflush", (uintptr_t)&fflush },
-    { "fgets", (uintptr_t)&fgets },
-    { "floor", (uintptr_t)&floor },
-    { "floorf", (uintptr_t)&floorf },
-    { "fmod", (uintptr_t)&fmod },
-    { "fmodf", (uintptr_t)&fmodf },
-    { "fopen", (uintptr_t)&fopen_soloader },
-    { "fprintf", (uintptr_t)&fprintf },
-    { "fputc", (uintptr_t)&fputc },
-    { "fputs", (uintptr_t)&fputs },
-    { "fread", (uintptr_t)&fread },
-    { "free", (uintptr_t)&free },
-    { "freeaddrinfo", (uintptr_t)&freeaddrinfo},
-    { "frexp", (uintptr_t)&frexp },
-    { "frexpf", (uintptr_t)&frexpf },
-    { "fseek", (uintptr_t)&fseek },
-    { "fseeko", (uintptr_t)&fseeko_soloader },
-    { "fstat", (uintptr_t)&fstat_soloader },
-    { "ftell", (uintptr_t)&ftell },
-    { "ftello", (uintptr_t)&ftello_soloader },
-    { "funopen", (uintptr_t)&funopen},
-    { "fwrite", (uintptr_t)&fwrite },
-    { "getaddrinfo", (uintptr_t)&getaddrinfo },
-    { "getc", (uintptr_t)&getc },
-    { "getenv", (uintptr_t)&getenv_soloader },
-    { "gettimeofday", (uintptr_t)&gettimeofday },
-    { "getwc", (uintptr_t)&getwc },
+        { "__cxa_begin_cleanup", (uintptr_t)&__cxa_begin_cleanup_tempwrap },
+        { "__cxa_type_match", (uintptr_t)&__cxa_type_match_tempwrap },
+        { "__gnu_Unwind_Find_exidx", (uintptr_t)&__gnu_Unwind_Find_exidx_tempwrap },
+        { "__isinf", (uintptr_t)&__isinf_tempwrap },
+        { "__page_size", (uintptr_t)&__page_size_tempwrap },
+        { "glClipPlanef", (uintptr_t)&glClipPlanef_tempwrap },
+        { "glClipPlanex", (uintptr_t)&glClipPlanex_tempwrap },
+        { "glCopyTexSubImage2D", (uintptr_t)&glCopyTexSubImage2D_tempwrap },
+        { "glCompressedTexSubImage2D", (uintptr_t)&glCompressedTexSubImage2D_tempwrap },
+        { "glCopyTexImage2D", (uintptr_t)&glCopyTexImage2D_tempwrap },
+        { "glCurrentPaletteMatrixOES", (uintptr_t)&glCurrentPaletteMatrixOES_tempwrap },
+        { "glDepthRangex", (uintptr_t)&glDepthRangex_tempwrap },
+        { "glDrawTexfOES", (uintptr_t)&glDrawTexfOES_tempwrap },
+        { "glDrawTexfvOES", (uintptr_t)&glDrawTexfvOES_tempwrap },
+        { "glDrawTexiOES", (uintptr_t)&glDrawTexiOES_tempwrap },
+        { "glDrawTexivOES", (uintptr_t)&glDrawTexivOES_tempwrap },
+        { "glDrawTexsOES", (uintptr_t)&glDrawTexsOES_tempwrap },
+        { "glDrawTexsvOES", (uintptr_t)&glDrawTexsvOES_tempwrap },
+        { "glDrawTexxOES", (uintptr_t)&glDrawTexxOES_tempwrap },
+        { "glDrawTexxvOES", (uintptr_t)&glDrawTexxvOES_tempwrap },
+        { "glEGLImageTargetRenderbufferStorageOES", (uintptr_t)&glEGLImageTargetRenderbufferStorageOES_tempwrap },
+        { "glEGLImageTargetTexture2DOES", (uintptr_t)&glEGLImageTargetTexture2DOES_tempwrap },
+        { "glFogx", (uintptr_t)&glFogx_tempwrap },
+        { "glFogxv", (uintptr_t)&glFogxv_tempwrap },
+        { "glGetBufferPointervOES", (uintptr_t)&glGetBufferPointervOES_tempwrap },
+        { "glGetClipPlanef", (uintptr_t)&glGetClipPlanef_tempwrap },
+        { "glGetClipPlanex", (uintptr_t)&glGetClipPlanex_tempwrap },
+        { "glGetFixedv", (uintptr_t)&glGetFixedv_tempwrap },
+        { "glGetLightfv", (uintptr_t)&glGetLightfv_tempwrap },
+        { "glGetLightxv", (uintptr_t)&glGetLightxv_tempwrap },
+        { "glGetMaterialfv", (uintptr_t)&glGetMaterialfv_tempwrap },
+        { "glGetMaterialxv", (uintptr_t)&glGetMaterialxv_tempwrap },
+        { "glGetPointerv", (uintptr_t)&glGetPointerv_tempwrap },
+        { "glGetTexEnvfv", (uintptr_t)&glGetTexEnvfv_tempwrap },
+        { "glGetTexEnviv", (uintptr_t)&glGetTexEnviv_tempwrap },
+        { "glGetTexEnvxv", (uintptr_t)&glGetTexEnvxv_tempwrap },
+        { "glGetTexGenfvOES", (uintptr_t)&glGetTexGenfvOES_tempwrap },
+        { "glGetTexGenivOES", (uintptr_t)&glGetTexGenivOES_tempwrap },
+        { "glGetTexGenxvOES", (uintptr_t)&glGetTexGenxvOES_tempwrap },
+        { "glGetTexParameterfv", (uintptr_t)&glGetTexParameterfv_tempwrap },
+        { "glGetTexParameteriv", (uintptr_t)&glGetTexParameteriv_tempwrap },
+        { "glGetTexParameterxv", (uintptr_t)&glGetTexParameterxv_tempwrap },
+        { "glIsBuffer", (uintptr_t)&glIsBuffer_tempwrap },
+        { "glIsRenderbufferOES", (uintptr_t)&glIsRenderbufferOES_tempwrap },
+        { "glLightModelf", (uintptr_t)&glLightModelf_tempwrap },
+        { "glLightModelx", (uintptr_t)&glLightModelx_tempwrap },
+        { "glLightf", (uintptr_t)&glLightf_tempwrap },
+        { "glLightx", (uintptr_t)&glLightx_tempwrap },
+        { "glLineWidthx", (uintptr_t)&glLineWidthx_tempwrap },
+        { "glLoadMatrixx", (uintptr_t)&glLoadMatrixx_tempwrap },
+        { "glLoadPaletteFromModelViewMatrixOES", (uintptr_t)&glLoadPaletteFromModelViewMatrixOES_tempwrap },
+        { "glLogicOp", (uintptr_t)&glLogicOp_tempwrap },
+        { "glMaterialf", (uintptr_t)&glMaterialf_tempwrap },
+        { "glMaterialx", (uintptr_t)&glMaterialx_tempwrap },
+        { "glMatrixIndexPointerOES", (uintptr_t)&glMatrixIndexPointerOES_tempwrap },
+        { "glMultiTexCoord4f", (uintptr_t)&glMultiTexCoord4f_tempwrap },
+        { "glMultiTexCoord4x", (uintptr_t)&glMultiTexCoord4x_tempwrap },
+        { "glNormal3x", (uintptr_t)&glNormal3x_tempwrap },
+        { "glOrthox", (uintptr_t)&glOrthox_tempwrap },
+        { "glPixelStorei", (uintptr_t)&glPixelStorei_tempwrap},
+        { "glPointParameterf", (uintptr_t)&glPointParameterf_tempwrap },
+        { "glPointParameterfv", (uintptr_t)&glPointParameterfv_tempwrap },
+        { "glPointParameterx", (uintptr_t)&glPointParameterx_tempwrap },
+        { "glPointParameterxv", (uintptr_t)&glPointParameterxv_tempwrap },
+        { "glPointSizePointerOES", (uintptr_t)&glPointSizePointerOES_tempwrap },
+        { "glPointSizex", (uintptr_t)&glPointSizex_tempwrap },
+        { "glPolygonOffsetx", (uintptr_t)&glPolygonOffsetx_tempwrap },
+        { "glQueryMatrixxOES", (uintptr_t)&glQueryMatrixxOES_tempwrap },
+        { "glSampleCoverage", (uintptr_t)&glSampleCoverage_tempwrap },
+        { "glSampleCoveragex", (uintptr_t)&glSampleCoveragex_tempwrap },
+        { "glTexEnviv", (uintptr_t)&glTexEnviv_tempwrap },
+        { "glTexGenfOES", (uintptr_t)&glTexGenfOES_tempwrap },
+        { "glTexGenfvOES", (uintptr_t)&glTexGenfvOES_tempwrap },
+        { "glTexGeniOES", (uintptr_t)&glTexGeniOES_tempwrap },
+        { "glTexGenivOES", (uintptr_t)&glTexGenivOES_tempwrap },
+        { "glTexGenxOES", (uintptr_t)&glTexGenxOES_tempwrap },
+        { "glTexGenxvOES", (uintptr_t)&glTexGenxvOES_tempwrap },
+        { "glTexParameterfv", (uintptr_t)&glTexParameterfv_tempwrap },
+        { "glTexParameteriv", (uintptr_t)&glTexParameteriv_tempwrap },
+        { "glTexParameterx", (uintptr_t)&glTexParameterx_tempwrap },
+        { "glTexParameterxv", (uintptr_t)&glTexParameterxv_tempwrap },
+        { "glWeightPointerOES", (uintptr_t)&glWeightPointerOES_tempwrap },
+        { "poll", (uintptr_t)&poll_tempwrap },
+        { "prctl", (uintptr_t)&prctl_tempwrap },
 
-#ifdef DEBUG_GL
-    { "glActiveTexture", (uintptr_t)&glActiveTexture_dbg},
-    { "glAttachShader", (uintptr_t)&glAttachShader_dbg},
-    { "glBindAttribLocation", (uintptr_t)&glBindAttribLocation_dbg},
-    { "glBindBuffer", (uintptr_t)&glBindBuffer_dbg },
-    { "glBindFramebuffer", (uintptr_t)&glBindFramebuffer_dbg},
-    { "glBindTexture", (uintptr_t)&glBindTexture_dbg },
-    { "glBlendEquationSeparate", (uintptr_t)&glBlendEquationSeparate_dbg},
-    { "glBlendFunc", (uintptr_t)&glBlendFunc_dbg },
-    { "glBlendFuncSeparate", (uintptr_t)&glBlendFuncSeparate_dbg},
-    { "glBufferData", (uintptr_t)&glBufferData_dbg },
-    { "glClear", (uintptr_t)&glClear_dbg },
-    { "glClearColor", (uintptr_t)&glClearColor_dbg },
-#if GRAPHICS_API == GRAPHICS_API_PVR
-    { "glClearDepthf", (uintptr_t)&glClearDepthf_sfp },
-#else
-    { "glClearDepthf", (uintptr_t)&glClearDepthf_dbg },
-#endif
-    { "glCompileShader", (uintptr_t)&glCompileShader_dbg},
-    { "glCompressedTexImage2D", (uintptr_t)&glCompressedTexImage2D_dbg },
-#if GRAPHICS_API == GRAPHICS_API_PVR
-    { "glCopyTexSubImage2D", (uintptr_t)&glCopyTexSubImage2D },
-#else
-    { "glCopyTexSubImage2D", (uintptr_t)&glCopyTexSubImage2D_dbg },
-#endif
-    { "glCreateProgram", (uintptr_t)&glCreateProgram_dbg},
-    { "glCreateShader", (uintptr_t)&glCreateShader_dbg},
-    { "glDeleteBuffers", (uintptr_t)&glDeleteBuffers_dbg },
-    { "glDeleteFramebuffers", (uintptr_t)&glDeleteFramebuffers_dbg},
-    { "glDeleteTextures", (uintptr_t)&glDeleteTextures_dbg },
-    { "glDepthFunc", (uintptr_t)&glDepthFunc_dbg },
-    { "glDepthMask", (uintptr_t)&glDepthMask_dbg },
-#if GRAPHICS_API == GRAPHICS_API_PVR
-    { "glDepthRangef", (uintptr_t) &glDepthRangef_sfp },
-    { "glDetachShader", (uintptr_t)&glDetachShader},
-#else
-    { "glDepthRangef", (uintptr_t) &glDepthRangef_dbg },
-    { "glDetachShader", (uintptr_t)&glDetachShader_dbg},
-#endif
-    { "glDisable", (uintptr_t)&glDisable_dbg },
-    { "glDrawArrays", (uintptr_t)&glDrawArrays_dbg},
-    { "glDrawElements", (uintptr_t)&glDrawElements_dbg },
-    { "glEnable", (uintptr_t)&glEnable_dbg },
-    { "glEnableVertexAttribArray", (uintptr_t)&glEnableVertexAttribArray_dbg},
-    { "glFramebufferTexture2D", (uintptr_t)&glFramebufferTexture2D_dbg},
-    { "glGenBuffers", (uintptr_t)&glGenBuffers_dbg },
-    { "glGenFramebuffers", (uintptr_t)&glGenFramebuffers_dbg},
-    { "glGenTextures", (uintptr_t)&glGenTextures_dbg },
-    { "glGetError", (uintptr_t)&glGetError_dbg },
-    { "glGetIntegerv", (uintptr_t)&glGetIntegerv_dbg},
-    { "glGetProgramInfoLog", (uintptr_t)&glGetProgramInfoLog_dbg},
-    { "glGetProgramiv", (uintptr_t)&glGetProgramiv_dbg},
-    { "glGetShaderInfoLog", (uintptr_t)&glGetShaderInfoLog_dbg},
-    { "glGetShaderiv", (uintptr_t)&glGetShaderiv_dbg},
-    { "glGetString", (uintptr_t)&glGetString_dbg},
-    { "glGetUniformLocation", (uintptr_t)&glGetUniformLocation_dbg},
-    { "glLinkProgram", (uintptr_t)&glLinkProgram_dbg},
-#if GRAPHICS_API == GRAPHICS_API_PVR
-    { "glPixelStorei", (uintptr_t)&glPixelStorei },
-    { "glShaderSource", (uintptr_t)&glShaderSource_dbg},
-#else
-    { "glPixelStorei", (uintptr_t)&glPixelStorei_dbg},
-    { "glShaderSource", (uintptr_t)&glShaderSourceHook},
-#endif
-    { "glShaderSource", (uintptr_t)&glShaderSource_dbg},
-    { "glTexImage2D", (uintptr_t)&glTexImage2D_dbg },
-    { "glTexParameteri", (uintptr_t)&glTexParameteri_dbg },
-    { "glTexSubImage2D", (uintptr_t)&glTexSubImage2D_dbg },
-#if GRAPHICS_API == GRAPHICS_API_PVR
-    { "glUniform1f", (uintptr_t)&glUniform1f_sfp},
-    { "glUniform2f", (uintptr_t)&glUniform2f_sfp},
-    { "glUniform4f", (uintptr_t)&glUniform4f_sfp},
-#else
-    { "glUniform1f", (uintptr_t)&glUniform1f_dbg},
-    { "glUniform2f", (uintptr_t)&glUniform2f_dbg},
-    { "glUniform4f", (uintptr_t)&glUniform4f_dbg},
-#endif
-    { "glUniform1i", (uintptr_t)&glUniform1i_dbg},
-    { "glUseProgram", (uintptr_t)&glUseProgram_dbg},
-    { "glVertexAttribPointer", (uintptr_t)&glVertexAttribPointer_dbg},
-    { "glViewport", (uintptr_t)&glViewport_dbg },
-#else // DEBUG_GL
-    { "glActiveTexture", (uintptr_t)&glActiveTexture},
-    { "glAttachShader", (uintptr_t)&glAttachShader},
-    { "glBindAttribLocation", (uintptr_t)&glBindAttribLocation},
-    { "glBindBuffer", (uintptr_t)&glBindBuffer },
-    { "glBindFramebuffer", (uintptr_t)&glBindFramebuffer},
-    { "glBindTexture", (uintptr_t)&glBindTexture },
-    { "glBlendEquationSeparate", (uintptr_t)&glBlendEquationSeparate},
-    { "glBlendFunc", (uintptr_t)&glBlendFunc },
-    { "glBlendFuncSeparate", (uintptr_t)&glBlendFuncSeparate},
-    { "glBufferData", (uintptr_t)&glBufferData },
-    { "glClear", (uintptr_t)&glClear },
-    { "glClearColor", (uintptr_t)&glClearColor },
-#if GRAPHICS_API == GRAPHICS_API_PVR
-    { "glClearDepthf", (uintptr_t)&glClearDepthf_sfp },
-#else
-    { "glClearDepthf", (uintptr_t)&glClearDepthf },
-#endif
-    { "glCompileShader", (uintptr_t)&ret0},
-    { "glCompressedTexImage2D", (uintptr_t)&glCompressedTexImage2D },
-#if GRAPHICS_API == GRAPHICS_API_PVR
-    { "glCopyTexSubImage2D", (uintptr_t)&glCopyTexSubImage2D },
-#else
-    { "glCopyTexSubImage2D", (uintptr_t)&ret0 },
-#endif
-    { "glCreateProgram", (uintptr_t)&glCreateProgram},
-    { "glCreateShader", (uintptr_t)&glCreateShader},
-    { "glDeleteBuffers", (uintptr_t)&glDeleteBuffers },
-    { "glDeleteFramebuffers", (uintptr_t)&glDeleteFramebuffers},
-    { "glDeleteTextures", (uintptr_t)&glDeleteTextures },
-    { "glDepthFunc", (uintptr_t)&glDepthFunc },
-    { "glDepthMask", (uintptr_t)&glDepthMask },
-#if GRAPHICS_API == GRAPHICS_API_PVR
-    { "glDepthRangef", (uintptr_t) &glDepthRangef_sfp },
-    { "glDetachShader", (uintptr_t)&glDetachShader},
-#else
-    { "glDepthRangef", (uintptr_t) &glDepthRangef },
-    { "glDetachShader", (uintptr_t)&ret0},
-#endif
-    { "glDisable", (uintptr_t)&glDisable },
-    { "glDrawArrays", (uintptr_t)&glDrawArrays},
-    { "glDrawElements", (uintptr_t)&glDrawElements },
-    { "glEnable", (uintptr_t)&glEnable },
-    { "glEnableVertexAttribArray", (uintptr_t)&glEnableVertexAttribArray},
-    { "glFramebufferTexture2D", (uintptr_t)&glFramebufferTexture2D},
-    { "glGenBuffers", (uintptr_t)&glGenBuffers },
-    { "glGenFramebuffers", (uintptr_t)&glGenFramebuffers},
-    { "glGenTextures", (uintptr_t)&glGenTextures },
-    { "glGetError", (uintptr_t)&glGetError },
-    { "glGetIntegerv", (uintptr_t)&glGetIntegerv},
-    { "glGetProgramInfoLog", (uintptr_t)&glGetProgramInfoLog},
-    { "glGetProgramiv", (uintptr_t)&glGetProgramiv},
-    { "glGetShaderInfoLog", (uintptr_t)&glGetShaderInfoLog},
-    { "glGetShaderiv", (uintptr_t)&glGetShaderiv},
-    { "glGetString", (uintptr_t)&glGetString},
-    { "glGetUniformLocation", (uintptr_t)&glGetUniformLocation},
-    { "glLinkProgram", (uintptr_t)&glLinkProgram},
-#if GRAPHICS_API == GRAPHICS_API_PVR
-    { "glPixelStorei", (uintptr_t)&glPixelStorei },
-    { "glShaderSource", (uintptr_t)&glShaderSource},
-#else
-    { "glPixelStorei", (uintptr_t)&ret0},
-    { "glShaderSource", (uintptr_t)&glShaderSourceHook},
-#endif
-    { "glShaderSource", (uintptr_t)&glShaderSource},
-    { "glTexImage2D", (uintptr_t)&glTexImage2D },
-    { "glTexParameteri", (uintptr_t)&glTexParameteri },
-    { "glTexSubImage2D", (uintptr_t)&glTexSubImage2D },
-#if GRAPHICS_API == GRAPHICS_API_PVR
-    { "glUniform1f", (uintptr_t)&glUniform1f_sfp},
-    { "glUniform2f", (uintptr_t)&glUniform2f_sfp},
-    { "glUniform4f", (uintptr_t)&glUniform4f_sfp},
-#else
-    { "glUniform1f", (uintptr_t)&glUniform1f},
-    { "glUniform2f", (uintptr_t)&glUniform2f},
-    { "glUniform4f", (uintptr_t)&glUniform4f},
-#endif
-    { "glUniform1i", (uintptr_t)&glUniform1i},
-    { "glUseProgram", (uintptr_t)&glUseProgram},
-    { "glVertexAttribPointer", (uintptr_t)&glVertexAttribPointer},
-    { "glViewport", (uintptr_t)&glViewport },
-#endif // DEBUG_GL
+        { "_toupper_tab_", (uintptr_t)&BIONIC_toupper_tab_ },
+        { "_tolower_tab_", (uintptr_t)&BIONIC_tolower_tab_ },
+        { "_ZNSt8bad_castD1Ev", (uintptr_t)&_ZNSt8bad_castD1Ev },
+        { "_ZNSt9exceptionD2Ev", (uintptr_t)&_ZNSt9exceptionD2Ev},
+        { "_ZSt17__throw_bad_allocv", (uintptr_t)&_ZSt17__throw_bad_allocv},
+        { "_ZSt9terminatev", (uintptr_t)&_ZSt9terminatev},
+        { "_ZTISt8bad_cast", (uintptr_t)&_ZTISt8bad_cast },
+        { "_ZTISt9exception", (uintptr_t)&_ZTISt9exception },
+        { "_ZTVN10__cxxabiv117__class_type_infoE", (uintptr_t)&_ZTVN10__cxxabiv117__class_type_infoE },
+        { "_ZTVN10__cxxabiv120__si_class_type_infoE", (uintptr_t)&_ZTVN10__cxxabiv120__si_class_type_infoE },
+        { "_ZTVN10__cxxabiv121__vmi_class_type_infoE", (uintptr_t)&_ZTVN10__cxxabiv121__vmi_class_type_infoE },
+        { "_ZdaPv", (uintptr_t)&_ZdaPv},
+        { "_ZdlPv", (uintptr_t)&_ZdlPv},
+        { "_Znaj", (uintptr_t)&_Znaj},
+        { "_Znwj", (uintptr_t)&_Znwj},
+        { "__aeabi_atexit", (uintptr_t)&__aeabi_atexit },
+        { "__aeabi_memclr", (uintptr_t)&__aeabi_memclr},
+        { "__aeabi_memclr4", (uintptr_t)&__aeabi_memclr},
+        { "__aeabi_memclr8", (uintptr_t)&__aeabi_memclr},
+        { "__aeabi_memcpy", (uintptr_t)&__aeabi_memcpy },
+        { "__aeabi_memcpy4", (uintptr_t)&__aeabi_memcpy},
+        { "__aeabi_memcpy8", (uintptr_t)&__aeabi_memcpy},
+        { "__aeabi_memmove", (uintptr_t)&__aeabi_memmove},
+        { "__aeabi_memmove4", (uintptr_t)&__aeabi_memmove},
+        { "__aeabi_memmove8", (uintptr_t)&__aeabi_memmove},
+        { "__aeabi_memset", (uintptr_t)&__aeabi_memset},
+        { "__aeabi_memset8", (uintptr_t)&__aeabi_memset},
+        { "__android_log_print", (uintptr_t)&android_log_print },
+        { "__android_log_vprint", (uintptr_t)&android_log_vprint },
+        { "__android_log_write", (uintptr_t)&android_log_write },
+        { "__assert2", (uintptr_t)&assert2},
+        { "__atomic_cmpxchg", (uintptr_t)&__atomic_cmpxchg },
+        { "__atomic_dec", (uintptr_t)&__atomic_dec },
+        { "__atomic_inc", (uintptr_t)&__atomic_inc},
+        { "__atomic_swap", (uintptr_t)&__atomic_swap},
+        { "__cxa_allocate_exception", (uintptr_t)&__cxa_allocate_exception},
+        { "__cxa_atexit", (uintptr_t)&__cxa_atexit },
+        { "__cxa_begin_catch", (uintptr_t)&__cxa_begin_catch},
+        { "__cxa_call_unexpected", (uintptr_t)&__cxa_call_unexpected},
+        { "__cxa_end_catch", (uintptr_t)&__cxa_end_catch},
+        { "__cxa_finalize", (uintptr_t)&__cxa_finalize },
+        { "__cxa_free_exception", (uintptr_t)&__cxa_free_exception},
+        { "__cxa_guard_acquire", (uintptr_t)&__cxa_guard_acquire},
+        { "__cxa_guard_release", (uintptr_t)&__cxa_guard_release},
+        { "__cxa_pure_virtual", (uintptr_t)&__cxa_pure_virtual },
+        { "__cxa_rethrow", (uintptr_t)&__cxa_rethrow},
+        { "__cxa_throw", (uintptr_t)&__cxa_throw},
+        { "__dso_handle", (uintptr_t)&__dso_handle },
+        { "__errno", (uintptr_t)&__errno },
+        { "__gnu_unwind_frame", (uintptr_t)&__gnu_unwind_frame },
+        { "__gxx_personality_v0", (uintptr_t)&__gxx_personality_v0},
+        { "__mmap2", (uintptr_t)&mmap},
+        { "__sF", (uintptr_t)&__sF_fake },
+        { "__stack_chk_fail", (uintptr_t)&__stack_chk_fail },
+        { "__stack_chk_guard", (uintptr_t)&__stack_chk_guard },
+        { "__system_property_get", (uintptr_t)&system_property_get},
+        { "_ctype_", (uintptr_t)&BIONIC_ctype_ },
+        { "_exit", (uintptr_t)&_exit},
+        { "abort", (uintptr_t)&abort },
+        { "acos", (uintptr_t)&acos },
+        { "acosf", (uintptr_t)&acosf },
+        { "asin", (uintptr_t)&asin },
+        { "asinf", (uintptr_t)&asinf },
+        { "atan", (uintptr_t)&atan },
+        { "atan2", (uintptr_t)&atan2 },
+        { "atan2f", (uintptr_t)&atan2f },
+        { "atanf", (uintptr_t)&atanf },
+        { "atoi", (uintptr_t)&atoi },
+        { "atoll", (uintptr_t)&atoll },
+        { "bind", (uintptr_t)&bind},
+        { "bsd_signal", (uintptr_t)&signal},
+        { "bsearch", (uintptr_t)&bsearch },
+        { "btowc", (uintptr_t)&btowc },
+        { "calloc", (uintptr_t)&calloc },
+        { "ceil", (uintptr_t)&ceil },
+        { "ceilf", (uintptr_t)&ceilf },
+        { "clearerr", (uintptr_t)&clearerr },
+        { "clock", (uintptr_t)&clock},
+        { "clock_gettime", (uintptr_t)&clock_gettime_soloader },
+        { "close", (uintptr_t)&close_soloader },
+        { "closedir", (uintptr_t)&closedir_soloader},
+        { "connect", (uintptr_t)&connect},
+        { "cos", (uintptr_t)&cos },
+        { "cosf", (uintptr_t)&cosf },
+        { "cosh", (uintptr_t)&cosh },
+        { "crc32", (uintptr_t)&crc32 },
+        { "exit", (uintptr_t)&exit },
+        { "exp", (uintptr_t)&exp },
+        { "exp2", (uintptr_t)&exp2 },
+        { "expf", (uintptr_t)&expf },
+        { "fclose", (uintptr_t)&fclose },
+        { "fcntl", (uintptr_t)&ret0 },
+        { "fdopen", (uintptr_t)&fdopen },
+        { "feof", (uintptr_t)&feof},
+        { "ferror", (uintptr_t)&ferror },
+        { "fflush", (uintptr_t)&fflush },
+        { "fgets", (uintptr_t)&fgets },
+        { "floor", (uintptr_t)&floor },
+        { "floorf", (uintptr_t)&floorf },
+        { "fmod", (uintptr_t)&fmod },
+        { "fmodf", (uintptr_t)&fmodf },
+        { "fopen", (uintptr_t)&fopen_soloader },
+        { "fprintf", (uintptr_t)&fprintf },
+        { "fputc", (uintptr_t)&fputc },
+        { "fputs", (uintptr_t)&fputs },
+        { "fread", (uintptr_t)&fread },
+        { "free", (uintptr_t)&free },
+        { "freeaddrinfo", (uintptr_t)&freeaddrinfo},
+        { "frexp", (uintptr_t)&frexp },
+        { "frexpf", (uintptr_t)&frexpf },
+        { "fseek", (uintptr_t)&fseek },
+        { "fseeko", (uintptr_t)&fseeko_soloader },
+        { "fstat", (uintptr_t)&fstat_soloader },
+        { "fsync", (uintptr_t)&fsync},
+        { "ftell", (uintptr_t)&ftell },
+        { "ftello", (uintptr_t)&ftello_soloader },
+        { "ftruncate", (uintptr_t)&ftruncate},
+        { "funopen", (uintptr_t)&funopen},
+        { "fwrite", (uintptr_t)&fwrite },
+        { "getaddrinfo", (uintptr_t)&getaddrinfo },
+        { "getc", (uintptr_t)&getc },
+        { "getenv", (uintptr_t)&getenv_soloader },
+        { "getpeername", (uintptr_t)&getpeername},
+        { "getsockname", (uintptr_t)&getsockname},
+        { "gettimeofday", (uintptr_t)&gettimeofday },
+        { "getwc", (uintptr_t)&getwc },
 
-    { "gmtime", (uintptr_t)&gmtime},
-    { "gzopen", (uintptr_t)&ret0 },
-    { "hid_close", (uintptr_t)&retNULL},
-    { "hid_enumerate", (uintptr_t)&retNULL},
-    { "hid_exit", (uintptr_t)&retNULL},
-    { "hid_free_enumeration", (uintptr_t)&retNULL},
-    { "hid_get_feature_report", (uintptr_t)&retNULL},
-    { "hid_init", (uintptr_t)&retNULL},
-    { "hid_open_path", (uintptr_t)&retNULL},
-    { "hid_read", (uintptr_t)&retNULL},
-    { "hid_read_timeout", (uintptr_t)&retNULL},
-    { "hid_send_feature_report", (uintptr_t)&retNULL},
-    { "hid_write", (uintptr_t)&retNULL},
-    { "inflate", (uintptr_t)&inflate },
-    { "inflateEnd", (uintptr_t)&inflateEnd },
-    { "inflateInit_", (uintptr_t)&inflateInit_ },
-    { "inflateReset", (uintptr_t)&inflateReset },
-    { "isalnum", (uintptr_t)&isalnum },
-    { "isalpha", (uintptr_t)&isalpha },
-    { "isblank", (uintptr_t)&isblank},
-    { "iscntrl", (uintptr_t)&iscntrl },
-    { "isgraph", (uintptr_t)&isgraph},
-    { "islower", (uintptr_t)&islower },
-    { "isprint", (uintptr_t)&isprint },
-    { "ispunct", (uintptr_t)&ispunct },
-    { "isspace", (uintptr_t)&isspace },
-    { "isupper", (uintptr_t)&isupper },
-    { "iswalpha", (uintptr_t)&iswalpha },
-    { "iswcntrl", (uintptr_t)&iswcntrl },
-    { "iswctype", (uintptr_t)&iswctype },
-    { "iswdigit", (uintptr_t)&iswdigit },
-    { "iswdigit", (uintptr_t)&iswdigit },
-    { "iswlower", (uintptr_t)&iswlower },
-    { "iswprint", (uintptr_t)&iswprint },
-    { "iswpunct", (uintptr_t)&iswpunct },
-    { "iswspace", (uintptr_t)&iswspace },
-    { "iswupper", (uintptr_t)&iswupper },
-    { "iswxdigit", (uintptr_t)&iswxdigit },
-    { "isxdigit", (uintptr_t)&isxdigit },
-    { "ldexp", (uintptr_t)&ldexp },
-    { "ldexpf", (uintptr_t)&ldexpf},
-    { "localtime", (uintptr_t)&localtime},
-    { "localtime_r", (uintptr_t)&localtime_r },
-    { "log", (uintptr_t)&log },
-    { "log10", (uintptr_t)&log10 },
-    { "log10f", (uintptr_t)&log10f},
-    { "logf", (uintptr_t)&logf},
-    { "longjmp", (uintptr_t)&longjmp },
-    { "lrand48", (uintptr_t)&lrand48 },
-    { "lrint", (uintptr_t)&lrint },
-    { "lrintf", (uintptr_t)&lrintf },
-    { "lround", (uintptr_t)&lround},
-    { "lroundf", (uintptr_t)&lroundf},
-    { "lseek", (uintptr_t)&lseek },
-    { "malloc", (uintptr_t)&malloc },
-    { "mbrlen", (uintptr_t)&mbrlen},
-    { "mbrtowc", (uintptr_t)&mbrtowc },
-    { "memchr", (uintptr_t)&sceClibMemchr },
-    { "memcmp", (uintptr_t)&memcmp },
-    { "memcpy", (uintptr_t)&sceClibMemcpy },
-    { "memmem", (uintptr_t)&memmem},
-    { "memmove", (uintptr_t)&sceClibMemmove },
-    { "memset", (uintptr_t)&sceClibMemset },
-    { "mkdir", (uintptr_t)&mkdir },
-    { "mktime", (uintptr_t)&mktime},
-    { "mmap", (uintptr_t)&mmap },
-    { "modf", (uintptr_t)&modf },
-    { "munmap", (uintptr_t)&munmap },
-    { "nanosleep", (uintptr_t)&nanosleep_soloader },
-    { "open", (uintptr_t)&open_soloader },
-    { "pow", (uintptr_t)&pow },
-    { "powf", (uintptr_t)&powf },
-    { "printf", (uintptr_t)&printf },
-    { "pthread_attr_destroy", (uintptr_t)&pthread_attr_destroy_soloader },
-    { "pthread_attr_init", (uintptr_t) &pthread_attr_init_soloader },
-    { "pthread_attr_setdetachstate", (uintptr_t) &pthread_attr_setdetachstate_soloader },
-    { "pthread_attr_setstacksize", (uintptr_t) &pthread_attr_setstacksize_soloader },
-    { "pthread_cond_broadcast", (uintptr_t) &pthread_cond_broadcast_soloader},
-    { "pthread_cond_destroy", (uintptr_t) &pthread_cond_destroy_soloader},
-    { "pthread_cond_init", (uintptr_t) &pthread_cond_init_soloader},
-    { "pthread_cond_signal", (uintptr_t) &pthread_cond_signal_soloader},
-    { "pthread_cond_timedwait", (uintptr_t) &pthread_cond_timedwait_soloader},
-    { "pthread_cond_wait", (uintptr_t) &pthread_cond_wait_soloader},
-    { "pthread_create", (uintptr_t) &pthread_create_soloader },
-    { "pthread_detach", (uintptr_t) &pthread_detach_soloader},
-    { "pthread_equal", (uintptr_t) &pthread_equal_soloader},
-    { "pthread_getschedparam", (uintptr_t) &pthread_getschedparam_soloader },
-    { "pthread_getspecific", (uintptr_t)&pthread_getspecific },
-    { "pthread_join", (uintptr_t) &pthread_join_soloader},
-    { "pthread_key_create", (uintptr_t)&pthread_key_create },
-    { "pthread_key_delete", (uintptr_t)&pthread_key_delete },
-    { "pthread_mutex_destroy", (uintptr_t) &pthread_mutex_destroy_soloader },
-    { "pthread_mutex_init", (uintptr_t) &pthread_mutex_init_soloader },
-    { "pthread_mutex_lock", (uintptr_t) &pthread_mutex_lock_soloader },
-    { "pthread_mutex_trylock", (uintptr_t) &pthread_mutex_trylock_soloader},
-    { "pthread_mutex_unlock", (uintptr_t) &pthread_mutex_unlock_soloader },
-    { "pthread_mutexattr_destroy", (uintptr_t) &pthread_mutexattr_destroy_soloader},
-    { "pthread_mutexattr_init", (uintptr_t) &pthread_mutexattr_init_soloader},
-    { "pthread_mutexattr_settype", (uintptr_t) &pthread_mutexattr_settype_soloader},
-    { "pthread_once", (uintptr_t)&pthread_once },
-    { "pthread_self", (uintptr_t) &pthread_self_soloader },
-    { "pthread_setname_np", (uintptr_t) &pthread_setname_np_soloader },
-    { "pthread_setschedparam", (uintptr_t) &pthread_setschedparam_soloader },
-    { "pthread_setspecific", (uintptr_t)&pthread_setspecific },
-    { "pthread_sigmask", (uintptr_t)&ret0},
-    { "putc", (uintptr_t)&putc },
-    { "putchar", (uintptr_t)&putchar},
-    { "puts", (uintptr_t)&puts},
-    { "putwc", (uintptr_t)&putwc },
-    { "qsort", (uintptr_t)&qsort },
-    { "raise", (uintptr_t)&raise},
-    { "read", (uintptr_t)&read },
-    { "realloc", (uintptr_t)&realloc },
-    { "remove", (uintptr_t)&remove},
-    { "rint", (uintptr_t)&rint },
-    { "rmdir", (uintptr_t)&rmdir},
-    { "round", (uintptr_t)&round},
-    { "roundf", (uintptr_t)&roundf},
-    { "scalbn", (uintptr_t)&scalbn},
-    { "scalbnf", (uintptr_t)&scalbnf},
-    { "sched_get_priority_max", (uintptr_t)&sched_get_priority_max},
-    { "sched_get_priority_min", (uintptr_t)&sched_get_priority_min},
-    { "sched_yield", (uintptr_t)&sched_yield},
-    { "select", (uintptr_t)&select},
-    { "sem_destroy", (uintptr_t) &sem_destroy_soloader},
-    { "sem_getvalue", (uintptr_t) &sem_getvalue_soloader},
-    { "sem_init", (uintptr_t) &sem_init_soloader},
-    { "sem_post", (uintptr_t) &sem_post_soloader},
-    { "sem_timedwait", (uintptr_t) &sem_timedwait_soloader},
-    { "sem_trywait", (uintptr_t) &sem_trywait_soloader},
-    { "sem_wait", (uintptr_t) &sem_wait_soloader},
-    { "setenv", (uintptr_t)&ret0 },
-    { "setjmp", (uintptr_t)&setjmp },
-    { "setvbuf", (uintptr_t)&setvbuf },
-    { "shutdown", (uintptr_t)&shutdown },
-    { "sin", (uintptr_t)&sin },
-    { "sincos", (uintptr_t)&sincos},
-    { "sincosf", (uintptr_t)&sincosf},
-    { "sinf", (uintptr_t)&sinf },
-    { "sinh", (uintptr_t)&sinh },
-    { "slCreateEngine", (uintptr_t)&slCreateEngine},
-    { "snprintf", (uintptr_t)&snprintf },
-    { "socket", (uintptr_t)&socket},
-    { "sprintf", (uintptr_t)&sprintf },
-    { "sqrt", (uintptr_t)&sqrt },
-    { "sqrtf", (uintptr_t)&sqrtf },
-    { "srand48", (uintptr_t)&srand48 },
-    { "sscanf", (uintptr_t)&sscanf },
-    { "stat", (uintptr_t)&stat_soloader },
-    { "strcasecmp", (uintptr_t)&strcasecmp },
-    { "strcat", (uintptr_t)&strcat },
-    { "strchr", (uintptr_t)&strchr },
-    { "strcmp", (uintptr_t)&sceClibStrcmp },
-    { "strcoll", (uintptr_t)&strcoll },
-    { "strcpy", (uintptr_t)&strcpy },
-    { "strcspn", (uintptr_t)&strcspn },
-    { "strerror", (uintptr_t)&strerror },
-    { "strerror_r", (uintptr_t)&strerror_r},
-    { "strftime", (uintptr_t)&strftime },
-    { "strlcat", (uintptr_t)&strlcat},
-    { "strlcpy", (uintptr_t)&strlcpy},
-    { "strlen", (uintptr_t)&strlen },
-    { "strncasecmp", (uintptr_t)&sceClibStrncasecmp },
-    { "strncat", (uintptr_t)&sceClibStrncat },
-    { "strncmp", (uintptr_t)&sceClibStrncmp },
-    { "strncpy", (uintptr_t)&sceClibStrncpy },
-    { "strnlen", (uintptr_t)&strnlen},
-    { "strpbrk", (uintptr_t)&strpbrk },
-    { "strrchr", (uintptr_t)&sceClibStrrchr },
-    { "strstr", (uintptr_t)&sceClibStrstr },
-    { "strtod", (uintptr_t)&strtod },
-    { "strtoimax", (uintptr_t)&strtoimax },
-    { "strtok_r", (uintptr_t)&strtok_r},
-    { "strtol", (uintptr_t)&strtol },
-    { "strtoll", (uintptr_t)&strtoll },
-    { "strtoul", (uintptr_t)&strtoul },
-    { "strtoull", (uintptr_t)&strtoull },
-    { "strtoumax", (uintptr_t)&strtoumax },
-    { "strxfrm", (uintptr_t)&strxfrm },
-    { "syscall", (uintptr_t)&syscall },
-    { "sysconf", (uintptr_t)&ret0 },
-    { "system", (uintptr_t)&system},
-    { "tan", (uintptr_t)&tan },
-    { "tanf", (uintptr_t)&tanf },
-    { "tanh", (uintptr_t)&tanh },
-    { "time", (uintptr_t)&time },
-    { "tolower", (uintptr_t)&tolower },
-    { "toupper", (uintptr_t)&toupper },
-    { "towlower", (uintptr_t)&towlower },
-    { "towupper", (uintptr_t)&towupper },
-    { "trunc", (uintptr_t)&trunc},
-    { "truncf", (uintptr_t)&truncf},
-    { "ungetc", (uintptr_t)&ungetc },
-    { "ungetwc", (uintptr_t)&ungetwc },
-    { "usleep", (uintptr_t)&usleep },
-    { "vasprintf", (uintptr_t)&vasprintf},
-    { "vfprintf", (uintptr_t)&vfprintf },
-    { "vprintf", (uintptr_t)&vprintf },
-    { "vsnprintf", (uintptr_t)&vsnprintf },
-    { "vsprintf", (uintptr_t)&vsprintf },
-    { "vsscanf", (uintptr_t)&vsscanf},
-    { "vswprintf", (uintptr_t)&vswprintf },
-    { "wcrtomb", (uintptr_t)&wcrtomb },
-    { "wcscasecmp", (uintptr_t)&wcscasecmp},
-    { "wcscmp", (uintptr_t)&wcscmp },
-    { "wcscoll", (uintptr_t)&wcscoll },
-    { "wcsftime", (uintptr_t)&wcsftime },
-    { "wcslcat", (uintptr_t)&wcslcat},
-    { "wcslcpy", (uintptr_t)&wcslcpy},
-    { "wcslen", (uintptr_t)&wcslen },
-    { "wcsncasecmp", (uintptr_t)&wcsncasecmp},
-    { "wcsncpy", (uintptr_t)&wcsncpy },
-    { "wcsxfrm", (uintptr_t)&wcsxfrm },
-    { "wctob", (uintptr_t)&wctob },
-    { "wctype", (uintptr_t)&wctype },
-    { "wmemchr", (uintptr_t)&wmemchr },
-    { "wmemcmp", (uintptr_t)&wmemcmp },
-    { "wmemcpy", (uintptr_t)&wmemcpy },
-    { "wmemmove", (uintptr_t)&wmemmove },
-    { "wmemset", (uintptr_t)&wmemset },
-    { "write", (uintptr_t)&write_soloader },
+#ifndef DEBUG_GL
+        { "glActiveTexture", (uintptr_t)&glActiveTexture},
+        { "glAlphaFunc", (uintptr_t)&glAlphaFunc},
+        { "glAlphaFuncx", (uintptr_t)&glAlphaFuncx},
+        { "glAttachShader", (uintptr_t)&glAttachShader},
+        { "glBindAttribLocation", (uintptr_t)&glBindAttribLocation},
+        { "glBindBuffer", (uintptr_t)&glBindBuffer },
+        { "glBindFramebuffer", (uintptr_t)&glBindFramebuffer},
+        { "glBindFramebufferOES", (uintptr_t)&glBindFramebuffer },
+        { "glBindRenderbufferOES", (uintptr_t)&glBindRenderbuffer},
+        { "glBindTexture", (uintptr_t)&glBindTexture },
+        { "glBlendEquationOES", (uintptr_t)&glBlendEquation},
+        { "glBlendEquationSeparate", (uintptr_t)&glBlendEquationSeparate},
+        { "glBlendEquationSeparateOES", (uintptr_t)&glBlendEquationSeparate },
+        { "glBlendFunc", (uintptr_t)&glBlendFunc },
+        { "glBlendFuncSeparate", (uintptr_t)&glBlendFuncSeparate},
+        { "glBlendFuncSeparateOES", (uintptr_t)&glBlendFuncSeparate},
+        { "glBufferData", (uintptr_t)&glBufferData },
+        { "glBufferSubData", (uintptr_t)&glBufferSubData},
+        { "glCheckFramebufferStatusOES", (uintptr_t)&glCheckFramebufferStatus },
+        { "glClear", (uintptr_t)&glClear },
+        { "glClearColor", (uintptr_t)&glClearColor },
+        { "glClearColorx", (uintptr_t)&glClearColorx},
+        { "glClearDepthf", (uintptr_t)&glClearDepthf },
+        { "glClearDepthx", (uintptr_t)&glClearDepthx},
+        { "glClearStencil", (uintptr_t)&glClearStencil},
+        { "glClientActiveTexture", (uintptr_t)&glClientActiveTexture},
+        { "glColor4f", (uintptr_t)&glColor4f},
+        { "glColor4ub", (uintptr_t)&glColor4ub},
+        { "glColor4x", (uintptr_t)&glColor4x},
+        { "glColorMask", (uintptr_t)&glColorMask},
+        { "glColorPointer", (uintptr_t)&glColorPointer},
+        { "glCompressedTexImage2D", (uintptr_t)&glCompressedTexImage2D },
+        { "glCreateProgram", (uintptr_t)&glCreateProgram},
+        { "glCreateShader", (uintptr_t)&glCreateShader},
+        { "glCullFace", (uintptr_t)&glCullFace},
+        { "glDeleteBuffers", (uintptr_t)&glDeleteBuffers },
+        { "glDeleteFramebuffers", (uintptr_t)&glDeleteFramebuffers},
+        { "glDeleteFramebuffersOES", (uintptr_t)&glDeleteFramebuffers},
+        { "glDeleteRenderbuffersOES", (uintptr_t)&glDeleteRenderbuffers },
+        { "glDeleteTextures", (uintptr_t)&glDeleteTextures },
+        { "glDepthFunc", (uintptr_t)&glDepthFunc },
+        { "glDepthMask", (uintptr_t)&glDepthMask },
+        { "glDepthRangef", (uintptr_t) &glDepthRangef },
+        { "glDisable", (uintptr_t)&glDisable },
+        { "glDisableClientState", (uintptr_t)&glDisableClientState},
+        { "glDrawArrays", (uintptr_t)&glDrawArrays},
+        { "glDrawElements", (uintptr_t)&glDrawElements },
+        { "glEnable", (uintptr_t)&glEnable },
+        { "glEnableClientState", (uintptr_t)&glEnableClientState},
+        { "glEnableVertexAttribArray", (uintptr_t)&glEnableVertexAttribArray},
+        { "glFinish", (uintptr_t)&glFinish},
+        { "glFlush", (uintptr_t)&glFlush},
+        { "glFogf", (uintptr_t)&glFogf},
+        { "glFogfv", (uintptr_t)&glFogfv},
+        { "glFramebufferRenderbufferOES", (uintptr_t)&glFramebufferRenderbuffer},
+        { "glFramebufferTexture2D", (uintptr_t)&glFramebufferTexture2D},
+        { "glFramebufferTexture2DOES", (uintptr_t)&glFramebufferTexture2D },
+        { "glFrontFace", (uintptr_t)&glFrontFace},
+        { "glFrustumf", (uintptr_t)&glFrustumf},
+        { "glFrustumx", (uintptr_t)&glFrustumx},
+        { "glGenBuffers", (uintptr_t)&glGenBuffers },
+        { "glGenFramebuffers", (uintptr_t)&glGenFramebuffers},
+        { "glGenFramebuffersOES", (uintptr_t)&glGenFramebuffers},
+        { "glGenRenderbuffersOES", (uintptr_t)&glGenRenderbuffers },
+        { "glGenTextures", (uintptr_t)&glGenTextures },
+        { "glGenerateMipmapOES", (uintptr_t)&glGenerateMipmap },
+        { "glGetBooleanv", (uintptr_t)&glGetBooleanv},
+        { "glGetBufferParameteriv", (uintptr_t)&glGetBufferParameteriv},
+        { "glGetError", (uintptr_t)&glGetError },
+        { "glGetFloatv", (uintptr_t)&glGetFloatv},
+        { "glGetFramebufferAttachmentParameterivOES", (uintptr_t)&glGetFramebufferAttachmentParameteriv},
+        { "glGetIntegerv", (uintptr_t)&glGetIntegerv},
+        { "glGetProgramInfoLog", (uintptr_t)&glGetProgramInfoLog},
+        { "glGetProgramiv", (uintptr_t)&glGetProgramiv},
+        { "glGetRenderbufferParameterivOES", (uintptr_t)&glGetBufferParameteriv },
+        { "glGetShaderInfoLog", (uintptr_t)&glGetShaderInfoLog},
+        { "glGetShaderiv", (uintptr_t)&glGetShaderiv},
+        { "glGetString", (uintptr_t)&glGetString},
+        { "glGetUniformLocation", (uintptr_t)&glGetUniformLocation},
+        { "glHint", (uintptr_t)&glHint},
+        { "glIsEnabled", (uintptr_t)&glIsEnabled},
+        { "glIsFramebufferOES", (uintptr_t)&glIsFramebuffer},
+        { "glIsTexture", (uintptr_t)&glIsTexture},
+        { "glLightModelfv", (uintptr_t)&glLightModelfv},
+        { "glLightModelxv", (uintptr_t)&glLightModelxv},
+        { "glLightfv", (uintptr_t)&glLightfv},
+        { "glLightxv", (uintptr_t)&glLightxv},
+        { "glLineWidth", (uintptr_t)&glLineWidth},
+        { "glLinkProgram", (uintptr_t)&glLinkProgram},
+        { "glLoadIdentity", (uintptr_t)&glLoadIdentity},
+        { "glLoadMatrixf", (uintptr_t)&glLoadMatrixf},
+        { "glMapBufferOES", (uintptr_t)&glMapBuffer },
+        { "glMaterialfv", (uintptr_t)&glMaterialfv},
+        { "glMaterialxv", (uintptr_t)&glMaterialxv},
+        { "glMatrixMode", (uintptr_t)&glMatrixMode},
+        { "glMultMatrixf", (uintptr_t)&glMultMatrixf},
+        { "glMultMatrixx", (uintptr_t)&glMultMatrixx},
+        { "glNormal3f", (uintptr_t)&glNormal3f},
+        { "glNormalPointer", (uintptr_t)&glNormalPointer},
+        { "glOrthof", (uintptr_t)&glOrthof},
+        { "glPointSize", (uintptr_t)&glPointSize},
+        { "glPolygonOffset", (uintptr_t)&glPolygonOffset},
+        { "glPopMatrix", (uintptr_t)&glPopMatrix},
+        { "glPushMatrix", (uintptr_t)&glPushMatrix},
+        { "glReadPixels", (uintptr_t)&glReadPixels},
+        { "glRenderbufferStorageOES", (uintptr_t)&glRenderbufferStorage },
+        { "glRotatef", (uintptr_t)&glRotatef},
+        { "glRotatex", (uintptr_t)&glRotatex},
+        { "glScalef", (uintptr_t)&glScalef},
+        { "glScalex", (uintptr_t)&glScalex},
+        { "glScissor", (uintptr_t)&glScissor},
+        { "glShadeModel", (uintptr_t)&glShadeModel},
+        { "glShaderSource", (uintptr_t)&glShaderSourceHook},
+        { "glShaderSource", (uintptr_t)&glShaderSource},
+        { "glStencilFunc", (uintptr_t)&glStencilFunc},
+        { "glStencilMask", (uintptr_t)&glStencilMask},
+        { "glStencilOp", (uintptr_t)&glStencilOp},
+        { "glTexCoordPointer", (uintptr_t)&glTexCoordPointer},
+        { "glTexEnvf", (uintptr_t)&glTexEnvf},
+        { "glTexEnvfv", (uintptr_t)&glTexEnvfv},
+        { "glTexEnvi", (uintptr_t)&glTexEnvi},
+        { "glTexEnvx", (uintptr_t)&glTexEnvx},
+        { "glTexEnvxv", (uintptr_t)&glTexEnvxv},
+        { "glTexImage2D", (uintptr_t)&glTexImage2D },
+        { "glTexParameterf", (uintptr_t)&glTexParameterf},
+        { "glTexParameteri", (uintptr_t)&glTexParameteri },
+        { "glTexSubImage2D", (uintptr_t)&glTexSubImage2D },
+        { "glTranslatef", (uintptr_t)&glTranslatef},
+        { "glTranslatex", (uintptr_t)&glTranslatex},
+        { "glUniform1f", (uintptr_t)&glUniform1f},
+        { "glUniform1i", (uintptr_t)&glUniform1i},
+        { "glUniform2f", (uintptr_t)&glUniform2f},
+        { "glUniform4f", (uintptr_t)&glUniform4f},
+        { "glUnmapBufferOES", (uintptr_t)&glUnmapBuffer},
+        { "glUseProgram", (uintptr_t)&glUseProgram},
+        { "glVertexAttribPointer", (uintptr_t)&glVertexAttribPointer},
+        { "glVertexPointer", (uintptr_t)&glVertexPointer},
+        { "glViewport", (uintptr_t)&glViewport },
+#else
+        { "glActiveTexture", (uintptr_t)&glActiveTexture_dbg},
+        { "glAlphaFunc", (uintptr_t)&glAlphaFunc_dbg},
+        { "glAlphaFuncx", (uintptr_t)&glAlphaFuncx_dbg},
+        { "glAttachShader", (uintptr_t)&glAttachShader_dbg},
+        { "glBindAttribLocation", (uintptr_t)&glBindAttribLocation_dbg},
+        { "glBindBuffer", (uintptr_t)&glBindBuffer_dbg },
+        { "glBindFramebuffer", (uintptr_t)&glBindFramebuffer_dbg},
+        { "glBindFramebufferOES", (uintptr_t)&glBindFramebuffer_dbg },
+        { "glBindRenderbufferOES", (uintptr_t)&glBindRenderbuffer_dbg},
+        { "glBindTexture", (uintptr_t)&glBindTexture_dbg },
+        { "glBlendEquationOES", (uintptr_t)&glBlendEquation_dbg},
+        { "glBlendEquationSeparate", (uintptr_t)&glBlendEquationSeparate_dbg},
+        { "glBlendEquationSeparateOES", (uintptr_t)&glBlendEquationSeparate_dbg },
+        { "glBlendFunc", (uintptr_t)&glBlendFunc_dbg },
+        { "glBlendFuncSeparate", (uintptr_t)&glBlendFuncSeparate_dbg},
+        { "glBlendFuncSeparateOES", (uintptr_t)&glBlendFuncSeparate_dbg},
+        { "glBufferData", (uintptr_t)&glBufferData_dbg },
+        { "glBufferSubData", (uintptr_t)&glBufferSubData_dbg},
+        { "glCheckFramebufferStatusOES", (uintptr_t)&glCheckFramebufferStatus_dbg },
+        { "glClear", (uintptr_t)&glClear_dbg },
+        { "glClearColor", (uintptr_t)&glClearColor_dbg },
+        { "glClearColorx", (uintptr_t)&glClearColorx_dbg},
+        { "glClearDepthf", (uintptr_t)&glClearDepthf_dbg },
+        { "glClearDepthx", (uintptr_t)&glClearDepthx_dbg},
+        { "glClearStencil", (uintptr_t)&glClearStencil_dbg},
+        { "glClientActiveTexture", (uintptr_t)&glClientActiveTexture_dbg},
+        { "glColor4f", (uintptr_t)&glColor4f_dbg},
+        { "glColor4ub", (uintptr_t)&glColor4ub_dbg},
+        { "glColor4x", (uintptr_t)&glColor4x_dbg},
+        { "glColorMask", (uintptr_t)&glColorMask_dbg},
+        { "glColorPointer", (uintptr_t)&glColorPointer_dbg},
+        { "glCompressedTexImage2D", (uintptr_t)&glCompressedTexImage2D_dbg },
+        { "glCreateProgram", (uintptr_t)&glCreateProgram_dbg},
+        { "glCreateShader", (uintptr_t)&glCreateShader_dbg},
+        { "glCullFace", (uintptr_t)&glCullFace_dbg},
+        { "glDeleteBuffers", (uintptr_t)&glDeleteBuffers_dbg },
+        { "glDeleteFramebuffers", (uintptr_t)&glDeleteFramebuffers_dbg},
+        { "glDeleteFramebuffersOES", (uintptr_t)&glDeleteFramebuffers_dbg},
+        { "glDeleteRenderbuffersOES", (uintptr_t)&glDeleteRenderbuffers_dbg },
+        { "glDeleteTextures", (uintptr_t)&glDeleteTextures_dbg },
+        { "glDepthFunc", (uintptr_t)&glDepthFunc_dbg },
+        { "glDepthMask", (uintptr_t)&glDepthMask_dbg },
+        { "glDepthRangef", (uintptr_t)&glDepthRangef_dbg },
+        { "glDisable", (uintptr_t)&glDisable_dbg },
+        { "glDisableClientState", (uintptr_t)&glDisableClientState_dbg},
+        { "glDrawArrays", (uintptr_t)&glDrawArrays_dbg},
+        { "glDrawElements", (uintptr_t)&glDrawElements_dbg },
+        { "glEnable", (uintptr_t)&glEnable_dbg },
+        { "glEnableClientState", (uintptr_t)&glEnableClientState_dbg},
+        { "glEnableVertexAttribArray", (uintptr_t)&glEnableVertexAttribArray_dbg},
+        { "glFinish", (uintptr_t)&glFinish_dbg},
+        { "glFlush", (uintptr_t)&glFlush_dbg},
+        { "glFogf", (uintptr_t)&glFogf_dbg},
+        { "glFogfv", (uintptr_t)&glFogfv_dbg},
+        { "glFramebufferRenderbufferOES", (uintptr_t)&glFramebufferRenderbuffer_dbg},
+        { "glFramebufferTexture2D", (uintptr_t)&glFramebufferTexture2D_dbg},
+        { "glFramebufferTexture2DOES", (uintptr_t)&glFramebufferTexture2D_dbg },
+        { "glFrontFace", (uintptr_t)&glFrontFace_dbg},
+        { "glFrustumf", (uintptr_t)&glFrustumf_dbg},
+        { "glFrustumx", (uintptr_t)&glFrustumx_dbg},
+        { "glGenBuffers", (uintptr_t)&glGenBuffers_dbg },
+        { "glGenFramebuffers", (uintptr_t)&glGenFramebuffers_dbg},
+        { "glGenFramebuffersOES", (uintptr_t)&glGenFramebuffers_dbg},
+        { "glGenRenderbuffersOES", (uintptr_t)&glGenRenderbuffers_dbg },
+        { "glGenTextures", (uintptr_t)&glGenTextures_dbg },
+        { "glGenerateMipmapOES", (uintptr_t)&glGenerateMipmap_dbg },
+        { "glGetBooleanv", (uintptr_t)&glGetBooleanv_dbg},
+        { "glGetBufferParameteriv", (uintptr_t)&glGetBufferParameteriv_dbg},
+        { "glGetError", (uintptr_t)&glGetError_dbg },
+        { "glGetFloatv", (uintptr_t)&glGetFloatv_dbg},
+        { "glGetFramebufferAttachmentParameterivOES", (uintptr_t)&glGetFramebufferAttachmentParameteriv_dbg},
+        { "glGetIntegerv", (uintptr_t)&glGetIntegerv_dbg},
+        { "glGetProgramInfoLog", (uintptr_t)&glGetProgramInfoLog_dbg},
+        { "glGetProgramiv", (uintptr_t)&glGetProgramiv_dbg},
+        { "glGetRenderbufferParameterivOES", (uintptr_t)&glGetBufferParameteriv_dbg },
+        { "glGetShaderInfoLog", (uintptr_t)&glGetShaderInfoLog_dbg},
+        { "glGetShaderiv", (uintptr_t)&glGetShaderiv_dbg},
+        { "glGetString", (uintptr_t)&glGetString_dbg},
+        { "glGetUniformLocation", (uintptr_t)&glGetUniformLocation_dbg},
+        { "glHint", (uintptr_t)&glHint_dbg},
+        { "glIsEnabled", (uintptr_t)&glIsEnabled_dbg},
+        { "glIsFramebufferOES", (uintptr_t)&glIsFramebuffer_dbg},
+        { "glIsTexture", (uintptr_t)&glIsTexture_dbg},
+        { "glLightModelfv", (uintptr_t)&glLightModelfv_dbg},
+        { "glLightModelxv", (uintptr_t)&glLightModelxv_dbg},
+        { "glLightfv", (uintptr_t)&glLightfv_dbg},
+        { "glLightxv", (uintptr_t)&glLightxv_dbg},
+        { "glLineWidth", (uintptr_t)&glLineWidth_dbg},
+        { "glLinkProgram", (uintptr_t)&glLinkProgram_dbg},
+        { "glLoadIdentity", (uintptr_t)&glLoadIdentity_dbg},
+        { "glLoadMatrixf", (uintptr_t)&glLoadMatrixf_dbg},
+        { "glMapBufferOES", (uintptr_t)&glMapBuffer_dbg },
+        { "glMaterialfv", (uintptr_t)&glMaterialfv_dbg},
+        { "glMaterialxv", (uintptr_t)&glMaterialxv_dbg},
+        { "glMatrixMode", (uintptr_t)&glMatrixMode_dbg},
+        { "glMultMatrixf", (uintptr_t)&glMultMatrixf_dbg},
+        { "glMultMatrixx", (uintptr_t)&glMultMatrixx_dbg},
+        { "glNormal3f", (uintptr_t)&glNormal3f_dbg},
+        { "glNormalPointer", (uintptr_t)&glNormalPointer_dbg},
+        { "glOrthof", (uintptr_t)&glOrthof_dbg},
+        { "glPointSize", (uintptr_t)&glPointSize_dbg},
+        { "glPolygonOffset", (uintptr_t)&glPolygonOffset_dbg},
+        { "glPopMatrix", (uintptr_t)&glPopMatrix_dbg},
+        { "glPushMatrix", (uintptr_t)&glPushMatrix_dbg},
+        { "glReadPixels", (uintptr_t)&glReadPixels_dbg},
+        { "glRenderbufferStorageOES", (uintptr_t)&glRenderbufferStorage_dbg },
+        { "glRotatef", (uintptr_t)&glRotatef_dbg},
+        { "glRotatex", (uintptr_t)&glRotatex_dbg},
+        { "glScalef", (uintptr_t)&glScalef_dbg},
+        { "glScalex", (uintptr_t)&glScalex_dbg},
+        { "glScissor", (uintptr_t)&glScissor_dbg},
+        { "glShadeModel", (uintptr_t)&glShadeModel_dbg},
+        { "glShaderSource", (uintptr_t)&glShaderSourceHook_dbg},
+        { "glShaderSource", (uintptr_t)&glShaderSource_dbg},
+        { "glStencilFunc", (uintptr_t)&glStencilFunc_dbg},
+        { "glStencilMask", (uintptr_t)&glStencilMask_dbg},
+        { "glStencilOp", (uintptr_t)&glStencilOp_dbg},
+        { "glTexCoordPointer", (uintptr_t)&glTexCoordPointer_dbg},
+        { "glTexEnvf", (uintptr_t)&glTexEnvf_dbg},
+        { "glTexEnvfv", (uintptr_t)&glTexEnvfv_dbg},
+        { "glTexEnvi", (uintptr_t)&glTexEnvi_dbg},
+        { "glTexEnvx", (uintptr_t)&glTexEnvx_dbg},
+        { "glTexEnvxv", (uintptr_t)&glTexEnvxv_dbg},
+        { "glTexImage2D", (uintptr_t)&glTexImage2D_dbg },
+        { "glTexParameterf", (uintptr_t)&glTexParameterf_dbg},
+        { "glTexParameteri", (uintptr_t)&glTexParameteri_dbg },
+        { "glTexSubImage2D", (uintptr_t)&glTexSubImage2D_dbg },
+        { "glTranslatef", (uintptr_t)&glTranslatef_dbg},
+        { "glTranslatex", (uintptr_t)&glTranslatex_dbg},
+        { "glUniform1f", (uintptr_t)&glUniform1f_dbg},
+        { "glUniform1i", (uintptr_t)&glUniform1i_dbg},
+        { "glUniform2f", (uintptr_t)&glUniform2f_dbg},
+        { "glUniform4f", (uintptr_t)&glUniform4f_dbg},
+        { "glUnmapBufferOES", (uintptr_t)&glUnmapBuffer_dbg},
+        { "glUseProgram", (uintptr_t)&glUseProgram_dbg},
+        { "glVertexAttribPointer", (uintptr_t)&glVertexAttribPointer_dbg},
+        { "glVertexPointer", (uintptr_t)&glVertexPointer_dbg},
+        { "glViewport", (uintptr_t)&glViewport_dbg },
+#endif
+
+        { "gmtime", (uintptr_t)&gmtime},
+        { "inflate", (uintptr_t)&inflate },
+        { "inflateEnd", (uintptr_t)&inflateEnd },
+        { "inflateInit_", (uintptr_t)&inflateInit_ },
+        { "inflateReset", (uintptr_t)&inflateReset },
+        { "isalnum", (uintptr_t)&isalnum },
+        { "isalpha", (uintptr_t)&isalpha },
+        { "isblank", (uintptr_t)&isblank},
+        { "iscntrl", (uintptr_t)&iscntrl },
+        { "isgraph", (uintptr_t)&isgraph},
+        { "islower", (uintptr_t)&islower },
+        { "isprint", (uintptr_t)&isprint },
+        { "ispunct", (uintptr_t)&ispunct },
+        { "isspace", (uintptr_t)&isspace },
+        { "isupper", (uintptr_t)&isupper },
+        { "iswalpha", (uintptr_t)&iswalpha },
+        { "iswcntrl", (uintptr_t)&iswcntrl },
+        { "iswctype", (uintptr_t)&iswctype },
+        { "iswdigit", (uintptr_t)&iswdigit },
+        { "iswdigit", (uintptr_t)&iswdigit },
+        { "iswlower", (uintptr_t)&iswlower },
+        { "iswprint", (uintptr_t)&iswprint },
+        { "iswpunct", (uintptr_t)&iswpunct },
+        { "iswspace", (uintptr_t)&iswspace },
+        { "iswupper", (uintptr_t)&iswupper },
+        { "iswxdigit", (uintptr_t)&iswxdigit },
+        { "isxdigit", (uintptr_t)&isxdigit },
+        { "ldexp", (uintptr_t)&ldexp },
+        { "ldexpf", (uintptr_t)&ldexpf},
+        { "localtime", (uintptr_t)&localtime},
+        { "localtime_r", (uintptr_t)&localtime_r },
+        { "log", (uintptr_t)&log },
+        { "log10", (uintptr_t)&log10 },
+        { "log10f", (uintptr_t)&log10f},
+        { "logf", (uintptr_t)&logf},
+        { "longjmp", (uintptr_t)&longjmp },
+        { "lrand48", (uintptr_t)&lrand48 },
+        { "lrint", (uintptr_t)&lrint },
+        { "lrintf", (uintptr_t)&lrintf },
+        { "lround", (uintptr_t)&lround},
+        { "lroundf", (uintptr_t)&lroundf},
+        { "lseek", (uintptr_t)&lseek },
+        { "malloc", (uintptr_t)&malloc },
+        { "mbrlen", (uintptr_t)&mbrlen},
+        { "mbrtowc", (uintptr_t)&mbrtowc },
+        { "memchr", (uintptr_t)&memchr },
+        { "memcmp", (uintptr_t)&memcmp },
+        { "memcpy", (uintptr_t)&memcpy },
+        { "memmem", (uintptr_t)&memmem},
+        { "memmove", (uintptr_t)&memmove },
+        { "memset", (uintptr_t)&memset },
+        { "mkdir", (uintptr_t)&mkdir },
+        { "mktime", (uintptr_t)&mktime},
+        { "mmap", (uintptr_t)&mmap },
+        { "modf", (uintptr_t)&modf },
+        { "munmap", (uintptr_t)&munmap },
+        { "nanosleep", (uintptr_t)&nanosleep_soloader },
+        { "open", (uintptr_t)&open_soloader },
+        { "opendir", (uintptr_t)&opendir_soloader},
+        { "pow", (uintptr_t)&pow },
+        { "powf", (uintptr_t)&powf },
+        { "printf", (uintptr_t)&printf },
+        { "pthread_attr_destroy", (uintptr_t)&pthread_attr_destroy_soloader },
+        { "pthread_attr_init", (uintptr_t) &pthread_attr_init_soloader },
+        { "pthread_attr_setdetachstate", (uintptr_t) &pthread_attr_setdetachstate_soloader },
+        { "pthread_attr_setschedparam", (uintptr_t)&pthread_attr_setschedparam},
+        { "pthread_attr_setstack", (uintptr_t)&pthread_attr_setstack},
+        { "pthread_attr_setstacksize", (uintptr_t) &pthread_attr_setstacksize_soloader },
+        { "pthread_cond_broadcast", (uintptr_t) &pthread_cond_broadcast_soloader},
+        { "pthread_cond_destroy", (uintptr_t) &pthread_cond_destroy_soloader},
+        { "pthread_cond_init", (uintptr_t) &pthread_cond_init_soloader},
+        { "pthread_cond_signal", (uintptr_t) &pthread_cond_signal_soloader},
+        { "pthread_cond_timedwait", (uintptr_t) &pthread_cond_timedwait_soloader},
+        { "pthread_cond_wait", (uintptr_t) &pthread_cond_wait_soloader},
+        { "pthread_create", (uintptr_t) &pthread_create_soloader },
+        { "pthread_detach", (uintptr_t) &pthread_detach_soloader},
+        { "pthread_equal", (uintptr_t) &pthread_equal_soloader},
+        { "pthread_getschedparam", (uintptr_t) &pthread_getschedparam_soloader },
+        { "pthread_getspecific", (uintptr_t)&pthread_getspecific },
+        { "pthread_join", (uintptr_t) &pthread_join_soloader},
+        { "pthread_key_create", (uintptr_t)&pthread_key_create },
+        { "pthread_key_delete", (uintptr_t)&pthread_key_delete },
+        { "pthread_mutex_destroy", (uintptr_t) &pthread_mutex_destroy_soloader },
+        { "pthread_mutex_init", (uintptr_t) &pthread_mutex_init_soloader },
+        { "pthread_mutex_lock", (uintptr_t) &pthread_mutex_lock_soloader },
+        { "pthread_mutex_trylock", (uintptr_t) &pthread_mutex_trylock_soloader},
+        { "pthread_mutex_unlock", (uintptr_t) &pthread_mutex_unlock_soloader },
+        { "pthread_mutexattr_destroy", (uintptr_t) &pthread_mutexattr_destroy_soloader},
+        { "pthread_mutexattr_init", (uintptr_t) &pthread_mutexattr_init_soloader},
+        { "pthread_mutexattr_setpshared", (uintptr_t) &pthread_mutexattr_setpshared_soloader},
+        { "pthread_mutexattr_settype", (uintptr_t) &pthread_mutexattr_settype_soloader},
+        { "pthread_once", (uintptr_t)&pthread_once },
+        { "pthread_self", (uintptr_t) &pthread_self_soloader },
+        { "pthread_setname_np", (uintptr_t) &pthread_setname_np_soloader },
+        { "pthread_setschedparam", (uintptr_t) &pthread_setschedparam_soloader },
+        { "pthread_setspecific", (uintptr_t)&pthread_setspecific },
+        { "putc", (uintptr_t)&putc },
+        { "putchar", (uintptr_t)&putchar},
+        { "puts", (uintptr_t)&puts},
+        { "putwc", (uintptr_t)&putwc },
+        { "qsort", (uintptr_t)&qsort },
+        { "raise", (uintptr_t)&raise},
+        { "read", (uintptr_t)&read_soloader },
+        { "readdir", (uintptr_t)&readdir},
+        { "readdir_r", (uintptr_t)&readdir_r_soloader},
+        { "realloc", (uintptr_t)&realloc },
+        { "recv", (uintptr_t)&recv},
+        { "recvfrom", (uintptr_t)&recvfrom},
+        { "remove", (uintptr_t)&remove},
+        { "rename", (uintptr_t)&rename},
+        { "rint", (uintptr_t)&rint },
+        { "rmdir", (uintptr_t)&rmdir},
+        { "round", (uintptr_t)&round},
+        { "roundf", (uintptr_t)&roundf},
+        { "sbrk", (uintptr_t)&sbrk},
+        { "scalbn", (uintptr_t)&scalbn},
+        { "scalbnf", (uintptr_t)&scalbnf},
+        { "sched_get_priority_max", (uintptr_t)&sched_get_priority_max},
+        { "sched_get_priority_min", (uintptr_t)&sched_get_priority_min},
+        { "sched_yield", (uintptr_t)&sched_yield},
+        { "select", (uintptr_t)&select},
+        { "sem_destroy", (uintptr_t) &sem_destroy_soloader},
+        { "sem_getvalue", (uintptr_t) &sem_getvalue_soloader},
+        { "sem_init", (uintptr_t) &sem_init_soloader},
+        { "sem_post", (uintptr_t) &sem_post_soloader},
+        { "sem_timedwait", (uintptr_t) &sem_timedwait_soloader},
+        { "sem_trywait", (uintptr_t) &sem_trywait_soloader},
+        { "sem_wait", (uintptr_t) &sem_wait_soloader},
+        { "send", (uintptr_t)&send},
+        { "sendto", (uintptr_t)&sendto},
+        { "setenv", (uintptr_t)&setenv_ret0 },
+        { "setjmp", (uintptr_t)&setjmp },
+        { "setsockopt", (uintptr_t)&setsockopt},
+        { "setvbuf", (uintptr_t)&setvbuf },
+        { "shutdown", (uintptr_t)&shutdown },
+        { "sin", (uintptr_t)&sin },
+        { "sincos", (uintptr_t)&sincos},
+        { "sincosf", (uintptr_t)&sincosf},
+        { "sinf", (uintptr_t)&sinf },
+        { "sinh", (uintptr_t)&sinh },
+        { "snprintf", (uintptr_t)&snprintf },
+        { "socket", (uintptr_t)&socket},
+        { "sprintf", (uintptr_t)&sprintf },
+        { "sqrt", (uintptr_t)&sqrt },
+        { "sqrtf", (uintptr_t)&sqrtf },
+        { "srand48", (uintptr_t)&srand48 },
+        { "sscanf", (uintptr_t)&sscanf },
+        { "stat", (uintptr_t)&stat_soloader },
+        { "strcasecmp", (uintptr_t)&strcasecmp },
+        { "strcat", (uintptr_t)&strcat },
+        { "strchr", (uintptr_t)&strchr },
+        { "strcmp", (uintptr_t)&strcmp },
+        { "strcoll", (uintptr_t)&strcoll },
+        { "strcpy", (uintptr_t)&strcpy },
+        { "strcspn", (uintptr_t)&strcspn },
+        { "strdup", (uintptr_t)&strdup},
+        { "strerror", (uintptr_t)&strerror },
+        { "strerror_r", (uintptr_t)&strerror_r},
+        { "strftime", (uintptr_t)&strftime },
+        { "strlcat", (uintptr_t)&strlcat},
+        { "strlcpy", (uintptr_t)&strlcpy},
+        { "strlen", (uintptr_t)&strlen },
+        { "strncasecmp", (uintptr_t)&strncasecmp },
+        { "strncat", (uintptr_t)&strncat },
+        { "strncmp", (uintptr_t)&strncmp },
+        { "strncpy", (uintptr_t)&strncpy },
+        { "strnlen", (uintptr_t)&strnlen},
+        { "strpbrk", (uintptr_t)&strpbrk },
+        { "strrchr", (uintptr_t)&strrchr },
+        { "strstr", (uintptr_t)&strstr_soloader },
+        { "strtod", (uintptr_t)&strtod },
+        { "strtoimax", (uintptr_t)&strtoimax },
+        { "strtok", (uintptr_t)&strtok},
+        { "strtok_r", (uintptr_t)&strtok_r},
+        { "strtol", (uintptr_t)&strtol },
+        { "strtoll", (uintptr_t)&strtoll },
+        { "strtoul", (uintptr_t)&strtoul },
+        { "strtoull", (uintptr_t)&strtoull },
+        { "strtoumax", (uintptr_t)&strtoumax },
+        { "strxfrm", (uintptr_t)&strxfrm },
+        { "syscall", (uintptr_t)&syscall },
+        { "sysconf", (uintptr_t)&sysconf_tempwrap },
+        { "system", (uintptr_t)&system},
+        { "tan", (uintptr_t)&tan },
+        { "tanf", (uintptr_t)&tanf },
+        { "tanh", (uintptr_t)&tanh },
+        { "time", (uintptr_t)&time },
+        { "tolower", (uintptr_t)&tolower },
+        { "toupper", (uintptr_t)&toupper },
+        { "towlower", (uintptr_t)&towlower },
+        { "towupper", (uintptr_t)&towupper },
+        { "trunc", (uintptr_t)&trunc},
+        { "truncf", (uintptr_t)&truncf},
+        { "ungetc", (uintptr_t)&ungetc },
+        { "ungetwc", (uintptr_t)&ungetwc },
+        { "unlink", (uintptr_t)&unlink},
+        { "usleep", (uintptr_t)&usleep },
+        { "vasprintf", (uintptr_t)&vasprintf},
+        { "vfprintf", (uintptr_t)&vfprintf },
+        { "vprintf", (uintptr_t)&vprintf },
+        { "vsnprintf", (uintptr_t)&vsnprintf },
+        { "vsprintf", (uintptr_t)&vsprintf },
+        { "vsscanf", (uintptr_t)&vsscanf},
+        { "vswprintf", (uintptr_t)&vswprintf },
+        { "wcrtomb", (uintptr_t)&wcrtomb },
+        { "wcscasecmp", (uintptr_t)&wcscasecmp},
+        { "wcscmp", (uintptr_t)&wcscmp },
+        { "wcscoll", (uintptr_t)&wcscoll },
+        { "wcsftime", (uintptr_t)&wcsftime },
+        { "wcslcat", (uintptr_t)&wcslcat},
+        { "wcslcpy", (uintptr_t)&wcslcpy},
+        { "wcslen", (uintptr_t)&wcslen },
+        { "wcsncasecmp", (uintptr_t)&wcsncasecmp},
+        { "wcsncpy", (uintptr_t)&wcsncpy },
+        { "wcsxfrm", (uintptr_t)&wcsxfrm },
+        { "wctob", (uintptr_t)&wctob },
+        { "wctype", (uintptr_t)&wctype },
+        { "wmemchr", (uintptr_t)&wmemchr },
+        { "wmemcmp", (uintptr_t)&wmemcmp },
+        { "wmemcpy", (uintptr_t)&wmemcpy },
+        { "wmemmove", (uintptr_t)&wmemmove },
+        { "wmemset", (uintptr_t)&wmemset },
+        { "write", (uintptr_t)&write_soloader },
 };

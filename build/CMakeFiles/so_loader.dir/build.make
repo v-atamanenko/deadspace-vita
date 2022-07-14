@@ -53,10 +53,10 @@ RM = /usr/local/Cellar/cmake/3.22.1/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/v/Repos/baba/goo_vita
+CMAKE_SOURCE_DIR = /Users/v/Repos/deadspace-vita
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/v/Repos/baba/goo_vita/build
+CMAKE_BINARY_DIR = /Users/v/Repos/deadspace-vita/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/so_loader.dir/depend.make
@@ -72,251 +72,281 @@ include CMakeFiles/so_loader.dir/flags.make
 CMakeFiles/so_loader.dir/loader/main.c.obj: CMakeFiles/so_loader.dir/flags.make
 CMakeFiles/so_loader.dir/loader/main.c.obj: ../loader/main.c
 CMakeFiles/so_loader.dir/loader/main.c.obj: CMakeFiles/so_loader.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/baba/goo_vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/so_loader.dir/loader/main.c.obj"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/main.c.obj -MF CMakeFiles/so_loader.dir/loader/main.c.obj.d -o CMakeFiles/so_loader.dir/loader/main.c.obj -c /Users/v/Repos/baba/goo_vita/loader/main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/deadspace-vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/so_loader.dir/loader/main.c.obj"
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/main.c.obj -MF CMakeFiles/so_loader.dir/loader/main.c.obj.d -o CMakeFiles/so_loader.dir/loader/main.c.obj -c /Users/v/Repos/deadspace-vita/loader/main.c
 
 CMakeFiles/so_loader.dir/loader/main.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/so_loader.dir/loader/main.c.i"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/baba/goo_vita/loader/main.c > CMakeFiles/so_loader.dir/loader/main.c.i
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/deadspace-vita/loader/main.c > CMakeFiles/so_loader.dir/loader/main.c.i
 
 CMakeFiles/so_loader.dir/loader/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/so_loader.dir/loader/main.c.s"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/baba/goo_vita/loader/main.c -o CMakeFiles/so_loader.dir/loader/main.c.s
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/deadspace-vita/loader/main.c -o CMakeFiles/so_loader.dir/loader/main.c.s
+
+CMakeFiles/so_loader.dir/loader/java.io.InputStream.c.obj: CMakeFiles/so_loader.dir/flags.make
+CMakeFiles/so_loader.dir/loader/java.io.InputStream.c.obj: ../loader/java.io.InputStream.c
+CMakeFiles/so_loader.dir/loader/java.io.InputStream.c.obj: CMakeFiles/so_loader.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/deadspace-vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/so_loader.dir/loader/java.io.InputStream.c.obj"
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/java.io.InputStream.c.obj -MF CMakeFiles/so_loader.dir/loader/java.io.InputStream.c.obj.d -o CMakeFiles/so_loader.dir/loader/java.io.InputStream.c.obj -c /Users/v/Repos/deadspace-vita/loader/java.io.InputStream.c
+
+CMakeFiles/so_loader.dir/loader/java.io.InputStream.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/so_loader.dir/loader/java.io.InputStream.c.i"
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/deadspace-vita/loader/java.io.InputStream.c > CMakeFiles/so_loader.dir/loader/java.io.InputStream.c.i
+
+CMakeFiles/so_loader.dir/loader/java.io.InputStream.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/so_loader.dir/loader/java.io.InputStream.c.s"
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/deadspace-vita/loader/java.io.InputStream.c -o CMakeFiles/so_loader.dir/loader/java.io.InputStream.c.s
 
 CMakeFiles/so_loader.dir/loader/default_dynlib.c.obj: CMakeFiles/so_loader.dir/flags.make
 CMakeFiles/so_loader.dir/loader/default_dynlib.c.obj: ../loader/default_dynlib.c
 CMakeFiles/so_loader.dir/loader/default_dynlib.c.obj: CMakeFiles/so_loader.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/baba/goo_vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/so_loader.dir/loader/default_dynlib.c.obj"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/default_dynlib.c.obj -MF CMakeFiles/so_loader.dir/loader/default_dynlib.c.obj.d -o CMakeFiles/so_loader.dir/loader/default_dynlib.c.obj -c /Users/v/Repos/baba/goo_vita/loader/default_dynlib.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/deadspace-vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/so_loader.dir/loader/default_dynlib.c.obj"
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/default_dynlib.c.obj -MF CMakeFiles/so_loader.dir/loader/default_dynlib.c.obj.d -o CMakeFiles/so_loader.dir/loader/default_dynlib.c.obj -c /Users/v/Repos/deadspace-vita/loader/default_dynlib.c
 
 CMakeFiles/so_loader.dir/loader/default_dynlib.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/so_loader.dir/loader/default_dynlib.c.i"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/baba/goo_vita/loader/default_dynlib.c > CMakeFiles/so_loader.dir/loader/default_dynlib.c.i
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/deadspace-vita/loader/default_dynlib.c > CMakeFiles/so_loader.dir/loader/default_dynlib.c.i
 
 CMakeFiles/so_loader.dir/loader/default_dynlib.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/so_loader.dir/loader/default_dynlib.c.s"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/baba/goo_vita/loader/default_dynlib.c -o CMakeFiles/so_loader.dir/loader/default_dynlib.c.s
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/deadspace-vita/loader/default_dynlib.c -o CMakeFiles/so_loader.dir/loader/default_dynlib.c.s
 
 CMakeFiles/so_loader.dir/loader/utils/dialog.c.obj: CMakeFiles/so_loader.dir/flags.make
 CMakeFiles/so_loader.dir/loader/utils/dialog.c.obj: ../loader/utils/dialog.c
 CMakeFiles/so_loader.dir/loader/utils/dialog.c.obj: CMakeFiles/so_loader.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/baba/goo_vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/so_loader.dir/loader/utils/dialog.c.obj"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/utils/dialog.c.obj -MF CMakeFiles/so_loader.dir/loader/utils/dialog.c.obj.d -o CMakeFiles/so_loader.dir/loader/utils/dialog.c.obj -c /Users/v/Repos/baba/goo_vita/loader/utils/dialog.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/deadspace-vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/so_loader.dir/loader/utils/dialog.c.obj"
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/utils/dialog.c.obj -MF CMakeFiles/so_loader.dir/loader/utils/dialog.c.obj.d -o CMakeFiles/so_loader.dir/loader/utils/dialog.c.obj -c /Users/v/Repos/deadspace-vita/loader/utils/dialog.c
 
 CMakeFiles/so_loader.dir/loader/utils/dialog.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/so_loader.dir/loader/utils/dialog.c.i"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/baba/goo_vita/loader/utils/dialog.c > CMakeFiles/so_loader.dir/loader/utils/dialog.c.i
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/deadspace-vita/loader/utils/dialog.c > CMakeFiles/so_loader.dir/loader/utils/dialog.c.i
 
 CMakeFiles/so_loader.dir/loader/utils/dialog.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/so_loader.dir/loader/utils/dialog.c.s"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/baba/goo_vita/loader/utils/dialog.c -o CMakeFiles/so_loader.dir/loader/utils/dialog.c.s
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/deadspace-vita/loader/utils/dialog.c -o CMakeFiles/so_loader.dir/loader/utils/dialog.c.s
 
 CMakeFiles/so_loader.dir/loader/glutil.c.obj: CMakeFiles/so_loader.dir/flags.make
 CMakeFiles/so_loader.dir/loader/glutil.c.obj: ../loader/glutil.c
 CMakeFiles/so_loader.dir/loader/glutil.c.obj: CMakeFiles/so_loader.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/baba/goo_vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/so_loader.dir/loader/glutil.c.obj"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/glutil.c.obj -MF CMakeFiles/so_loader.dir/loader/glutil.c.obj.d -o CMakeFiles/so_loader.dir/loader/glutil.c.obj -c /Users/v/Repos/baba/goo_vita/loader/glutil.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/deadspace-vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/so_loader.dir/loader/glutil.c.obj"
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/glutil.c.obj -MF CMakeFiles/so_loader.dir/loader/glutil.c.obj.d -o CMakeFiles/so_loader.dir/loader/glutil.c.obj -c /Users/v/Repos/deadspace-vita/loader/glutil.c
 
 CMakeFiles/so_loader.dir/loader/glutil.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/so_loader.dir/loader/glutil.c.i"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/baba/goo_vita/loader/glutil.c > CMakeFiles/so_loader.dir/loader/glutil.c.i
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/deadspace-vita/loader/glutil.c > CMakeFiles/so_loader.dir/loader/glutil.c.i
 
 CMakeFiles/so_loader.dir/loader/glutil.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/so_loader.dir/loader/glutil.c.s"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/baba/goo_vita/loader/glutil.c -o CMakeFiles/so_loader.dir/loader/glutil.c.s
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/deadspace-vita/loader/glutil.c -o CMakeFiles/so_loader.dir/loader/glutil.c.s
 
-CMakeFiles/so_loader.dir/loader/jni.c.obj: CMakeFiles/so_loader.dir/flags.make
-CMakeFiles/so_loader.dir/loader/jni.c.obj: ../loader/jni.c
-CMakeFiles/so_loader.dir/loader/jni.c.obj: CMakeFiles/so_loader.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/baba/goo_vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/so_loader.dir/loader/jni.c.obj"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/jni.c.obj -MF CMakeFiles/so_loader.dir/loader/jni.c.obj.d -o CMakeFiles/so_loader.dir/loader/jni.c.obj -c /Users/v/Repos/baba/goo_vita/loader/jni.c
+CMakeFiles/so_loader.dir/loader/jni_fake.c.obj: CMakeFiles/so_loader.dir/flags.make
+CMakeFiles/so_loader.dir/loader/jni_fake.c.obj: ../loader/jni_fake.c
+CMakeFiles/so_loader.dir/loader/jni_fake.c.obj: CMakeFiles/so_loader.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/deadspace-vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/so_loader.dir/loader/jni_fake.c.obj"
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/jni_fake.c.obj -MF CMakeFiles/so_loader.dir/loader/jni_fake.c.obj.d -o CMakeFiles/so_loader.dir/loader/jni_fake.c.obj -c /Users/v/Repos/deadspace-vita/loader/jni_fake.c
 
-CMakeFiles/so_loader.dir/loader/jni.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/so_loader.dir/loader/jni.c.i"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/baba/goo_vita/loader/jni.c > CMakeFiles/so_loader.dir/loader/jni.c.i
+CMakeFiles/so_loader.dir/loader/jni_fake.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/so_loader.dir/loader/jni_fake.c.i"
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/deadspace-vita/loader/jni_fake.c > CMakeFiles/so_loader.dir/loader/jni_fake.c.i
 
-CMakeFiles/so_loader.dir/loader/jni.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/so_loader.dir/loader/jni.c.s"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/baba/goo_vita/loader/jni.c -o CMakeFiles/so_loader.dir/loader/jni.c.s
+CMakeFiles/so_loader.dir/loader/jni_fake.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/so_loader.dir/loader/jni_fake.c.s"
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/deadspace-vita/loader/jni_fake.c -o CMakeFiles/so_loader.dir/loader/jni_fake.c.s
 
 CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.obj: CMakeFiles/so_loader.dir/flags.make
 CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.obj: ../loader/utils/loading_screen.c
 CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.obj: CMakeFiles/so_loader.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/baba/goo_vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.obj"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.obj -MF CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.obj.d -o CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.obj -c /Users/v/Repos/baba/goo_vita/loader/utils/loading_screen.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/deadspace-vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.obj"
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.obj -MF CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.obj.d -o CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.obj -c /Users/v/Repos/deadspace-vita/loader/utils/loading_screen.c
 
 CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.i"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/baba/goo_vita/loader/utils/loading_screen.c > CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.i
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/deadspace-vita/loader/utils/loading_screen.c > CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.i
 
 CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.s"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/baba/goo_vita/loader/utils/loading_screen.c -o CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.s
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/deadspace-vita/loader/utils/loading_screen.c -o CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.s
 
 CMakeFiles/so_loader.dir/loader/patch_game.c.obj: CMakeFiles/so_loader.dir/flags.make
 CMakeFiles/so_loader.dir/loader/patch_game.c.obj: ../loader/patch_game.c
 CMakeFiles/so_loader.dir/loader/patch_game.c.obj: CMakeFiles/so_loader.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/baba/goo_vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/so_loader.dir/loader/patch_game.c.obj"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/patch_game.c.obj -MF CMakeFiles/so_loader.dir/loader/patch_game.c.obj.d -o CMakeFiles/so_loader.dir/loader/patch_game.c.obj -c /Users/v/Repos/baba/goo_vita/loader/patch_game.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/deadspace-vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/so_loader.dir/loader/patch_game.c.obj"
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/patch_game.c.obj -MF CMakeFiles/so_loader.dir/loader/patch_game.c.obj.d -o CMakeFiles/so_loader.dir/loader/patch_game.c.obj -c /Users/v/Repos/deadspace-vita/loader/patch_game.c
 
 CMakeFiles/so_loader.dir/loader/patch_game.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/so_loader.dir/loader/patch_game.c.i"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/baba/goo_vita/loader/patch_game.c > CMakeFiles/so_loader.dir/loader/patch_game.c.i
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/deadspace-vita/loader/patch_game.c > CMakeFiles/so_loader.dir/loader/patch_game.c.i
 
 CMakeFiles/so_loader.dir/loader/patch_game.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/so_loader.dir/loader/patch_game.c.s"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/baba/goo_vita/loader/patch_game.c -o CMakeFiles/so_loader.dir/loader/patch_game.c.s
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/deadspace-vita/loader/patch_game.c -o CMakeFiles/so_loader.dir/loader/patch_game.c.s
 
 CMakeFiles/so_loader.dir/loader/utils/utils.c.obj: CMakeFiles/so_loader.dir/flags.make
 CMakeFiles/so_loader.dir/loader/utils/utils.c.obj: ../loader/utils/utils.c
 CMakeFiles/so_loader.dir/loader/utils/utils.c.obj: CMakeFiles/so_loader.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/baba/goo_vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/so_loader.dir/loader/utils/utils.c.obj"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/utils/utils.c.obj -MF CMakeFiles/so_loader.dir/loader/utils/utils.c.obj.d -o CMakeFiles/so_loader.dir/loader/utils/utils.c.obj -c /Users/v/Repos/baba/goo_vita/loader/utils/utils.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/deadspace-vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/so_loader.dir/loader/utils/utils.c.obj"
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/utils/utils.c.obj -MF CMakeFiles/so_loader.dir/loader/utils/utils.c.obj.d -o CMakeFiles/so_loader.dir/loader/utils/utils.c.obj -c /Users/v/Repos/deadspace-vita/loader/utils/utils.c
 
 CMakeFiles/so_loader.dir/loader/utils/utils.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/so_loader.dir/loader/utils/utils.c.i"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/baba/goo_vita/loader/utils/utils.c > CMakeFiles/so_loader.dir/loader/utils/utils.c.i
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/deadspace-vita/loader/utils/utils.c > CMakeFiles/so_loader.dir/loader/utils/utils.c.i
 
 CMakeFiles/so_loader.dir/loader/utils/utils.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/so_loader.dir/loader/utils/utils.c.s"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/baba/goo_vita/loader/utils/utils.c -o CMakeFiles/so_loader.dir/loader/utils/utils.c.s
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/deadspace-vita/loader/utils/utils.c -o CMakeFiles/so_loader.dir/loader/utils/utils.c.s
+
+CMakeFiles/so_loader.dir/loader/reimpl/ctype_patch.c.obj: CMakeFiles/so_loader.dir/flags.make
+CMakeFiles/so_loader.dir/loader/reimpl/ctype_patch.c.obj: ../loader/reimpl/ctype_patch.c
+CMakeFiles/so_loader.dir/loader/reimpl/ctype_patch.c.obj: CMakeFiles/so_loader.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/deadspace-vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/so_loader.dir/loader/reimpl/ctype_patch.c.obj"
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/reimpl/ctype_patch.c.obj -MF CMakeFiles/so_loader.dir/loader/reimpl/ctype_patch.c.obj.d -o CMakeFiles/so_loader.dir/loader/reimpl/ctype_patch.c.obj -c /Users/v/Repos/deadspace-vita/loader/reimpl/ctype_patch.c
+
+CMakeFiles/so_loader.dir/loader/reimpl/ctype_patch.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/so_loader.dir/loader/reimpl/ctype_patch.c.i"
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/deadspace-vita/loader/reimpl/ctype_patch.c > CMakeFiles/so_loader.dir/loader/reimpl/ctype_patch.c.i
+
+CMakeFiles/so_loader.dir/loader/reimpl/ctype_patch.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/so_loader.dir/loader/reimpl/ctype_patch.c.s"
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/deadspace-vita/loader/reimpl/ctype_patch.c -o CMakeFiles/so_loader.dir/loader/reimpl/ctype_patch.c.s
 
 CMakeFiles/so_loader.dir/loader/reimpl/env.c.obj: CMakeFiles/so_loader.dir/flags.make
 CMakeFiles/so_loader.dir/loader/reimpl/env.c.obj: ../loader/reimpl/env.c
 CMakeFiles/so_loader.dir/loader/reimpl/env.c.obj: CMakeFiles/so_loader.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/baba/goo_vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/so_loader.dir/loader/reimpl/env.c.obj"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/reimpl/env.c.obj -MF CMakeFiles/so_loader.dir/loader/reimpl/env.c.obj.d -o CMakeFiles/so_loader.dir/loader/reimpl/env.c.obj -c /Users/v/Repos/baba/goo_vita/loader/reimpl/env.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/deadspace-vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/so_loader.dir/loader/reimpl/env.c.obj"
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/reimpl/env.c.obj -MF CMakeFiles/so_loader.dir/loader/reimpl/env.c.obj.d -o CMakeFiles/so_loader.dir/loader/reimpl/env.c.obj -c /Users/v/Repos/deadspace-vita/loader/reimpl/env.c
 
 CMakeFiles/so_loader.dir/loader/reimpl/env.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/so_loader.dir/loader/reimpl/env.c.i"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/baba/goo_vita/loader/reimpl/env.c > CMakeFiles/so_loader.dir/loader/reimpl/env.c.i
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/deadspace-vita/loader/reimpl/env.c > CMakeFiles/so_loader.dir/loader/reimpl/env.c.i
 
 CMakeFiles/so_loader.dir/loader/reimpl/env.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/so_loader.dir/loader/reimpl/env.c.s"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/baba/goo_vita/loader/reimpl/env.c -o CMakeFiles/so_loader.dir/loader/reimpl/env.c.s
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/deadspace-vita/loader/reimpl/env.c -o CMakeFiles/so_loader.dir/loader/reimpl/env.c.s
 
 CMakeFiles/so_loader.dir/loader/reimpl/io.c.obj: CMakeFiles/so_loader.dir/flags.make
 CMakeFiles/so_loader.dir/loader/reimpl/io.c.obj: ../loader/reimpl/io.c
 CMakeFiles/so_loader.dir/loader/reimpl/io.c.obj: CMakeFiles/so_loader.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/baba/goo_vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/so_loader.dir/loader/reimpl/io.c.obj"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/reimpl/io.c.obj -MF CMakeFiles/so_loader.dir/loader/reimpl/io.c.obj.d -o CMakeFiles/so_loader.dir/loader/reimpl/io.c.obj -c /Users/v/Repos/baba/goo_vita/loader/reimpl/io.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/deadspace-vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/so_loader.dir/loader/reimpl/io.c.obj"
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/reimpl/io.c.obj -MF CMakeFiles/so_loader.dir/loader/reimpl/io.c.obj.d -o CMakeFiles/so_loader.dir/loader/reimpl/io.c.obj -c /Users/v/Repos/deadspace-vita/loader/reimpl/io.c
 
 CMakeFiles/so_loader.dir/loader/reimpl/io.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/so_loader.dir/loader/reimpl/io.c.i"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/baba/goo_vita/loader/reimpl/io.c > CMakeFiles/so_loader.dir/loader/reimpl/io.c.i
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/deadspace-vita/loader/reimpl/io.c > CMakeFiles/so_loader.dir/loader/reimpl/io.c.i
 
 CMakeFiles/so_loader.dir/loader/reimpl/io.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/so_loader.dir/loader/reimpl/io.c.s"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/baba/goo_vita/loader/reimpl/io.c -o CMakeFiles/so_loader.dir/loader/reimpl/io.c.s
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/deadspace-vita/loader/reimpl/io.c -o CMakeFiles/so_loader.dir/loader/reimpl/io.c.s
 
 CMakeFiles/so_loader.dir/loader/reimpl/log.c.obj: CMakeFiles/so_loader.dir/flags.make
 CMakeFiles/so_loader.dir/loader/reimpl/log.c.obj: ../loader/reimpl/log.c
 CMakeFiles/so_loader.dir/loader/reimpl/log.c.obj: CMakeFiles/so_loader.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/baba/goo_vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/so_loader.dir/loader/reimpl/log.c.obj"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/reimpl/log.c.obj -MF CMakeFiles/so_loader.dir/loader/reimpl/log.c.obj.d -o CMakeFiles/so_loader.dir/loader/reimpl/log.c.obj -c /Users/v/Repos/baba/goo_vita/loader/reimpl/log.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/deadspace-vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/so_loader.dir/loader/reimpl/log.c.obj"
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/reimpl/log.c.obj -MF CMakeFiles/so_loader.dir/loader/reimpl/log.c.obj.d -o CMakeFiles/so_loader.dir/loader/reimpl/log.c.obj -c /Users/v/Repos/deadspace-vita/loader/reimpl/log.c
 
 CMakeFiles/so_loader.dir/loader/reimpl/log.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/so_loader.dir/loader/reimpl/log.c.i"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/baba/goo_vita/loader/reimpl/log.c > CMakeFiles/so_loader.dir/loader/reimpl/log.c.i
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/deadspace-vita/loader/reimpl/log.c > CMakeFiles/so_loader.dir/loader/reimpl/log.c.i
 
 CMakeFiles/so_loader.dir/loader/reimpl/log.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/so_loader.dir/loader/reimpl/log.c.s"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/baba/goo_vita/loader/reimpl/log.c -o CMakeFiles/so_loader.dir/loader/reimpl/log.c.s
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/deadspace-vita/loader/reimpl/log.c -o CMakeFiles/so_loader.dir/loader/reimpl/log.c.s
 
 CMakeFiles/so_loader.dir/loader/reimpl/mem.c.obj: CMakeFiles/so_loader.dir/flags.make
 CMakeFiles/so_loader.dir/loader/reimpl/mem.c.obj: ../loader/reimpl/mem.c
 CMakeFiles/so_loader.dir/loader/reimpl/mem.c.obj: CMakeFiles/so_loader.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/baba/goo_vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/so_loader.dir/loader/reimpl/mem.c.obj"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/reimpl/mem.c.obj -MF CMakeFiles/so_loader.dir/loader/reimpl/mem.c.obj.d -o CMakeFiles/so_loader.dir/loader/reimpl/mem.c.obj -c /Users/v/Repos/baba/goo_vita/loader/reimpl/mem.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/deadspace-vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/so_loader.dir/loader/reimpl/mem.c.obj"
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/reimpl/mem.c.obj -MF CMakeFiles/so_loader.dir/loader/reimpl/mem.c.obj.d -o CMakeFiles/so_loader.dir/loader/reimpl/mem.c.obj -c /Users/v/Repos/deadspace-vita/loader/reimpl/mem.c
 
 CMakeFiles/so_loader.dir/loader/reimpl/mem.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/so_loader.dir/loader/reimpl/mem.c.i"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/baba/goo_vita/loader/reimpl/mem.c > CMakeFiles/so_loader.dir/loader/reimpl/mem.c.i
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/deadspace-vita/loader/reimpl/mem.c > CMakeFiles/so_loader.dir/loader/reimpl/mem.c.i
 
 CMakeFiles/so_loader.dir/loader/reimpl/mem.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/so_loader.dir/loader/reimpl/mem.c.s"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/baba/goo_vita/loader/reimpl/mem.c -o CMakeFiles/so_loader.dir/loader/reimpl/mem.c.s
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/deadspace-vita/loader/reimpl/mem.c -o CMakeFiles/so_loader.dir/loader/reimpl/mem.c.s
 
 CMakeFiles/so_loader.dir/loader/reimpl/pthr.c.obj: CMakeFiles/so_loader.dir/flags.make
 CMakeFiles/so_loader.dir/loader/reimpl/pthr.c.obj: ../loader/reimpl/pthr.c
 CMakeFiles/so_loader.dir/loader/reimpl/pthr.c.obj: CMakeFiles/so_loader.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/baba/goo_vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/so_loader.dir/loader/reimpl/pthr.c.obj"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/reimpl/pthr.c.obj -MF CMakeFiles/so_loader.dir/loader/reimpl/pthr.c.obj.d -o CMakeFiles/so_loader.dir/loader/reimpl/pthr.c.obj -c /Users/v/Repos/baba/goo_vita/loader/reimpl/pthr.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/deadspace-vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/so_loader.dir/loader/reimpl/pthr.c.obj"
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/reimpl/pthr.c.obj -MF CMakeFiles/so_loader.dir/loader/reimpl/pthr.c.obj.d -o CMakeFiles/so_loader.dir/loader/reimpl/pthr.c.obj -c /Users/v/Repos/deadspace-vita/loader/reimpl/pthr.c
 
 CMakeFiles/so_loader.dir/loader/reimpl/pthr.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/so_loader.dir/loader/reimpl/pthr.c.i"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/baba/goo_vita/loader/reimpl/pthr.c > CMakeFiles/so_loader.dir/loader/reimpl/pthr.c.i
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/deadspace-vita/loader/reimpl/pthr.c > CMakeFiles/so_loader.dir/loader/reimpl/pthr.c.i
 
 CMakeFiles/so_loader.dir/loader/reimpl/pthr.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/so_loader.dir/loader/reimpl/pthr.c.s"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/baba/goo_vita/loader/reimpl/pthr.c -o CMakeFiles/so_loader.dir/loader/reimpl/pthr.c.s
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/deadspace-vita/loader/reimpl/pthr.c -o CMakeFiles/so_loader.dir/loader/reimpl/pthr.c.s
 
 CMakeFiles/so_loader.dir/loader/reimpl/sys.c.obj: CMakeFiles/so_loader.dir/flags.make
 CMakeFiles/so_loader.dir/loader/reimpl/sys.c.obj: ../loader/reimpl/sys.c
 CMakeFiles/so_loader.dir/loader/reimpl/sys.c.obj: CMakeFiles/so_loader.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/baba/goo_vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/so_loader.dir/loader/reimpl/sys.c.obj"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/reimpl/sys.c.obj -MF CMakeFiles/so_loader.dir/loader/reimpl/sys.c.obj.d -o CMakeFiles/so_loader.dir/loader/reimpl/sys.c.obj -c /Users/v/Repos/baba/goo_vita/loader/reimpl/sys.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/deadspace-vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/so_loader.dir/loader/reimpl/sys.c.obj"
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/loader/reimpl/sys.c.obj -MF CMakeFiles/so_loader.dir/loader/reimpl/sys.c.obj.d -o CMakeFiles/so_loader.dir/loader/reimpl/sys.c.obj -c /Users/v/Repos/deadspace-vita/loader/reimpl/sys.c
 
 CMakeFiles/so_loader.dir/loader/reimpl/sys.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/so_loader.dir/loader/reimpl/sys.c.i"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/baba/goo_vita/loader/reimpl/sys.c > CMakeFiles/so_loader.dir/loader/reimpl/sys.c.i
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/deadspace-vita/loader/reimpl/sys.c > CMakeFiles/so_loader.dir/loader/reimpl/sys.c.i
 
 CMakeFiles/so_loader.dir/loader/reimpl/sys.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/so_loader.dir/loader/reimpl/sys.c.s"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/baba/goo_vita/loader/reimpl/sys.c -o CMakeFiles/so_loader.dir/loader/reimpl/sys.c.s
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/deadspace-vita/loader/reimpl/sys.c -o CMakeFiles/so_loader.dir/loader/reimpl/sys.c.s
 
 CMakeFiles/so_loader.dir/lib/fios/fios.c.obj: CMakeFiles/so_loader.dir/flags.make
 CMakeFiles/so_loader.dir/lib/fios/fios.c.obj: ../lib/fios/fios.c
 CMakeFiles/so_loader.dir/lib/fios/fios.c.obj: CMakeFiles/so_loader.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/baba/goo_vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/so_loader.dir/lib/fios/fios.c.obj"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/lib/fios/fios.c.obj -MF CMakeFiles/so_loader.dir/lib/fios/fios.c.obj.d -o CMakeFiles/so_loader.dir/lib/fios/fios.c.obj -c /Users/v/Repos/baba/goo_vita/lib/fios/fios.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/deadspace-vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/so_loader.dir/lib/fios/fios.c.obj"
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/lib/fios/fios.c.obj -MF CMakeFiles/so_loader.dir/lib/fios/fios.c.obj.d -o CMakeFiles/so_loader.dir/lib/fios/fios.c.obj -c /Users/v/Repos/deadspace-vita/lib/fios/fios.c
 
 CMakeFiles/so_loader.dir/lib/fios/fios.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/so_loader.dir/lib/fios/fios.c.i"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/baba/goo_vita/lib/fios/fios.c > CMakeFiles/so_loader.dir/lib/fios/fios.c.i
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/deadspace-vita/lib/fios/fios.c > CMakeFiles/so_loader.dir/lib/fios/fios.c.i
 
 CMakeFiles/so_loader.dir/lib/fios/fios.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/so_loader.dir/lib/fios/fios.c.s"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/baba/goo_vita/lib/fios/fios.c -o CMakeFiles/so_loader.dir/lib/fios/fios.c.s
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/deadspace-vita/lib/fios/fios.c -o CMakeFiles/so_loader.dir/lib/fios/fios.c.s
 
 CMakeFiles/so_loader.dir/lib/sha1/sha1.c.obj: CMakeFiles/so_loader.dir/flags.make
 CMakeFiles/so_loader.dir/lib/sha1/sha1.c.obj: ../lib/sha1/sha1.c
 CMakeFiles/so_loader.dir/lib/sha1/sha1.c.obj: CMakeFiles/so_loader.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/baba/goo_vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/so_loader.dir/lib/sha1/sha1.c.obj"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/lib/sha1/sha1.c.obj -MF CMakeFiles/so_loader.dir/lib/sha1/sha1.c.obj.d -o CMakeFiles/so_loader.dir/lib/sha1/sha1.c.obj -c /Users/v/Repos/baba/goo_vita/lib/sha1/sha1.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/deadspace-vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object CMakeFiles/so_loader.dir/lib/sha1/sha1.c.obj"
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/lib/sha1/sha1.c.obj -MF CMakeFiles/so_loader.dir/lib/sha1/sha1.c.obj.d -o CMakeFiles/so_loader.dir/lib/sha1/sha1.c.obj -c /Users/v/Repos/deadspace-vita/lib/sha1/sha1.c
 
 CMakeFiles/so_loader.dir/lib/sha1/sha1.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/so_loader.dir/lib/sha1/sha1.c.i"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/baba/goo_vita/lib/sha1/sha1.c > CMakeFiles/so_loader.dir/lib/sha1/sha1.c.i
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/deadspace-vita/lib/sha1/sha1.c > CMakeFiles/so_loader.dir/lib/sha1/sha1.c.i
 
 CMakeFiles/so_loader.dir/lib/sha1/sha1.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/so_loader.dir/lib/sha1/sha1.c.s"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/baba/goo_vita/lib/sha1/sha1.c -o CMakeFiles/so_loader.dir/lib/sha1/sha1.c.s
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/deadspace-vita/lib/sha1/sha1.c -o CMakeFiles/so_loader.dir/lib/sha1/sha1.c.s
 
 CMakeFiles/so_loader.dir/lib/so_util/so_util.c.obj: CMakeFiles/so_loader.dir/flags.make
 CMakeFiles/so_loader.dir/lib/so_util/so_util.c.obj: ../lib/so_util/so_util.c
 CMakeFiles/so_loader.dir/lib/so_util/so_util.c.obj: CMakeFiles/so_loader.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/baba/goo_vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/so_loader.dir/lib/so_util/so_util.c.obj"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/lib/so_util/so_util.c.obj -MF CMakeFiles/so_loader.dir/lib/so_util/so_util.c.obj.d -o CMakeFiles/so_loader.dir/lib/so_util/so_util.c.obj -c /Users/v/Repos/baba/goo_vita/lib/so_util/so_util.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/v/Repos/deadspace-vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/so_loader.dir/lib/so_util/so_util.c.obj"
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/so_loader.dir/lib/so_util/so_util.c.obj -MF CMakeFiles/so_loader.dir/lib/so_util/so_util.c.obj.d -o CMakeFiles/so_loader.dir/lib/so_util/so_util.c.obj -c /Users/v/Repos/deadspace-vita/lib/so_util/so_util.c
 
 CMakeFiles/so_loader.dir/lib/so_util/so_util.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/so_loader.dir/lib/so_util/so_util.c.i"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/baba/goo_vita/lib/so_util/so_util.c > CMakeFiles/so_loader.dir/lib/so_util/so_util.c.i
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/v/Repos/deadspace-vita/lib/so_util/so_util.c > CMakeFiles/so_loader.dir/lib/so_util/so_util.c.i
 
 CMakeFiles/so_loader.dir/lib/so_util/so_util.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/so_loader.dir/lib/so_util/so_util.c.s"
-	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/baba/goo_vita/lib/so_util/so_util.c -o CMakeFiles/so_loader.dir/lib/so_util/so_util.c.s
+	/usr/local/vitasdk/bin/arm-vita-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/v/Repos/deadspace-vita/lib/so_util/so_util.c -o CMakeFiles/so_loader.dir/lib/so_util/so_util.c.s
 
 # Object files for target so_loader
 so_loader_OBJECTS = \
 "CMakeFiles/so_loader.dir/loader/main.c.obj" \
+"CMakeFiles/so_loader.dir/loader/java.io.InputStream.c.obj" \
 "CMakeFiles/so_loader.dir/loader/default_dynlib.c.obj" \
 "CMakeFiles/so_loader.dir/loader/utils/dialog.c.obj" \
 "CMakeFiles/so_loader.dir/loader/glutil.c.obj" \
-"CMakeFiles/so_loader.dir/loader/jni.c.obj" \
+"CMakeFiles/so_loader.dir/loader/jni_fake.c.obj" \
 "CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.obj" \
 "CMakeFiles/so_loader.dir/loader/patch_game.c.obj" \
 "CMakeFiles/so_loader.dir/loader/utils/utils.c.obj" \
+"CMakeFiles/so_loader.dir/loader/reimpl/ctype_patch.c.obj" \
 "CMakeFiles/so_loader.dir/loader/reimpl/env.c.obj" \
 "CMakeFiles/so_loader.dir/loader/reimpl/io.c.obj" \
 "CMakeFiles/so_loader.dir/loader/reimpl/log.c.obj" \
@@ -331,13 +361,15 @@ so_loader_OBJECTS = \
 so_loader_EXTERNAL_OBJECTS =
 
 so_loader: CMakeFiles/so_loader.dir/loader/main.c.obj
+so_loader: CMakeFiles/so_loader.dir/loader/java.io.InputStream.c.obj
 so_loader: CMakeFiles/so_loader.dir/loader/default_dynlib.c.obj
 so_loader: CMakeFiles/so_loader.dir/loader/utils/dialog.c.obj
 so_loader: CMakeFiles/so_loader.dir/loader/glutil.c.obj
-so_loader: CMakeFiles/so_loader.dir/loader/jni.c.obj
+so_loader: CMakeFiles/so_loader.dir/loader/jni_fake.c.obj
 so_loader: CMakeFiles/so_loader.dir/loader/utils/loading_screen.c.obj
 so_loader: CMakeFiles/so_loader.dir/loader/patch_game.c.obj
 so_loader: CMakeFiles/so_loader.dir/loader/utils/utils.c.obj
+so_loader: CMakeFiles/so_loader.dir/loader/reimpl/ctype_patch.c.obj
 so_loader: CMakeFiles/so_loader.dir/loader/reimpl/env.c.obj
 so_loader: CMakeFiles/so_loader.dir/loader/reimpl/io.c.obj
 so_loader: CMakeFiles/so_loader.dir/loader/reimpl/log.c.obj
@@ -352,9 +384,9 @@ so_loader: ../lib/kubridge/libkubridge_stub.a
 so_loader: ../lib/libc_bridge/out/libSceLibcBridge_stub.a
 so_loader: ../lib/libc_bridge/out/libSceLibcBridge_stub.a
 so_loader: CMakeFiles/so_loader.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/v/Repos/baba/goo_vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Linking C executable so_loader"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/v/Repos/deadspace-vita/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Linking C executable so_loader"
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building stubs for libc_bridge"
-	cd /Users/v/Repos/baba/goo_vita && make -C lib/libc_bridge
+	cd /Users/v/Repos/deadspace-vita && make -C lib/libc_bridge
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/so_loader.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -366,6 +398,6 @@ CMakeFiles/so_loader.dir/clean:
 .PHONY : CMakeFiles/so_loader.dir/clean
 
 CMakeFiles/so_loader.dir/depend:
-	cd /Users/v/Repos/baba/goo_vita/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/v/Repos/baba/goo_vita /Users/v/Repos/baba/goo_vita /Users/v/Repos/baba/goo_vita/build /Users/v/Repos/baba/goo_vita/build /Users/v/Repos/baba/goo_vita/build/CMakeFiles/so_loader.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/v/Repos/deadspace-vita/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/v/Repos/deadspace-vita /Users/v/Repos/deadspace-vita /Users/v/Repos/deadspace-vita/build /Users/v/Repos/deadspace-vita/build /Users/v/Repos/deadspace-vita/build/CMakeFiles/so_loader.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/so_loader.dir/depend
 

@@ -1,37 +1,23 @@
 CMakeFiles/so_loader.dir/loader/main.c.obj: \
- /Users/v/Repos/baba/goo_vita/loader/main.c \
- /Users/v/Repos/baba/goo_vita/loader/main.h \
- /Users/v/Repos/baba/goo_vita/loader/config.h \
- /Users/v/Repos/baba/goo_vita/loader/utils/utils.h \
- /Users/v/Repos/baba/goo_vita/loader/config.h \
- /Users/v/Repos/baba/goo_vita/lib/so_util/so_util.h \
- /Users/v/Repos/baba/goo_vita/lib/so_util/elf.h \
- /usr/local/vitasdk/arm-vita-eabi/include/sys/cdefs.h \
- /usr/local/vitasdk/arm-vita-eabi/include/machine/_default_types.h \
- /usr/local/vitasdk/arm-vita-eabi/include/sys/features.h \
- /usr/local/vitasdk/arm-vita-eabi/include/_newlib_version.h \
- /usr/local/vitasdk/arm-vita-eabi/include/bits/posix_opt.h \
- /usr/local/vitasdk/lib/gcc/arm-vita-eabi/10.3.0/include-fixed/limits.h \
- /usr/local/vitasdk/lib/gcc/arm-vita-eabi/10.3.0/include/stddef.h \
- /usr/local/vitasdk/lib/gcc/arm-vita-eabi/10.3.0/include/stdint.h \
- /usr/local/vitasdk/arm-vita-eabi/include/stdint.h \
- /usr/local/vitasdk/arm-vita-eabi/include/sys/_intsup.h \
- /usr/local/vitasdk/arm-vita-eabi/include/sys/_stdint.h \
- /usr/local/vitasdk/arm-vita-eabi/include/psp2/types.h \
- /usr/local/vitasdk/arm-vita-eabi/include/psp2common/types.h \
- /usr/local/vitasdk/arm-vita-eabi/include/pthread.h \
- /usr/local/vitasdk/arm-vita-eabi/include/pte_types.h \
- /usr/local/vitasdk/arm-vita-eabi/include/errno.h \
- /usr/local/vitasdk/arm-vita-eabi/include/sys/errno.h \
- /usr/local/vitasdk/arm-vita-eabi/include/sys/reent.h \
+ /Users/v/Repos/deadspace-vita/loader/main.c \
+ /Users/v/Repos/deadspace-vita/loader/main.h \
+ /Users/v/Repos/deadspace-vita/loader/config.h \
+ /Users/v/Repos/deadspace-vita/loader/utils/utils.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/types.h \
  /usr/local/vitasdk/arm-vita-eabi/include/_ansi.h \
  /usr/local/vitasdk/arm-vita-eabi/include/newlib.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/_newlib_version.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/config.h \
  /usr/local/vitasdk/arm-vita-eabi/include/machine/ieeefp.h \
- /usr/local/vitasdk/arm-vita-eabi/include/sys/_types.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/features.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/bits/posix_opt.h \
+ /usr/local/vitasdk/lib/gcc/arm-vita-eabi/10.3.0/include-fixed/limits.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/cdefs.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/machine/_default_types.h \
+ /usr/local/vitasdk/lib/gcc/arm-vita-eabi/10.3.0/include/stddef.h \
  /usr/local/vitasdk/arm-vita-eabi/include/machine/_types.h \
- /usr/local/vitasdk/arm-vita-eabi/include/sys/lock.h \
- /usr/local/vitasdk/arm-vita-eabi/include/sys/types.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/_types.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/_stdint.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/select.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/_sigset.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/_timeval.h \
@@ -42,6 +28,20 @@ CMakeFiles/so_loader.dir/loader/main.c.obj: \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/_pthreadtypes.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/sched.h \
  /usr/local/vitasdk/arm-vita-eabi/include/machine/types.h \
+ /Users/v/Repos/deadspace-vita/loader/config.h \
+ /Users/v/Repos/deadspace-vita/lib/so_util/so_util.h \
+ /Users/v/Repos/deadspace-vita/lib/so_util/elf.h \
+ /usr/local/vitasdk/lib/gcc/arm-vita-eabi/10.3.0/include/stdint.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/stdint.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/_intsup.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/psp2/types.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/psp2common/types.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/pthread.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/pte_types.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/errno.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/errno.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/reent.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/lock.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/timeb.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sched.h \
  /usr/local/vitasdk/arm-vita-eabi/include/signal.h \
@@ -59,16 +59,23 @@ CMakeFiles/so_loader.dir/loader/main.c.obj: \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/string.h \
  /usr/local/vitasdk/arm-vita-eabi/include/psp2/apputil.h \
  /usr/local/vitasdk/arm-vita-eabi/include/psp2/power.h \
- /Users/v/Repos/baba/goo_vita/loader/default_dynlib.h \
- /Users/v/Repos/baba/goo_vita/lib/fios/fios.h \
- /Users/v/Repos/baba/goo_vita/loader/glutil.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/unistd.h \
+ /Users/v/Repos/deadspace-vita/loader/default_dynlib.h \
+ /Users/v/Repos/deadspace-vita/lib/fios/fios.h \
+ /Users/v/Repos/deadspace-vita/loader/glutil.h \
  /usr/local/vitasdk/arm-vita-eabi/include/vitaGL.h \
  /usr/local/vitasdk/arm-vita-eabi/include/vitashark.h \
  /usr/local/vitasdk/arm-vita-eabi/include/psp2/gxm.h \
- /Users/v/Repos/baba/goo_vita/loader/jni.h \
- /Users/v/Repos/baba/goo_vita/loader/patch_game.h \
- /Users/v/Repos/baba/goo_vita/loader/reimpl/io.h \
- /usr/local/vitasdk/arm-vita-eabi/include/stdio.h \
+ /Users/v/Repos/deadspace-vita/loader/jni_fake.h \
+ /Users/v/Repos/deadspace-vita/loader/android/jni.h \
  /usr/local/vitasdk/lib/gcc/arm-vita-eabi/10.3.0/include/stdarg.h \
+ /Users/v/Repos/deadspace-vita/loader/patch_game.h \
+ /Users/v/Repos/deadspace-vita/loader/reimpl/io.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/stdio.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/stdio.h \
- /Users/v/Repos/baba/goo_vita/loader/utils/dialog.h
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/dirent.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/time.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/machine/_time.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/psp2/io/dirent.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/psp2common/kernel/iofilemgr.h \
+ /Users/v/Repos/deadspace-vita/loader/utils/dialog.h

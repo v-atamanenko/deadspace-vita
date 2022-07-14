@@ -1,6 +1,6 @@
-/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/Applications/CLion.app/Contents/bin/ninja/mac/ninja -DCMAKE_C_COMPILER=/usr/local/vitasdk/bin/arm-vita-eabi-gcc -DCMAKE_CXX_COMPILER=/usr/local/vitasdk/bin/arm-vita-eabi-g++ -G Ninja /Users/v/Repos/baba/goo_vita
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/Applications/CLion.app/Contents/bin/ninja/mac/ninja -DCMAKE_C_COMPILER=/usr/local/vitasdk/bin/arm-vita-eabi-gcc -DCMAKE_CXX_COMPILER=/usr/local/vitasdk/bin/arm-vita-eabi-g++ -G Ninja /Users/v/Repos/deadspace-vita
 CMake Warning at CMakeLists.txt:15 (message):
-  PSVITAIP environment variable is not set, using default IP 192.168.1.17
+  PSVITAIP environment variable is not set, using default IP 192.168.1.20
 
 
 CMake Warning at CMakeLists.txt:22 (message):
@@ -10,4 +10,4 @@ CMake Warning at CMakeLists.txt:22 (message):
 
 -- Configuring done
 -- Generating done
--- Build files have been written to: /Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk
+-- Build files have been written to: /Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk

@@ -1,5 +1,5 @@
 CMakeFiles/so_loader.dir/lib/so_util/so_util.c.obj: \
- /Users/v/Repos/baba/goo_vita/lib/so_util/so_util.c \
+ /Users/v/Repos/deadspace-vita/lib/so_util/so_util.c \
  /usr/local/vitasdk/arm-vita-eabi/include/vitasdk.h \
  /usr/local/vitasdk/arm-vita-eabi/include/vitasdk/utils.h \
  /usr/local/vitasdk/arm-vita-eabi/include/psp2/types.h \
@@ -151,12 +151,12 @@ CMakeFiles/so_loader.dir/lib/so_util/so_util.c.obj: \
  /usr/local/vitasdk/arm-vita-eabi/include/stdlib.h \
  /usr/local/vitasdk/arm-vita-eabi/include/machine/stdlib.h \
  /usr/local/vitasdk/arm-vita-eabi/include/alloca.h \
- /Users/v/Repos/baba/goo_vita/loader/main.h \
- /Users/v/Repos/baba/goo_vita/loader/config.h \
- /Users/v/Repos/baba/goo_vita/loader/utils/utils.h \
- /Users/v/Repos/baba/goo_vita/loader/config.h \
- /Users/v/Repos/baba/goo_vita/lib/so_util/so_util.h \
- /Users/v/Repos/baba/goo_vita/lib/so_util/elf.h \
- /Users/v/Repos/baba/goo_vita/loader/utils/dialog.h \
- /Users/v/Repos/baba/goo_vita/lib/so_util/so_util.h \
- /Users/v/Repos/baba/goo_vita/loader/utils/utils.h
+ /Users/v/Repos/deadspace-vita/loader/main.h \
+ /Users/v/Repos/deadspace-vita/loader/config.h \
+ /Users/v/Repos/deadspace-vita/loader/utils/utils.h \
+ /Users/v/Repos/deadspace-vita/loader/config.h \
+ /Users/v/Repos/deadspace-vita/lib/so_util/so_util.h \
+ /Users/v/Repos/deadspace-vita/lib/so_util/elf.h \
+ /Users/v/Repos/deadspace-vita/loader/utils/dialog.h \
+ /Users/v/Repos/deadspace-vita/lib/so_util/so_util.h \
+ /Users/v/Repos/deadspace-vita/loader/utils/utils.h

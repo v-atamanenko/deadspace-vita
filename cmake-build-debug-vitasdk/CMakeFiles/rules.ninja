@@ -42,7 +42,7 @@ rule C_EXECUTABLE_LINKER__so_loader_Debug
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake --regenerate-during-build -S/Users/v/Repos/baba/goo_vita -B/Users/v/Repos/baba/goo_vita/cmake-build-debug-vitasdk
+  command = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake --regenerate-during-build -S/Users/v/Repos/deadspace-vita -B/Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk
   description = Re-running CMake...
   generator = 1
 

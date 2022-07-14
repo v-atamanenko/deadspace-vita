@@ -1,6 +1,6 @@
 CMakeFiles/so_loader.dir/loader/reimpl/io.c.obj: \
- /Users/v/Repos/baba/goo_vita/loader/reimpl/io.c \
- /Users/v/Repos/baba/goo_vita/loader/reimpl/io.h \
+ /Users/v/Repos/deadspace-vita/loader/reimpl/io.c \
+ /Users/v/Repos/deadspace-vita/loader/reimpl/io.h \
  /usr/local/vitasdk/arm-vita-eabi/include/stdio.h \
  /usr/local/vitasdk/arm-vita-eabi/include/_ansi.h \
  /usr/local/vitasdk/arm-vita-eabi/include/newlib.h \
@@ -32,27 +32,38 @@ CMakeFiles/so_loader.dir/loader/reimpl/io.c.obj: \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/sched.h \
  /usr/local/vitasdk/arm-vita-eabi/include/machine/types.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/stdio.h \
- /usr/local/vitasdk/arm-vita-eabi/include/string.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/dirent.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/time.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/time.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/machine/time.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/_locale.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/signal.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/signal.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/machine/_time.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/psp2/io/dirent.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/psp2/types.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/psp2common/types.h \
+ /usr/local/vitasdk/lib/gcc/arm-vita-eabi/10.3.0/include/stdint.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/stdint.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/_intsup.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/psp2common/kernel/iofilemgr.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/string.h \
  /usr/local/vitasdk/arm-vita-eabi/include/strings.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/string.h \
- /Users/v/Repos/baba/goo_vita/lib/libc_bridge/libc_bridge.h \
+ /Users/v/Repos/deadspace-vita/lib/libc_bridge/libc_bridge.h \
  /usr/local/vitasdk/arm-vita-eabi/include/setjmp.h \
  /usr/local/vitasdk/arm-vita-eabi/include/machine/setjmp.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/stat.h \
- /usr/local/vitasdk/arm-vita-eabi/include/time.h \
- /usr/local/vitasdk/arm-vita-eabi/include/machine/time.h \
- /usr/local/vitasdk/arm-vita-eabi/include/signal.h \
- /usr/local/vitasdk/arm-vita-eabi/include/sys/signal.h \
  /usr/local/vitasdk/arm-vita-eabi/include/sys/unistd.h \
  /usr/local/vitasdk/arm-vita-eabi/include/malloc.h \
  /usr/local/vitasdk/arm-vita-eabi/include/machine/malloc.h \
  /usr/local/vitasdk/arm-vita-eabi/include/stdlib.h \
  /usr/local/vitasdk/arm-vita-eabi/include/machine/stdlib.h \
  /usr/local/vitasdk/arm-vita-eabi/include/alloca.h \
- /Users/v/Repos/baba/goo_vita/loader/utils/utils.h \
- /Users/v/Repos/baba/goo_vita/loader/config.h \
- /Users/v/Repos/baba/goo_vita/loader/utils/dialog.h \
- /Users/v/Repos/baba/goo_vita/loader/utils/loading_screen.h \
- /Users/v/Repos/baba/goo_vita/loader/reimpl/_preload_files.c \
- /Users/v/Repos/baba/goo_vita/loader/reimpl/_existing_files.c
+ /usr/local/vitasdk/arm-vita-eabi/include/errno.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/sys/errno.h \
+ /usr/local/vitasdk/arm-vita-eabi/include/dirent.h \
+ /Users/v/Repos/deadspace-vita/loader/utils/utils.h \
+ /Users/v/Repos/deadspace-vita/loader/config.h \
+ /Users/v/Repos/deadspace-vita/loader/utils/dialog.h \
+ /Users/v/Repos/deadspace-vita/loader/utils/loading_screen.h
