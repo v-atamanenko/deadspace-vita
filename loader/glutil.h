@@ -18,22 +18,36 @@
 #include "utils/utils.h"
 
 #if GRAPHICS_API == GRAPHICS_API_PVR
-include <psp2/power.h>
+#include <psp2/power.h>
 #include <psp2/appmgr.h>
 #include <psp2/kernel/processmgr.h>
 #include <psp2/vshbridge.h>
 
 #include "gpu_es4/psp2_pvr_hint.h"
 
-#include <GLES2/gl2.h>
-#include <GLES2/gl2ext.h>
-#include "utils/sfp2hfp.h"
+#include <GLES/gl.h>
+#include <GLES/glext.h>
+#include <EGL/egl1_4.h>
+#include <EGL/eglext.h>
+
+
 #else
 #include <vitaGL.h>
-void glShaderSourceHook(GLuint shader, GLsizei count,
-                        const GLchar **string, const GLint *length);
 #endif
 
+void gl_preload();
 void gl_init();
+void gl_swap();
+
+#if GRAPHICS_API == GRAPHICS_API_PVR
+
+int eglInit(EGLNativeDisplayType eglDisplay, EGLNativeWindowType eglWindow);
+
+#elif GRAPHICS_API == GRAPHICS_API_VITAGL
+
+void glShaderSourceHook(GLuint shader, GLsizei count,
+                        const GLchar **string, const GLint *length);
+
+#endif
 
 #endif // SOLOADER_GLUTIL_H

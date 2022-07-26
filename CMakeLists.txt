@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.0)
 
 if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
   if(DEFINED ENV{VITASDK})
@@ -11,7 +11,7 @@ endif()
 if(DEFINED ENV{PSVITAIP})
   set(PSVITAIP "$ENV{PSVITAIP}")
 else()
-  set(PSVITAIP "192.168.1.20")
+  set(PSVITAIP "192.168.1.17")
   message(WARNING "PSVITAIP environment variable is not set, using default IP ${PSVITAIP}")
 endif()
 
@@ -78,6 +78,9 @@ add_executable(so_loader
         lib/so_util/so_util.c
 )
 
+add_subdirectory(lib/kubridge)
+add_dependencies(so_loader kubridge_all)
+
 target_include_directories(so_loader SYSTEM
         PUBLIC ${CMAKE_SOURCE_DIR}/lib/fios
         PUBLIC ${CMAKE_SOURCE_DIR}/lib/libc_bridge
@@ -90,18 +93,15 @@ target_include_directories(so_loader
         PUBLIC ${CMAKE_SOURCE_DIR}/loader
 )
 
-if (GRAPHICS_API EQUAL "PVR")
+if (GRAPHICS_API STREQUAL "PVR")
   add_definitions(-D__psp2__)
   add_definitions(-DGRAPHICS_API=1)
   set(GRAPHICS_LIBS
           libgpu_es4_ext_stub_weak
           libIMGEGL_stub_weak
-          libGLESv2_stub_weak
+          libGLESv1_CM_stub_weak
   )
-  set(SDL_LIBS
-          SDL2
-          SDL2main
-  )
+  set(SDL_LIBS)
   set(VPK_INCLUDES
           ${CMAKE_SOURCE_DIR}/module module
   )
@@ -114,10 +114,7 @@ else()
           taihen_stub
           SceShaccCg_stub
   )
-  set(SDL_LIBS
-          SDL2d # Name to be changed to normal when Northfear's fork is merged
-          SDL2maind
-  )
+  set(SDL_LIBS)
   set(VPK_INCLUDES
           ${CMAKE_SOURCE_DIR}/shaders shaders
   )
@@ -140,7 +137,7 @@ target_link_libraries(so_loader
         vita2d
         ScePgf_stub
         mathneon
-        ${CMAKE_SOURCE_DIR}/lib/kubridge/libkubridge_stub.a
+        ${CMAKE_BINARY_DIR}/lib/kubridge/stubs/libkubridge_stub.a
         SceHid_stub
         SceTouch_stub
         SceMotion_stub
@@ -189,7 +186,7 @@ add_custom_target(send_kvdb
         COMMAND echo destroy | nc ${PSVITAIP} 1338
         COMMAND curl -T eboot.bin ftp://${PSVITAIP}:1337/ux0:/app/${VITA_TITLEID}/
         COMMAND echo launch ux0:/app/${VITA_TITLEID}/eboot.bin | nc ${PSVITAIP} 1338
-        DEPENDS so_loader
+        DEPENDS ${VITA_VPKNAME}.vpk-vpk
 )
 
 add_custom_target(dump

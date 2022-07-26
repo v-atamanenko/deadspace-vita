@@ -65,6 +65,11 @@ dirent64_bionic * dirent_newlib_to_dirent_bionic(struct dirent* dirent_newlib) {
     return ret;
 }
 
+struct dirent * readdir_soloader(DIR * dir) {
+    debugPrintf("[io] readdir()\n");
+    return readdir(dir);
+}
+
 int readdir_r_soloader(DIR *dirp, dirent64_bionic *entry, dirent64_bionic **result) {
     debugPrintf("[io] readdir_r()\n");
 
@@ -73,10 +78,12 @@ int readdir_r_soloader(DIR *dirp, dirent64_bionic *entry, dirent64_bionic **resu
 
     int ret = readdir_r(dirp, &dirent_tmp, &pdirent_tmp);
 
-    dirent64_bionic* entry_tmp = dirent_newlib_to_dirent_bionic(&dirent_tmp);
-    memcpy(entry, entry_tmp, sizeof(dirent64_bionic));
-    *result = (pdirent_tmp != NULL) ? entry : NULL;
-    free(entry_tmp);
+    if (ret == 0) {
+        dirent64_bionic* entry_tmp = dirent_newlib_to_dirent_bionic(&dirent_tmp);
+        memcpy(entry, entry_tmp, sizeof(dirent64_bionic));
+        *result = (pdirent_tmp != NULL) ? entry : NULL;
+        free(entry_tmp);
+    }
 
     return ret;
 }
@@ -123,7 +130,7 @@ int fstat_soloader(int fd, void *statbuf) {
 }
 
 int write_soloader(int fd, const void *buf, int count) {
-    debugPrintf("Called write() for fd %i\n", fd);
+    //debugPrintf("Called write() for fd %i\n", fd);
     return write(fd, buf, count);
 }
 
@@ -167,7 +174,7 @@ int stat_soloader(char *_pathname, stat64_bionic *statbuf) {
         statbuf->st_ctime_nsec = 0;
     }
     free(pathname);
-    debugPrintf("res: %i\n, sizeof stat64_bionic %i\n", res, sizeof(stat64_bionic));
+    //debugPrintf("res: %i\n, sizeof stat64_bionic %i\n", res, sizeof(stat64_bionic));
     return res;
 }
 

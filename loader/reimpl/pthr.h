@@ -68,6 +68,12 @@ int pthread_cond_wait_soloader(pthread_cond_t **cond, pthread_mutex_t **mutex);
 
 int pthread_cond_broadcast_soloader(pthread_cond_t **cond);
 
+int pthread_attr_getstack_soloader(const pthread_attr_t **attr,
+                                   void **stackaddr,
+                                   size_t *stacksize);
+
+int pthread_getattr_np_soloader(pthread_t *thread, pthread_attr_t *attr);
+
 int pthread_attr_init_soloader(pthread_attr_t **attr);
 
 int pthread_attr_setdetachstate_soloader(pthread_attr_t **attr, int state);
@@ -88,6 +94,12 @@ pthread_t *pthread_self_soloader();
 
 int pthread_setname_np_soloader(const pthread_t *thread, const char* thread_name);
 
+int pthread_attr_setstack_soloader(pthread_attr_t **attr,
+                                   void *stackaddr,
+                                   size_t stacksize);
+
+int pthread_attr_setschedparam_soloader(pthread_attr_t **attr,
+                                        const struct sched_param *param);
 
 int sem_destroy_soloader(sem_t ** sem);
 

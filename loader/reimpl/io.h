@@ -74,6 +74,7 @@ int read_soloader(int __fd, void *__buf, size_t __nbyte);
 
 int closedir_soloader(DIR* dir);
 int readdir_r_soloader(DIR *dirp, dirent64_bionic *entry, dirent64_bionic **result);
+struct dirent * readdir_soloader(DIR * dir);
 
 DIR* opendir_soloader(char* name);
 

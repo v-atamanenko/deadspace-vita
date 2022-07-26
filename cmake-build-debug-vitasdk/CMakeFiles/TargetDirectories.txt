@@ -1,9 +1,0 @@
-/Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk/CMakeFiles/rebuild_cache.dir
-/Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk/CMakeFiles/edit_cache.dir
-/Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk/CMakeFiles/dump.dir
-/Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk/CMakeFiles/so_loader.dir
-/Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk/CMakeFiles/eboot.bin-self.dir
-/Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk/CMakeFiles/send_kvdb.dir
-/Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk/CMakeFiles/reboot.dir
-/Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk/CMakeFiles/DEADSPACE.vpk-vpk.dir
-/Users/v/Repos/deadspace-vita/cmake-build-debug-vitasdk/CMakeFiles/send.dir

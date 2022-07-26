@@ -83,6 +83,13 @@ int pthread_attr_destroy_soloader(pthread_attr_t **attr)
     return ret;
 }
 
+int pthread_attr_getstack_soloader(const pthread_attr_t **attr,
+                                   void **stackaddr,
+                                   size_t *stacksize)
+{
+    return pthread_attr_getstack(*attr, stackaddr, stacksize);
+}
+
 __attribute__((unused)) int pthread_condattr_init_soloader(pthread_condattr_t **attr)
 {
     *attr = calloc(1, sizeof(pthread_condattr_t));
@@ -137,10 +144,16 @@ int pthread_create_soloader(pthread_t **thread,
 {
     *thread = calloc(1, sizeof(pthread_t));
 
-    if (attr != NULL)
+    if (attr != NULL) {
+        pthread_attr_setstacksize(*attr, 256 * 1024);
         return pthread_create(*thread, *attr, start, param);
-    else
-        return pthread_create(*thread, NULL, start, param);
+    } else {
+        pthread_attr_t attrr;
+        pthread_attr_init(&attrr);
+        pthread_attr_setstacksize(&attrr, 256 * 1024);
+        return pthread_create(*thread, &attrr, start, param);
+    }
+
 }
 
 int pthread_mutexattr_init_soloader(pthread_mutexattr_t **attr)
@@ -234,6 +247,19 @@ int pthread_attr_setstacksize_soloader(pthread_attr_t **attr, size_t stacksize)
     return pthread_attr_setstacksize(*attr, stacksize);
 }
 
+int pthread_attr_setschedparam_soloader(pthread_attr_t **attr,
+                                        const struct sched_param *param)
+{
+    return pthread_attr_setschedparam(*attr, param);
+}
+
+int pthread_attr_setstack_soloader(pthread_attr_t **attr,
+                                   void *stackaddr,
+                                   size_t stacksize)
+{
+    return pthread_attr_setstack(*attr, stackaddr, stacksize);
+}
+
 int pthread_setschedparam_soloader(const pthread_t *thread, int policy,
                                    const struct sched_param *param)
 {
@@ -249,6 +275,11 @@ int pthread_getschedparam_soloader(const pthread_t *thread, int *policy,
 int pthread_detach_soloader(const pthread_t *thread)
 {
     return pthread_detach(*thread);
+}
+
+int pthread_getattr_np_soloader(pthread_t* thread, pthread_attr_t *attr) {
+    fprintf(stderr, "[WARNING!] Not implemented: pthread_getattr_np\n");
+    return 0;
 }
 
 int pthread_equal_soloader(const pthread_t *t1, const pthread_t *t2)

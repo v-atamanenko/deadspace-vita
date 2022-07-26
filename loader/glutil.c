@@ -17,8 +17,16 @@
 
 #include <stdio.h>
 #include <malloc.h>
+#include <psp2/kernel/sysmem.h>
 
-void gl_init() {
+#if GRAPHICS_API == GRAPHICS_API_PVR
+
+static EGLDisplay dpy;
+static EGLSurface surface;
+
+#endif
+
+void gl_preload() {
 #if GRAPHICS_API == GRAPHICS_API_PVR
     PVRSRV_PSP2_APPHINT hint;
     int ret;
@@ -45,6 +53,23 @@ void gl_init() {
 #endif
 }
 
+void gl_init() {
+#if GRAPHICS_API == GRAPHICS_API_PVR
+    eglInit(EGL_DEFAULT_DISPLAY, 0);
+#elif GRAPHICS_API == GRAPHICS_API_VITAGL
+    vglInitExtended(0, 960, 544, 12 * 1024 * 1024, SCE_GXM_MULTISAMPLE_4X);
+#endif
+}
+
+void gl_swap() {
+#if GRAPHICS_API == GRAPHICS_API_PVR
+    eglSwapBuffers(dpy, surface);
+#elif GRAPHICS_API == GRAPHICS_API_VITAGL
+    vglSwapBuffers(GL_FALSE);
+#endif
+}
+
+#if GRAPHICS_API == GRAPHICS_API_VITAGL
 void glShaderSourceHook(GLuint shader, GLsizei count, const GLchar **string,
                         const GLint *length) {
     uint32_t sha1[5];
@@ -97,3 +122,84 @@ void glShaderSourceHook(GLuint shader, GLsizei count, const GLchar **string,
         free(shaderBuf);
     }
 }
+#endif
+
+#if GRAPHICS_API == GRAPHICS_API_PVR
+
+int eglInit(EGLNativeDisplayType eglDisplay, EGLNativeWindowType eglWindow)
+{
+    EGLContext context;
+    EGLConfig configs[2];
+    EGLBoolean eRetStatus;
+    EGLint major, minor;
+    EGLint config_count;
+
+    EGLint cfg_attribs[] = { EGL_BUFFER_SIZE,    EGL_DONT_CARE,
+                             EGL_RED_SIZE,       8,
+                             EGL_GREEN_SIZE,     8,
+                             EGL_BLUE_SIZE,      8,
+                             EGL_ALPHA_SIZE,		8,
+                             EGL_DEPTH_SIZE,		16,
+                             EGL_SAMPLES,		4,
+                             EGL_NONE };
+
+    dpy = eglGetDisplay(eglDisplay);
+
+    eRetStatus = eglInitialize(dpy, &major, &minor);
+
+    if (eRetStatus != EGL_TRUE)
+    {
+        printf("Error: eglInitialize\n");
+    }
+
+    eRetStatus = eglGetConfigs(dpy, configs, 2, &config_count);
+
+    if (eRetStatus != EGL_TRUE)
+    {
+        printf("Error: eglGetConfigs\n");
+    }
+
+    eRetStatus = eglChooseConfig(dpy, cfg_attribs, configs, 2, &config_count);
+
+    if (eRetStatus != EGL_TRUE)
+    {
+        printf("Error: eglChooseConfig\n");
+    }
+
+    Psp2NativeWindow win;
+    win.type = PSP2_DRAWABLE_TYPE_WINDOW;
+    if (sceKernelGetModel() == SCE_KERNEL_MODEL_VITATV) {
+        win.windowSize = PSP2_WINDOW_1920X1088;
+        scePowerSetGpuClockFrequency(222);
+    }
+    else {
+        win.windowSize = PSP2_WINDOW_960X544;
+    }
+    win.numFlipBuffers = 2;
+    win.flipChainThrdAffinity = SCE_KERNEL_CPU_MASK_USER_1;
+
+    surface = eglCreateWindowSurface(dpy, configs[0], &win, NULL);
+
+    if (surface == EGL_NO_SURFACE)
+    {
+        printf("Error: eglCreateWindowSurface\n");
+    }
+
+    context = eglCreateContext(dpy, configs[0], EGL_NO_CONTEXT, NULL);
+
+    if (context == EGL_NO_CONTEXT)
+    {
+        printf("Error: eglCreateContext\n");
+    }
+
+    eRetStatus = eglMakeCurrent(dpy, surface, surface, context);
+
+    if (eRetStatus != EGL_TRUE)
+    {
+        printf("Error: eglMakeCurrent\n");
+    }
+
+    return 0;
+}
+
+#endif

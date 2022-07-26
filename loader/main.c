@@ -19,6 +19,8 @@
 #include <psp2/apputil.h>
 #include <psp2/power.h>
 #include <sys/unistd.h>
+#include <psp2/touch.h>
+#include <psp2/ctrl.h>
 
 #include "default_dynlib.h"
 #include "fios.h"
@@ -28,19 +30,49 @@
 #include "reimpl/io.h"
 #include "utils/dialog.h"
 
+#include "../lib/kubridge/kubridge.h"
+
 // Disable IDE complaints about _identifiers and unused variables
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 #pragma ide diagnostic ignored "bugprone-reserved-identifier"
 
-unsigned int sceLibcHeapSize = 1 * 1024 * 1024;
-int _newlib_heap_size_user = 250 * 1024 * 1024;
-unsigned int _pthread_stack_default_user = 512 * 1024;
+unsigned int sceLibcHeapSize = 6 * 1024 * 1024;
+int _newlib_heap_size_user = 210 * 1024 * 1024;
+unsigned int _pthread_stack_default_user = 1 * 1024 * 1024;
 
-unsigned int sceUserMainThreadStackSize = 5 * 1024 * 1024;
+unsigned int sceUserMainThreadStackSize = 2 * 1024 * 1024;
 
 so_module so_mod;
 
+void abort_handler(KuKernelAbortContext *ctx) {
+    printf("Crash Detected!!! (Abort Type: 0x%08X)\n", ctx->abortType);
+    printf("-----------------\n");
+    printf("PC: 0x%08X\n", ctx->pc);
+    printf("LR: 0x%08X\n", ctx->lr);
+    printf("SP: 0x%08X\n", ctx->sp);
+    printf("-----------------\n");
+    printf("REGISTERS:\n");
+    uint32_t *registers = (uint32_t *)ctx;
+    for (int i = 0; i < 13; i++) {
+        printf("R%d: 0x%08X\n", i, registers[i]);
+    }
+    printf("-----------------\n");
+    printf("VFP REGISTERS:\n");
+    for (int i = 0; i < 32; i++) {
+        printf("D%d: 0x%016llX\n", i, ctx->vfpRegisters[i]);
+    }
+    printf("-----------------\n");
+    printf("SPSR: 0x%08X\n", ctx->SPSR);
+    printf("FPSCR: 0x%08X\n", ctx->FPSCR);
+    printf("FPEXC: 0x%08X\n", ctx->FPEXC);
+    printf("FSR: 0x%08X\n", ctx->FSR);
+    printf("FAR: 0x%08X\n", *(&(ctx->FSR) + 4)); // Using ctx->FAR gives an error for some weird reason
+    //sceKernelExitProcess(0);
+}
+
 int main() {
+    //kuKernelRegisterAbortHandler(abort_handler, NULL);
+
     SceAppUtilInitParam init_param;
     SceAppUtilBootParam boot_param;
     memset(&init_param, 0, sizeof(SceAppUtilInitParam));
@@ -52,9 +84,13 @@ int main() {
     scePowerSetGpuClockFrequency(222);
     scePowerSetGpuXbarClockFrequency(166);
 
+    // Enable analog stick and touchscreen
+    sceCtrlSetSamplingMode(SCE_CTRL_MODE_ANALOG);
+    sceTouchSetSamplingState(SCE_TOUCH_PORT_FRONT, 1);
+
     //if (fios_init() < 0)
-//        fatal_error("Fatal error: Could not initialize FIOS.");
-  //  debugPrintf("fios_init() passed.\n");
+    //    fatal_error("Fatal error: Could not initialize FIOS.");
+    //    debugPrintf("fios_init() passed.\n");
 
     if (check_kubridge() < 0)
         fatal_error("Error kubridge.skprx is not installed.");
@@ -67,7 +103,7 @@ int main() {
     so_relocate(&so_mod);
     debugPrintf("so_relocate() passed.\n");
 
-    so_resolve(&so_mod, default_dynlib, SO_DYNLIB_SIZE, 0);
+    resolve_imports(&so_mod);
     debugPrintf("so_resolve() passed.\n");
 
     patch_game();
@@ -76,8 +112,8 @@ int main() {
     so_flush_caches(&so_mod);
     debugPrintf("so_flush_caches() passed.\n");
 
-    gl_init();
-    debugPrintf("gl_init() passed.\n");
+    gl_preload();
+    debugPrintf("gl_preload() passed.\n");
 
     so_initialize(&so_mod);
     debugPrintf("so_initialize() passed.\n");
@@ -85,66 +121,74 @@ int main() {
     init_jni();
     debugPrintf("init_jni() passed.\n");
 
-    vglInitExtended(0, 960, 544, 12 * 1024 * 1024, SCE_GXM_MULTISAMPLE_4X);
+    gl_init();
 
     baba_main();
-    return 0;
-    // Running the .so in a thread with enlarged stack size.
-    pthread_t t;
-    pthread_attr_t attr;
-    pthread_attr_init(&attr);
-    pthread_attr_setstacksize(&attr, 0xA00000);
-    pthread_create(&t, &attr, baba_main, NULL);
-    pthread_join(t, NULL);
-    debugPrintf("AAA.\n");
-
-    return 0;
 }
 
-void* (*IO__GetAllocator)();
 void (*Java_com_ea_EAIO_EAIO_Startup)(JNIEnv*, void*, jobject);
-void (*eastl_strappend)(void*, char*, char*);
+
+int lastX[SCE_TOUCH_MAX_REPORT] = {-1, -1, -1, -1, -1, -1, -1, -1};
+int lastY[SCE_TOUCH_MAX_REPORT] = {-1, -1, -1, -1, -1, -1, -1, -1};
+
+void (*NativeOnPointerEvent)(JNIEnv *env, jobject obj, int rawEvent, int moduleId, int eventPointerId, float eventX, float eventY);
+
+#define kIdRawPointerCancel 0xc
+#define kIdRawPointerDown 0x6000c
+#define kIdRawPointerMove 0x4000c
+#define kIdRawPointerUp 0x8000c
+#define kIdUndefined 0
+
+void pollTouch() {
+    SceTouchData touch;
+    sceTouchPeek(SCE_TOUCH_PORT_FRONT, &touch, 1);
+    for (int i = 0; i < SCE_TOUCH_MAX_REPORT; i++) {
+        if (i < touch.reportNum) {
+            int x, y;
+            x = (int)((float)touch.report[i].x * (float)960 / 1920.0f);
+            y = (int)((float)touch.report[i].y * (float)544 / 1088.0f);
+
+            if (lastX[i] == -1 || lastY[i] == -1) {
+                //printf("send down\n");
+                NativeOnPointerEvent(&jni, (void*)0x42424242, kIdRawPointerDown, 1000, i, (float)x, (float)y);
+            }
+            else if (lastX[i] != x || lastY[i] != y) {
+                //printf("send move\n");
+                NativeOnPointerEvent(&jni, (void*)0x42424242, kIdRawPointerMove, 1000, i, (float)x, (float)y);
+            }
+
+            lastX[i] = x;
+            lastY[i] = y;
+        } else {
+            if (lastX[i] != -1 || lastY[i] != -1) {
+                //printf("send up\n");
+                NativeOnPointerEvent(&jni, (void*)0x42424242, kIdRawPointerUp, 1000, i, (float)lastX[i], (float)lastY[i]);
+                lastX[i] = -1;
+                lastY[i] = -1;
+            }
+        }
+    }
+}
 
 _Noreturn void *baba_main() {
-
     Java_com_ea_EAIO_EAIO_Startup = (void*)so_symbol(&so_mod,"Java_com_ea_EAIO_EAIO_Startup");
-    IO__GetAllocator = (void*)((uintptr_t)so_mod.text_base + 0x00271914);
-    eastl_strappend = (void*)((uintptr_t)so_mod.text_base + 0x001ca8b0);
-
-    // JNI_OnLoad is responsible for providing jvm/env for the whole app and is
-    // normally called by OS. See SDL2/src/core/android/SDL_android.c#L87.
-
     int (*JNI_OnLoad)(JavaVM* jvm) = (void*)so_symbol(&so_mod,"JNI_OnLoad");
-    JNI_OnLoad(&jvm);
+    void (*Java_com_ea_blast_MainActivity_NativeOnCreate)(void) = (void*)so_symbol(&so_mod,"Java_com_ea_blast_MainActivity_NativeOnCreate");
+    void (*Java_com_ea_blast_AndroidRenderer_NativeOnSurfaceCreated)(void) = (void*)so_symbol(&so_mod,"Java_com_ea_blast_AndroidRenderer_NativeOnSurfaceCreated");
+    void (*Java_com_ea_blast_AndroidRenderer_NativeOnDrawFrame)(void) = (void*)so_symbol(&so_mod,"Java_com_ea_blast_AndroidRenderer_NativeOnDrawFrame");
+    NativeOnPointerEvent = (void*)so_symbol(&so_mod,"Java_com_ea_blast_TouchSurfaceAndroid_NativeOnPointerEvent");
 
+    JNI_OnLoad(&jvm);
     debugPrintf("JNI_OnLoad() passed.\n");
 
-    void (*Java_com_ea_blast_MainActivity_NativeOnCreate)(void) = (void*)so_symbol(&so_mod,"Java_com_ea_blast_MainActivity_NativeOnCreate");
     Java_com_ea_blast_MainActivity_NativeOnCreate();
     debugPrintf("Java_com_ea_blast_MainActivity_NativeOnCreate() passed.\n");
 
-    // The game inits GL from inside Java, so we'll do it here.
-
-    //vglSwapBuffers(GL_FALSE); vglSwapBuffers(GL_FALSE);
-
-    void (*Java_com_ea_blast_AndroidRenderer_NativeOnSurfaceCreated)(void) = (void*)so_symbol(&so_mod,"Java_com_ea_blast_AndroidRenderer_NativeOnSurfaceCreated");
-    void (*Java_com_ea_blast_AndroidRenderer_NativeOnDrawFrame)(void) = (void*)so_symbol(&so_mod,"Java_com_ea_blast_AndroidRenderer_NativeOnDrawFrame");
-
-
     Java_com_ea_blast_AndroidRenderer_NativeOnSurfaceCreated();
 
-    uint64_t i = 0;
     while (1) {
-        i++;
-        if (i == 2) {
-            // For whatever ungodly reason, you can't init GL before second frame.
-
-            //vglSwapBuffers(GL_FALSE);vglSwapBuffers(GL_FALSE);vglSwapBuffers(GL_FALSE);
-        }
         Java_com_ea_blast_AndroidRenderer_NativeOnDrawFrame();
-        vglSwapBuffers(GL_FALSE);
+        gl_swap();
+        pollTouch();
     }
-
-    while (1) {usleep(10000000);}
-    return NULL;
 }

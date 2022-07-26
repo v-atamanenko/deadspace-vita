@@ -19,8 +19,6 @@
 
 #include "so_util.h"
 
-#define SO_DYNLIB_LENGTH 571
-#define SO_DYNLIB_SIZE (sizeof(so_default_dynlib) * SO_DYNLIB_LENGTH)
-extern so_default_dynlib default_dynlib[SO_DYNLIB_LENGTH];
+void resolve_imports(so_module* mod);
 
 #endif // SOLOADER_DYNLIB_H
