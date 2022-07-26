@@ -115,9 +115,7 @@ else()
           SceShaccCg_stub
   )
   set(SDL_LIBS)
-  set(VPK_INCLUDES
-          ${CMAKE_SOURCE_DIR}/shaders shaders
-  )
+  set(VPK_INCLUDES)
 endif()
 
 target_link_libraries(so_loader
