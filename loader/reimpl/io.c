@@ -71,7 +71,7 @@ struct dirent * readdir_soloader(DIR * dir) {
 }
 
 int readdir_r_soloader(DIR *dirp, dirent64_bionic *entry, dirent64_bionic **result) {
-    debugPrintf("[io] readdir_r()\n");
+    //debugPrintf("[io] readdir_r()\n");
 
     struct dirent dirent_tmp;
     struct dirent* pdirent_tmp;
@@ -98,7 +98,7 @@ FILE *fopen_soloader(char *fname, char *mode) {
 int open_soloader(char *_fname, int flags) {
     char* fname = fix_path(_fname);
 
-    debugPrintf("[io] open(%s, %x)\n", fname, flags);
+    //debugPrintf("[io] open(%s, %x)\n", fname, flags);
     int ret = open(fname, flags);
     free(fname);
     return ret;
@@ -135,7 +135,7 @@ int write_soloader(int fd, const void *buf, int count) {
 }
 
 int close_soloader(int fd) {
-    debugPrintf("[io] close(%x)\n", fd);
+    //debugPrintf("[io] close(%x)\n", fd);
     return close(fd);
 }
 
@@ -147,7 +147,7 @@ int stat_soloader(char *_pathname, stat64_bionic *statbuf) {
 
     char* pathname = fix_path(_pathname);
 
-    debugPrintf("[io] stat(%s): ", pathname);
+    //debugPrintf("[io] stat(%s): ", pathname);
 
     struct stat st;
     int res = stat(pathname, &st);

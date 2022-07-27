@@ -58,6 +58,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -std=gnu++11")
 
 add_executable(so_loader
         loader/main.c
+        loader/EAAudioCore.c
         loader/java.io.InputStream.c
         loader/default_dynlib.c
         loader/utils/dialog.c
@@ -114,7 +115,7 @@ else()
           taihen_stub
           SceShaccCg_stub
   )
-  set(SDL_LIBS)
+  set(SDL_LIBS SDL2 SDL2main)
   set(VPK_INCLUDES)
 endif()
 

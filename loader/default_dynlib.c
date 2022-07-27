@@ -176,14 +176,36 @@ int glMaterialx_tempwrap() { fprintf(stderr, "ret0d call!!! glMaterialx_tempwrap
 int glPointParameterfv_tempwrap() { fprintf(stderr, "ret0d call!!! glPointParameterfv_tempwrap\n"); return 0; }
 int glPolygonOffsetx_tempwrap() { fprintf(stderr, "ret0d call!!! glPolygonOffsetx_tempwrap\n"); return 0; }
 int glTexParameterxv_tempwrap() { fprintf(stderr, "ret0d call!!! glTexParameterxv_tempwrap\n"); return 0; }
-int glFogx_tempwrap() { fprintf(stderr, "ret0d call!!! glFogx_tempwrap\n"); return 0; }
+
+void glFogx_tempwrap(GLenum pname, GLfixed param) {
+    fprintf(stderr, "[VGLDBG] glFogx(0x%x, 0x%x)\n", pname, param);
+}
+
+void glFogxv_tempwrap(GLenum pname, GLfixed* param) {
+    fprintf(stderr, "[VGLDBG] glFogxv(0x%x, 0x%x)\n", pname, param[0]);
+}
+
+void glTexEnvx_tempwrap(GLenum target, GLenum pname, GLfixed param) {
+    fprintf(stderr, "[VGLDBG] glTexEnvx(0x%x, 0x%x, 0x%x)\n", target, pname, param);
+    glTexEnvx(target, pname, param);
+}
+
+void glTexEnvxv_tempwrap(GLenum target, GLenum pname, GLfixed* param) {
+    fprintf(stderr, "[VGLDBG] glTexEnvxv(0x%x, 0x%x, 0x%x)\n", target, pname, param[0]);
+    glTexEnvxv(target, pname, param);
+}
+
 int glGetTexParameterfv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetTexParameterfv_tempwrap\n"); return 0; }
 int glCopyTexImage2D_tempwrap() { fprintf(stderr, "ret0d call!!! glCopyTexImage2D_tempwrap\n"); return 0; }
 int glMaterialf_tempwrap() { fprintf(stderr, "ret0d call!!! glMaterialf_tempwrap\n"); return 0; }
-int glTexParameterx_tempwrap() { fprintf(stderr, "ret0d call!!! glTexParameterx_tempwrap\n"); return 0; }
+
+void glTexParameterx_tempwrap(GLenum target, GLenum pname, GLfixed param) {
+    fprintf(stderr, "[VGLDBG] glTexParameterx(0x%x, 0x%x, 0x%x)\n", target, pname, param);
+    //glTexParameterx(target, pname, param);
+}
+
 int glGetTexEnvxv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetTexEnvxv_tempwrap\n"); return 0; }
 int glOrthox_tempwrap() { fprintf(stderr, "ret0d call!!! glOrthox_tempwrap\n"); return 0; }
-int glFogxv_tempwrap() { fprintf(stderr, "ret0d call!!! glFogxv_tempwrap\n"); return 0; }
 int glGetTexParameterxv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetTexParameterxv_tempwrap\n"); return 0; }
 int glGetMaterialxv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetMaterialxv_tempwrap\n"); return 0; }
 int glGetClipPlanef_tempwrap() { fprintf(stderr, "ret0d call!!! glGetClipPlanef_tempwrap\n"); return 0; }
@@ -205,17 +227,17 @@ int glPointParameterx_tempwrap() { fprintf(stderr, "ret0d call!!! glPointParamet
 int glGetTexEnvfv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetTexEnvfv_tempwrap\n"); return 0; }
 int glLightModelx_tempwrap() { fprintf(stderr, "ret0d call!!! glLightModelx_tempwrap\n"); return 0; }
 int glLogicOp_tempwrap() { fprintf(stderr, "ret0d call!!! glLogicOp_tempwrap\n"); return 0; }
-int glPixelStorei_tempwrap() { fprintf(stderr, "ret0d call!!! glPixelStorei_tempwrap\n"); return 0; }
+int glPixelStorei_tempwrap() { /*fprintf(stderr, "ret0d call!!! glPixelStorei_tempwrap\n");*/ return 0; }
 int glCopyTexSubImage2D_tempwrap() { fprintf(stderr, "ret0d call!!! glCopyTexSubImage2D_tempwrap\n"); return 0; }
 int glGetRenderbufferParameterivOES_tempwrap() { fprintf(stderr, "ret0d call!!! glGetRenderbufferParameterivOES_tempwrap\n"); return 0; }
 
 #endif
 
 char * strstr_soloader(char *__haystack,char *__needle) {
-    fprintf(stderr, "strstr(\"%s\", \"%s\")\n", __haystack, __needle);
+    //fprintf(stderr, "strstr(\"%s\", \"%s\")\n", __haystack, __needle);
 
     if (strcmp("appbundle:/", __needle) == 0) {
-        fprintf(stderr, "strstr: force NULL\n");
+        //fprintf(stderr, "strstr: force NULL\n");
         return NULL;
     }
 
@@ -1182,8 +1204,8 @@ so_default_dynlib default_dynlib[] = {
         { "glClearDepthx", (uintptr_t)&glClearDepthx},
         { "glClearStencil", (uintptr_t)&glClearStencil},
         { "glClientActiveTexture", (uintptr_t)&glClientActiveTexture},
-        { "glClipPlanef", (uintptr_t)&glClipPlanef_tempwrap },
-        { "glClipPlanex", (uintptr_t)&glClipPlanex_tempwrap },
+        { "glClipPlanef", (uintptr_t)&glClipPlanef },
+        { "glClipPlanex", (uintptr_t)&glClipPlanex },
         { "glColor4f", (uintptr_t)&glColor4f },
         { "glColor4ub", (uintptr_t)&glColor4ub},
         { "glColor4x", (uintptr_t)&glColor4x},
@@ -1202,7 +1224,7 @@ so_default_dynlib default_dynlib[] = {
         { "glDepthFunc", (uintptr_t)&glDepthFunc },
         { "glDepthMask", (uintptr_t)&glDepthMask },
         { "glDepthRangef", (uintptr_t) &glDepthRangef },
-        { "glDepthRangex", (uintptr_t)&glDepthRangex_tempwrap },
+        { "glDepthRangex", (uintptr_t)&glDepthRangex },
         { "glDisable", (uintptr_t)&glDisable },
         { "glDisableClientState", (uintptr_t)&glDisableClientState},
         { "glDrawArrays", (uintptr_t)&glDrawArrays},
@@ -1223,8 +1245,8 @@ so_default_dynlib default_dynlib[] = {
         { "glFlush", (uintptr_t)&glFlush},
         { "glFogf", (uintptr_t)&glFogf},
         { "glFogfv", (uintptr_t)&glFogfv},
-        { "glFogx", (uintptr_t)&glFogx_tempwrap },
-        { "glFogxv", (uintptr_t)&glFogxv_tempwrap },
+        { "glFogx", (uintptr_t)&glFogx },
+        { "glFogxv", (uintptr_t)&glFogxv },
         { "glFramebufferRenderbufferOES", (uintptr_t)&glFramebufferRenderbuffer },
         { "glFramebufferTexture2DOES", (uintptr_t)&glFramebufferTexture2D },
         { "glFrontFace", (uintptr_t)&glFrontFace},
@@ -1276,7 +1298,7 @@ so_default_dynlib default_dynlib[] = {
         { "glLightx", (uintptr_t)&glLightx_tempwrap },
         { "glLightxv", (uintptr_t)&glLightxv},
         { "glLineWidth", (uintptr_t)&glLineWidth },
-        { "glLineWidthx", (uintptr_t)&glLineWidthx_tempwrap },
+        { "glLineWidthx", (uintptr_t)&glLineWidthx },
         { "glLoadIdentity", (uintptr_t)&glLoadIdentity},
         { "glLoadMatrixf", (uintptr_t)&glLoadMatrixf},
         { "glLoadMatrixx", (uintptr_t)&glLoadMatrixx },
@@ -1297,7 +1319,7 @@ so_default_dynlib default_dynlib[] = {
         { "glNormal3x", (uintptr_t)&glNormal3x_tempwrap },
         { "glNormalPointer", (uintptr_t)&glNormalPointer},
         { "glOrthof", (uintptr_t)&glOrthof },
-        { "glOrthox", (uintptr_t)&glOrthox_tempwrap },
+        { "glOrthox", (uintptr_t)&glOrthox },
         { "glPixelStorei", (uintptr_t)&glPixelStorei_tempwrap},
         { "glPointParameterf", (uintptr_t)&glPointParameterf_tempwrap },
         { "glPointParameterfv", (uintptr_t)&glPointParameterfv_tempwrap },
@@ -1305,9 +1327,9 @@ so_default_dynlib default_dynlib[] = {
         { "glPointParameterxv", (uintptr_t)&glPointParameterxv_tempwrap },
         { "glPointSize", (uintptr_t)&glPointSize},
         { "glPointSizePointerOES", (uintptr_t)&glPointSizePointerOES_tempwrap },
-        { "glPointSizex", (uintptr_t)&glPointSizex_tempwrap },
+        { "glPointSizex", (uintptr_t)&glPointSizex },
         { "glPolygonOffset", (uintptr_t)&glPolygonOffset},
-        { "glPolygonOffsetx", (uintptr_t)&glPolygonOffsetx_tempwrap },
+        { "glPolygonOffsetx", (uintptr_t)&glPolygonOffsetx },
         { "glPopMatrix", (uintptr_t)&glPopMatrix},
         { "glPushMatrix", (uintptr_t)&glPushMatrix},
         { "glQueryMatrixxOES", (uintptr_t)&glQueryMatrixxOES_tempwrap },
@@ -1329,7 +1351,7 @@ so_default_dynlib default_dynlib[] = {
         { "glTexEnvfv", (uintptr_t)&glTexEnvfv},
         { "glTexEnvi", (uintptr_t)&glTexEnvi},
         { "glTexEnviv", (uintptr_t)&glTexEnviv_tempwrap },
-        { "glTexEnvx", (uintptr_t)&glTexEnvx},
+        { "glTexEnvx", (uintptr_t)&glTexEnvx },
         { "glTexEnvxv", (uintptr_t)&glTexEnvxv},
         { "glTexGenfOES", (uintptr_t)&glTexGenfOES_tempwrap },
         { "glTexGenfvOES", (uintptr_t)&glTexGenfvOES_tempwrap },
@@ -1341,8 +1363,8 @@ so_default_dynlib default_dynlib[] = {
         { "glTexParameterf", (uintptr_t)&glTexParameterf },
         { "glTexParameterfv", (uintptr_t)&glTexParameterfv_tempwrap },
         { "glTexParameteri", (uintptr_t)&glTexParameteri },
-        { "glTexParameteriv", (uintptr_t)&glTexParameteriv_tempwrap },
-        { "glTexParameterx", (uintptr_t)&glTexParameterx_tempwrap },
+        { "glTexParameteriv", (uintptr_t)&glTexParameteriv },
+        { "glTexParameterx", (uintptr_t)&glTexParameterx },
         { "glTexParameterxv", (uintptr_t)&glTexParameterxv_tempwrap },
         { "glTexSubImage2D", (uintptr_t)&glTexSubImage2D },
         { "glTranslatef", (uintptr_t)&glTranslatef },

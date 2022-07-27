@@ -12,6 +12,7 @@ extern "C" {
 #include "jni_fake.h"
 #include "java.io.InputStream.h"
 
+#include "EAAudioCore.h"
 
 typedef enum FIELD_TYPE {
     FIELD_TYPE_UNKNOWN   = 0,
@@ -168,6 +169,11 @@ NameToMethodID nameToMethodId[] = {
     { 113, "getVersion", METHOD_TYPE_OBJECT },
     { 114, "getTotalMemory", METHOD_TYPE_LONG },
     { 115, "SetUpdateFrequency", METHOD_TYPE_VOID },
+
+    // EAAudioCore
+    { 116, "play", METHOD_TYPE_VOID },
+    { 117, "stop", METHOD_TYPE_VOID },
+    { 118, "write", METHOD_TYPE_INT }
 };
 
 /*
@@ -580,6 +586,7 @@ MethodsInt methodsInt[] = {
     { 103, GetDefaultWidth },
     { 104, GetDefaultHeight },
     { 600, InputStream_read },
+    { 118, EAAudioCore_AudioTrack_write }
 };
 
 MethodsFloat methodsFloat[] = {
@@ -595,6 +602,8 @@ MethodsVoid methodsVoid[] = {
     { 111, SetEnabled },
     { 601, InputStream_close },
     { 115, SetUpdateFrequency },
+    { 116, EAAudioCore_AudioTrack_play },
+    { 117, EAAudioCore_AudioTrack_stop },
 };
 
 MethodsBoolean methodsBoolean[] = {
@@ -884,12 +893,12 @@ jlong methodLongCall(int id, va_list args) {
 jint methodIntCall(int id, va_list args) {
     for (int i = 0; i < sizeof(methodsInt) / sizeof(MethodsInt); i++) {
         if (methodsInt[i].id == id) {
-            debugPrintf("resolved.\n");
+            //debugPrintf("resolved.\n");
             return methodsInt[i].Method(id, args);
         }
     }
 
-    debugPrintf("not found!\n");
+    //debugPrintf("not found!\n");
     return -1;
 }
 

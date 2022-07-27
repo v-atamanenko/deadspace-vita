@@ -27,6 +27,9 @@
 #include <string.h>
 
 #include <psp2/apputil.h>
+#include <psp2/audioout.h>
+#include <sys/unistd.h>
+#include <SDL2/SDL.h>
 //#include "android/AAssetManager_acquirer.h"
 
 #include "jni_specific.h"
@@ -42,7 +45,7 @@ JNIEnv jni;
 // VM functions:
 
 jint GetEnv(JavaVM *vm, void **env, jint version) {
-    debugPrintf("[JVM] GetEnv(vm, **env, version:%i)\n", version);
+    //debugPrintf("[JVM] GetEnv(vm, **env, version:%i)\n", version);
     *env = &jni;
     return JNI_OK;
 }
@@ -328,7 +331,7 @@ jint CallIntMethod(JNIEnv* env, jobject obj, jmethodID _methodID, ...) {
     return ret;
 }
 jint CallIntMethodV(JNIEnv* env, jobject obj, jmethodID _methodID, va_list args) {
-    debugPrintf("[JNI] CallIntMethodV(env, 0x%x, %i, args): ", (int)obj, (int)_methodID);
+    //debugPrintf("[JNI] CallIntMethodV(env, 0x%x, %i, args): ", (int)obj, (int)_methodID);
     return methodIntCall((int)_methodID, args);
 }
 jint CallIntMethodA(JNIEnv* env, jobject obj, jmethodID _methodID, const jvalue* p4) {
@@ -814,7 +817,15 @@ void         GetDoubleArrayRegion(JNIEnv* p1, jdoubleArray p2, jsize p3, jsize p
 void         SetBooleanArrayRegion(JNIEnv* p1, jbooleanArray p2, jsize p3, jsize p4, const jboolean* p5) { debugPrintf("[JNI] SetBooleanArrayRegion(): not implemented\n"); }
 void         SetByteArrayRegion(JNIEnv* p1, jbyteArray p2, jsize p3, jsize p4, const jbyte* p5) { debugPrintf("[JNI] SetByteArrayRegion(): not implemented\n"); }
 void         SetCharArrayRegion(JNIEnv* p1, jcharArray p2, jsize p3, jsize p4, const jchar* p5) { debugPrintf("[JNI] SetCharArrayRegion(): not implemented\n"); }
-void         SetShortArrayRegion(JNIEnv* p1, jshortArray p2, jsize p3, jsize p4, const jshort* p5) { debugPrintf("[JNI] SetShortArrayRegion(): not implemented\n"); }
+
+extern int audio_port;
+extern SDL_AudioDeviceID deviceId;
+
+void         SetShortArrayRegion(JNIEnv* p1, jshortArray p2, jsize p3, jsize p4, const jshort* buf) {
+    //printf("SetShortArrayRegion %i\n", p4);
+    SDL_QueueAudio(deviceId, buf, p4);
+    //sceAudioOutOutput(audio_port, buf);
+}
 void         SetIntArrayRegion(JNIEnv* p1, jintArray p2, jsize p3, jsize p4, const jint* p5) { debugPrintf("[JNI] SetIntArrayRegion(): not implemented\n"); }
 void         SetLongArrayRegion(JNIEnv* p1, jlongArray p2, jsize p3, jsize p4, const jlong* p5) { debugPrintf("[JNI] SetLongArrayRegion(): not implemented\n"); }
 void         SetFloatArrayRegion(JNIEnv* p1, jfloatArray p2, jsize p3, jsize p4, const jfloat* p5) { debugPrintf("[JNI] SetFloatArrayRegion(): not implemented\n"); }

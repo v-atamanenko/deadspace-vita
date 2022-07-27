@@ -31,6 +31,7 @@
 #include "utils/dialog.h"
 
 #include "../lib/kubridge/kubridge.h"
+#include "EAAudioCore.h"
 
 // Disable IDE complaints about _identifiers and unused variables
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
@@ -122,6 +123,7 @@ int main() {
     debugPrintf("init_jni() passed.\n");
 
     gl_init();
+    debugPrintf("gl_init() passed.\n");
 
     baba_main();
 }
@@ -170,6 +172,10 @@ void pollTouch() {
     }
 }
 
+void (*Java_com_ea_EAAudioCore_AndroidEAAudioCore_Init)(JNIEnv* env, jobject* obj, AudioTrack audioTrack, int i, int i2, int i3);
+void (*Java_com_ea_EAAudioCore_AndroidEAAudioCore_Release)(JNIEnv* env);
+
+
 _Noreturn void *baba_main() {
     Java_com_ea_EAIO_EAIO_Startup = (void*)so_symbol(&so_mod,"Java_com_ea_EAIO_EAIO_Startup");
     int (*JNI_OnLoad)(JavaVM* jvm) = (void*)so_symbol(&so_mod,"JNI_OnLoad");
@@ -177,12 +183,17 @@ _Noreturn void *baba_main() {
     void (*Java_com_ea_blast_AndroidRenderer_NativeOnSurfaceCreated)(void) = (void*)so_symbol(&so_mod,"Java_com_ea_blast_AndroidRenderer_NativeOnSurfaceCreated");
     void (*Java_com_ea_blast_AndroidRenderer_NativeOnDrawFrame)(void) = (void*)so_symbol(&so_mod,"Java_com_ea_blast_AndroidRenderer_NativeOnDrawFrame");
     NativeOnPointerEvent = (void*)so_symbol(&so_mod,"Java_com_ea_blast_TouchSurfaceAndroid_NativeOnPointerEvent");
+    Java_com_ea_EAAudioCore_AndroidEAAudioCore_Init = (void*)so_symbol(&so_mod,"Java_com_ea_EAAudioCore_AndroidEAAudioCore_Init");
+    Java_com_ea_EAAudioCore_AndroidEAAudioCore_Release = (void*)so_symbol(&so_mod,"Java_com_ea_EAAudioCore_AndroidEAAudioCore_Release");
 
     JNI_OnLoad(&jvm);
     debugPrintf("JNI_OnLoad() passed.\n");
 
     Java_com_ea_blast_MainActivity_NativeOnCreate();
     debugPrintf("Java_com_ea_blast_MainActivity_NativeOnCreate() passed.\n");
+
+    EAAudioCore__Startup();
+    debugPrintf("EAAudioCore__Startup() passed.\n");
 
     Java_com_ea_blast_AndroidRenderer_NativeOnSurfaceCreated();
 
