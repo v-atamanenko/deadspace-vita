@@ -21,6 +21,7 @@
 #include <sys/unistd.h>
 #include <psp2/touch.h>
 #include <psp2/ctrl.h>
+#include <psp2/motion.h>
 
 #include "default_dynlib.h"
 #include "fios.h"
@@ -37,8 +38,10 @@
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 #pragma ide diagnostic ignored "bugprone-reserved-identifier"
 
+#define GRAVITY_CONSTANT 9.807f
+
 unsigned int sceLibcHeapSize = 6 * 1024 * 1024;
-int _newlib_heap_size_user = 210 * 1024 * 1024;
+int _newlib_heap_size_user = 250 * 1024 * 1024;
 unsigned int _pthread_stack_default_user = 1 * 1024 * 1024;
 
 unsigned int sceUserMainThreadStackSize = 2 * 1024 * 1024;
@@ -134,6 +137,9 @@ int lastX[SCE_TOUCH_MAX_REPORT] = {-1, -1, -1, -1, -1, -1, -1, -1};
 int lastY[SCE_TOUCH_MAX_REPORT] = {-1, -1, -1, -1, -1, -1, -1, -1};
 
 void (*NativeOnPointerEvent)(JNIEnv *env, jobject obj, int rawEvent, int moduleId, int eventPointerId, float eventX, float eventY);
+void (*NativeOnKeyDown)(JNIEnv *env, jobject obj, int moduleId, int androidKey, int altPressed);
+void (*NativeOnKeyUp)(JNIEnv *env, jobject obj, int moduleId, int androidKey, int altPressed);
+void (*NativeOnAcceleration)(JNIEnv *env, jobject obj, float f1, float f2, float f3);
 
 #define kIdRawPointerCancel 0xc
 #define kIdRawPointerDown 0x6000c
@@ -172,6 +178,77 @@ void pollTouch() {
     }
 }
 
+enum {
+    ACTION_DOWN = 1,
+    ACTION_UP   = 2,
+    ACTION_MOVE = 3,
+};
+
+enum {
+    AKEYCODE_DPAD_UP = 19,
+    AKEYCODE_DPAD_DOWN = 20,
+    AKEYCODE_DPAD_LEFT = 21,
+    AKEYCODE_DPAD_RIGHT = 22,
+    AKEYCODE_A = 29,
+    AKEYCODE_B = 30,
+    AKEYCODE_BUTTON_X = 99,
+    AKEYCODE_BUTTON_Y = 100,
+    AKEYCODE_BUTTON_L1 = 102,
+    AKEYCODE_BUTTON_R1 = 103,
+    AKEYCODE_BUTTON_START = 108,
+    AKEYCODE_BUTTON_SELECT = 109,
+};
+
+typedef struct {
+    uint32_t sce_button;
+    uint32_t android_button;
+} ButtonMapping;
+
+static ButtonMapping mapping[] = {
+        { SCE_CTRL_UP,        AKEYCODE_DPAD_UP },
+        { SCE_CTRL_DOWN,      AKEYCODE_DPAD_DOWN },
+        { SCE_CTRL_LEFT,      AKEYCODE_DPAD_LEFT },
+        { SCE_CTRL_RIGHT,     AKEYCODE_DPAD_RIGHT },
+        { SCE_CTRL_CROSS,     AKEYCODE_A },
+        { SCE_CTRL_CIRCLE,    AKEYCODE_B },
+        { SCE_CTRL_SQUARE,    AKEYCODE_BUTTON_X },
+        { SCE_CTRL_TRIANGLE,  AKEYCODE_BUTTON_Y },
+        { SCE_CTRL_L1,        AKEYCODE_BUTTON_L1 },
+        { SCE_CTRL_R1,        AKEYCODE_BUTTON_R1 },
+        { SCE_CTRL_START,     AKEYCODE_BUTTON_START },
+        { SCE_CTRL_SELECT,    AKEYCODE_BUTTON_SELECT },
+};
+
+uint32_t old_buttons = 0, current_buttons = 0, pressed_buttons = 0, released_buttons = 0;
+
+void pollPad() {
+    SceCtrlData pad;
+    sceCtrlPeekBufferPositiveExt2(0, &pad, 1);
+
+    old_buttons = current_buttons;
+    current_buttons = pad.buttons;
+    pressed_buttons = current_buttons & ~old_buttons;
+    released_buttons = ~current_buttons & old_buttons;
+
+    for (int i = 0; i < sizeof(mapping) / sizeof(ButtonMapping); i++) {
+        if (pressed_buttons & mapping[i].sce_button) {
+            NativeOnKeyDown(&jni, (void *) 0x42424242, 600, mapping[i].android_button, 0);
+        }
+        if (released_buttons & mapping[i].sce_button)
+            NativeOnKeyUp(&jni, (void*)0x42424242, 600, mapping[i].android_button, 0);
+    }
+}
+
+void pollAccel() {
+    SceMotionSensorState sensor;
+    sceMotionGetSensorState(&sensor, 1);
+
+    float val1 = sensor.accelerometer.x*GRAVITY_CONSTANT;
+    float val2 = sensor.accelerometer.y*GRAVITY_CONSTANT;
+    float val3 = sensor.accelerometer.z*GRAVITY_CONSTANT;
+    NativeOnAcceleration(&jni, (void*)0x42424242, val1, val2, val3);
+}
+
 void (*Java_com_ea_EAAudioCore_AndroidEAAudioCore_Init)(JNIEnv* env, jobject* obj, AudioTrack audioTrack, int i, int i2, int i3);
 void (*Java_com_ea_EAAudioCore_AndroidEAAudioCore_Release)(JNIEnv* env);
 
@@ -183,23 +260,33 @@ _Noreturn void *baba_main() {
     void (*Java_com_ea_blast_AndroidRenderer_NativeOnSurfaceCreated)(void) = (void*)so_symbol(&so_mod,"Java_com_ea_blast_AndroidRenderer_NativeOnSurfaceCreated");
     void (*Java_com_ea_blast_AndroidRenderer_NativeOnDrawFrame)(void) = (void*)so_symbol(&so_mod,"Java_com_ea_blast_AndroidRenderer_NativeOnDrawFrame");
     NativeOnPointerEvent = (void*)so_symbol(&so_mod,"Java_com_ea_blast_TouchSurfaceAndroid_NativeOnPointerEvent");
+    NativeOnKeyDown = (void*)so_symbol(&so_mod,"Java_com_ea_blast_KeyboardAndroid_NativeOnKeyDown");
+    NativeOnKeyUp = (void*)so_symbol(&so_mod,"Java_com_ea_blast_KeyboardAndroid_NativeOnKeyUp");
+    NativeOnAcceleration = (void*)so_symbol(&so_mod,"Java_com_ea_blast_AccelerometerAndroidDelegate_NativeOnAcceleration");
     Java_com_ea_EAAudioCore_AndroidEAAudioCore_Init = (void*)so_symbol(&so_mod,"Java_com_ea_EAAudioCore_AndroidEAAudioCore_Init");
     Java_com_ea_EAAudioCore_AndroidEAAudioCore_Release = (void*)so_symbol(&so_mod,"Java_com_ea_EAAudioCore_AndroidEAAudioCore_Release");
 
     JNI_OnLoad(&jvm);
     debugPrintf("JNI_OnLoad() passed.\n");
 
-    Java_com_ea_blast_MainActivity_NativeOnCreate();
-    debugPrintf("Java_com_ea_blast_MainActivity_NativeOnCreate() passed.\n");
-
     EAAudioCore__Startup();
     debugPrintf("EAAudioCore__Startup() passed.\n");
 
+    Java_com_ea_blast_MainActivity_NativeOnCreate();
+    debugPrintf("Java_com_ea_blast_MainActivity_NativeOnCreate() passed.\n");
+
+    sceMotionStartSampling();
+
     Java_com_ea_blast_AndroidRenderer_NativeOnSurfaceCreated();
+
+    void (*NativeOnVisibilityChanged)(JNIEnv* jniEnv, jobject obj, int moduleId, int hardKeyboardHidden) = (void*)so_symbol(&so_mod,"Java_com_ea_blast_KeyboardAndroid_NativeOnVisibilityChanged");
+    NativeOnVisibilityChanged(&jni, (void*)0x42424242, 600, 1);
 
     while (1) {
         Java_com_ea_blast_AndroidRenderer_NativeOnDrawFrame();
         gl_swap();
         pollTouch();
+        //pollPad();
+        pollAccel();
     }
 }
