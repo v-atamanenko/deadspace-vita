@@ -30,6 +30,7 @@
 #include <psp2/audioout.h>
 #include <sys/unistd.h>
 #include <SDL2/SDL.h>
+#include <psp2/kernel/threadmgr.h>
 //#include "android/AAssetManager_acquirer.h"
 
 #include "jni_specific.h"
@@ -823,7 +824,9 @@ extern SDL_AudioDeviceID deviceId;
 
 void         SetShortArrayRegion(JNIEnv* p1, jshortArray p2, jsize p3, jsize p4, const jshort* buf) {
     //printf("SetShortArrayRegion %i\n", p4);
-    SDL_QueueAudio(deviceId, buf, p4);
+    sceAudioOutOutput(audio_port, buf);
+    sceKernelDelayThread(1000);
+    //SDL_QueueAudio(deviceId, buf, p4);
     //sceAudioOutOutput(audio_port, buf);
 }
 void         SetIntArrayRegion(JNIEnv* p1, jintArray p2, jsize p3, jsize p4, const jint* p5) { debugPrintf("[JNI] SetIntArrayRegion(): not implemented\n"); }

@@ -212,6 +212,9 @@ int EAAudioCore_AudioTrack_write(int id, va_list args) {
 }
 
 void EAAudioCore_AudioTrack_play(int id, va_list args) {
+    audio_port = sceAudioOutOpenPort(SCE_AUDIO_OUT_PORT_TYPE_BGM, 512, 44100, SCE_AUDIO_OUT_MODE_STEREO);
+    printf("audio_port %x\n", audio_port);
+
     printf("AudioTrack_play\n");
     // ignore
 }
@@ -242,33 +245,8 @@ void EAAudioCore__Startup() {
         sAudioTrack->release = _AudioTrack_release;
         //sAudioTrack = new AudioTrack(3, samplerate, channelConfig, 2, bufsize, 1);
 
-        //audio_port = sceAudioOutOpenPort(SCE_AUDIO_OUT_PORT_TYPE_MAIN, 2048, EAAudioCore_NativeOutputSampleRate, SCE_AUDIO_OUT_MODE_STEREO);
-
-        if (SDL_Init(SDL_INIT_AUDIO) < 0) {
-            fprintf(stderr, "SDL_Init failed: %s\n", SDL_GetError());
-        }
-
-        SDL_AudioSpec desired_audiospec;
-        SDL_zero(desired_audiospec);
-        desired_audiospec.format = AUDIO_S16;
-        desired_audiospec.channels = 2;
-        desired_audiospec.freq = EAAudioCore_NativeOutputSampleRate;
-        desired_audiospec.samples = 1024;
-
-        SDL_AudioSpec obtained_audiospec;
-        SDL_zero(obtained_audiospec);
-
-        deviceId = SDL_OpenAudioDevice(NULL, false, &desired_audiospec, &obtained_audiospec, 0);
-        if (deviceId <= 0) {
-            fprintf(stderr, "SDL_OpenAudioDevice failed: %s\n", SDL_GetError());
-        }
-
-        fprintf(stderr, "Obtained freq: %i\n", obtained_audiospec.freq);
-        fprintf(stderr, "Obtained samples: %i\n", obtained_audiospec.samples);
-        SDL_PauseAudioDevice(deviceId, 0);
-
         // bufsize / (2 * channels), channels, samplerate
-        Java_com_ea_EAAudioCore_AndroidEAAudioCore_Init(&jni, (void*)0x42424242, sAudioTrack, 1024, channels, samplerate);
+        Java_com_ea_EAAudioCore_AndroidEAAudioCore_Init(&jni, (void*)0x42424242, sAudioTrack, 4192, 2, 44100);
 
         sInit = true;
 
