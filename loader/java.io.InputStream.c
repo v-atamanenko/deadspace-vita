@@ -22,7 +22,7 @@ size_t listAllocedSize = 0;
 char** list = NULL;
 int calls_count = 0;
 
-const char* assetsPathPrefix = "ux0:/data/deadspace/assets/";
+const char* assetsPathPrefix = DATA_PATH_INT;
 
 // public int read(byte[] b, int off, int len)
 // https://docs.oracle.com/javase/7/docs/api/java/io/InputStream.html#read()

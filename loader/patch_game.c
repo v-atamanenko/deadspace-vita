@@ -192,6 +192,14 @@ void patch_game(void) {
     uint32_t fix = 0xe35a0001;
     kuKernelCpuUnrestrictedMemcpy((void *)(so_mod.text_base + 0x00272e50), &fix, sizeof(fix));
 
+    // Same for xperia
+    // original
+    // 0023bf6c 07 00 00 1a     bne        LAB_0023bf90
+    // patch
+    // 0023bf6c 07 00 00 ea     b          LAB_0023bf90
+    //uint32_t fix = 0xea000007;
+    //kuKernelCpuUnrestrictedMemcpy((void *)(so_mod.text_base + 0x0023bf6c), &fix, sizeof(fix));
+
     uint32_t nop = 0xe1a00000;
     //kuKernelCpuUnrestrictedMemcpy((void *)(so_mod.text_base + 0x0026d4ec), &nop, sizeof(nop));
 

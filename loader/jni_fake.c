@@ -29,7 +29,6 @@
 #include <psp2/apputil.h>
 #include <psp2/audioout.h>
 #include <sys/unistd.h>
-#include <SDL2/SDL.h>
 #include <psp2/kernel/threadmgr.h>
 //#include "android/AAssetManager_acquirer.h"
 
@@ -820,7 +819,6 @@ void         SetByteArrayRegion(JNIEnv* p1, jbyteArray p2, jsize p3, jsize p4, c
 void         SetCharArrayRegion(JNIEnv* p1, jcharArray p2, jsize p3, jsize p4, const jchar* p5) { debugPrintf("[JNI] SetCharArrayRegion(): not implemented\n"); }
 
 extern int audio_port;
-extern SDL_AudioDeviceID deviceId;
 
 void         SetShortArrayRegion(JNIEnv* p1, jshortArray p2, jsize p3, jsize p4, const jshort* buf) {
     //printf("SetShortArrayRegion %i\n", p4);

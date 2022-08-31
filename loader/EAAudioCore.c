@@ -8,7 +8,6 @@
 #include "stdbool.h"
 #include "android/jni.h"
 #include "jni_fake.h"
-#include "SDL2/SDL.h"
 
 #define EAAudioCore_nChannels 2
 #define EAAudioCore_NativeOutputSampleRate 48000 //Hz
@@ -224,7 +223,6 @@ void EAAudioCore_AudioTrack_stop(int id, va_list args) {
     // ignore
 }
 
-SDL_AudioDeviceID deviceId;
 
 void EAAudioCore__Startup() {
     if (!sInit) {

@@ -45,6 +45,9 @@ endif()
 SET(DATA_PATH "ux0:data/deadspace" CACHE STRING "Path to data files")
 SET(DATA_PATH_INT "${DATA_PATH}/assets" CACHE STRING "Path to assets folder")
 SET(SO_PATH "${DATA_PATH}/lib/armeabi/libDeadSpace.so" CACHE STRING "Path to .so")
+#SET(DATA_PATH "ux0:data/deadspace_xperia/" CACHE STRING "Path to data files")
+#SET(DATA_PATH_INT "${DATA_PATH}/assets/" CACHE STRING "Path to assets folder")
+#SET(SO_PATH "${DATA_PATH}/lib/armeabi/libEAMGameDeadSpace.so" CACHE STRING "Path to .so")
 SET(GRAPHICS_API "VGL" CACHE STRING "\"VGL\" for VitaGL, \"PVR\" for PVR_PSP2")
 
 add_definitions(-DDATA_PATH="${DATA_PATH}")
@@ -53,7 +56,7 @@ add_definitions(-DSO_PATH="${SO_PATH}")
 
 add_definitions(-D_GNU_SOURCE) # makes sincos, sincosf, etc. visible
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wl,-q -O2 -mfloat-abi=softfp -fno-lto -fsigned-char")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wl,-q -O2")
 set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -std=gnu++11")
 
 add_executable(so_loader
@@ -64,7 +67,7 @@ add_executable(so_loader
         loader/utils/dialog.c
         loader/glutil.c
         loader/jni_fake.c
-        loader/utils/loading_screen.c
+        #loader/utils/loading_screen.c
         loader/patch_game.c
         loader/utils/utils.c
         loader/reimpl/ctype_patch.c
@@ -115,25 +118,15 @@ else()
           taihen_stub
           SceShaccCg_stub
   )
-  set(SDL_LIBS SDL2 SDL2main)
   set(VPK_INCLUDES)
 endif()
 
 target_link_libraries(so_loader
-        ${SDL_LIBS}
         -Wl,--whole-archive pthread -Wl,--no-whole-archive
         z
         m
         stdc++
-        OpenSLES
-        sndfile
-        vorbis
-        vorbisenc
-        vorbisfile
-        ogg
-        FLAC
         ${GRAPHICS_LIBS}
-        vita2d
         ScePgf_stub
         mathneon
         ${CMAKE_BINARY_DIR}/lib/kubridge/stubs/libkubridge_stub.a

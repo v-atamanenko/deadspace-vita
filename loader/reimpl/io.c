@@ -47,7 +47,7 @@ char* fix_path(const char * orig_path) {
 
     if (strstr(path_temp, "appbundle:/")) {
         path_temp = strremove(path_temp, "appbundle:/");
-        prepend(path_temp, "ux0:/data/deadspace/assets/");
+        prepend(path_temp, DATA_PATH_INT);
         return path_temp;
     }
 

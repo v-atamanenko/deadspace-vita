@@ -160,11 +160,8 @@ int glTexGeniOES_tempwrap() { fprintf(stderr, "ret0d call!!! glTexGeniOES_tempwr
 int glGetPointerv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetPointerv_tempwrap\n"); return 0; }
 int glCompressedTexSubImage2D_tempwrap() { fprintf(stderr, "ret0d call!!! glCompressedTexSubImage2D_tempwrap\n"); return 0; }
 int glSampleCoverage_tempwrap() { fprintf(stderr, "ret0d call!!! glSampleCoverage_tempwrap\n"); return 0; }
-int glTexParameteriv_tempwrap() { fprintf(stderr, "ret0d call!!! glTexParameteriv_tempwrap\n"); return 0; }
 int glPointSizePointerOES_tempwrap() { fprintf(stderr, "ret0d call!!! glPointSizePointerOES_tempwrap\n"); return 0; }
-int glDepthRangex_tempwrap() { fprintf(stderr, "ret0d call!!! glDepthRangex_tempwrap\n"); return 0; }
 int glLightf_tempwrap() { fprintf(stderr, "ret0d call!!! glLightf_tempwrap\n"); return 0; }
-int glPointSizex_tempwrap() { fprintf(stderr, "ret0d call!!! glPointSizex_tempwrap\n"); return 0; }
 int glGetLightfv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetLightfv_tempwrap\n"); return 0; }
 int glPointParameterf_tempwrap() { fprintf(stderr, "ret0d call!!! glPointParameterf_tempwrap\n"); return 0; }
 int glPointParameterxv_tempwrap() { fprintf(stderr, "ret0d call!!! glPointParameterxv_tempwrap\n"); return 0; }
@@ -174,51 +171,21 @@ int glGetLightxv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetLightxv_tempwr
 int glSampleCoveragex_tempwrap() { fprintf(stderr, "ret0d call!!! glSampleCoveragex_tempwrap\n"); return 0; }
 int glMaterialx_tempwrap() { fprintf(stderr, "ret0d call!!! glMaterialx_tempwrap\n"); return 0; }
 int glPointParameterfv_tempwrap() { fprintf(stderr, "ret0d call!!! glPointParameterfv_tempwrap\n"); return 0; }
-int glPolygonOffsetx_tempwrap() { fprintf(stderr, "ret0d call!!! glPolygonOffsetx_tempwrap\n"); return 0; }
 int glTexParameterxv_tempwrap() { fprintf(stderr, "ret0d call!!! glTexParameterxv_tempwrap\n"); return 0; }
-
-void glFogx_tempwrap(GLenum pname, GLfixed param) {
-    fprintf(stderr, "[VGLDBG] glFogx(0x%x, 0x%x)\n", pname, param);
-}
-
-void glFogxv_tempwrap(GLenum pname, GLfixed* param) {
-    fprintf(stderr, "[VGLDBG] glFogxv(0x%x, 0x%x)\n", pname, param[0]);
-}
-
-void glTexEnvx_tempwrap(GLenum target, GLenum pname, GLfixed param) {
-    fprintf(stderr, "[VGLDBG] glTexEnvx(0x%x, 0x%x, 0x%x)\n", target, pname, param);
-    glTexEnvx(target, pname, param);
-}
-
-void glTexEnvxv_tempwrap(GLenum target, GLenum pname, GLfixed* param) {
-    fprintf(stderr, "[VGLDBG] glTexEnvxv(0x%x, 0x%x, 0x%x)\n", target, pname, param[0]);
-    glTexEnvxv(target, pname, param);
-}
-
 int glGetTexParameterfv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetTexParameterfv_tempwrap\n"); return 0; }
 int glCopyTexImage2D_tempwrap() { fprintf(stderr, "ret0d call!!! glCopyTexImage2D_tempwrap\n"); return 0; }
 int glMaterialf_tempwrap() { fprintf(stderr, "ret0d call!!! glMaterialf_tempwrap\n"); return 0; }
-
-void glTexParameterx_tempwrap(GLenum target, GLenum pname, GLfixed param) {
-    fprintf(stderr, "[VGLDBG] glTexParameterx(0x%x, 0x%x, 0x%x)\n", target, pname, param);
-    //glTexParameterx(target, pname, param);
-}
-
 int glGetTexEnvxv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetTexEnvxv_tempwrap\n"); return 0; }
-int glOrthox_tempwrap() { fprintf(stderr, "ret0d call!!! glOrthox_tempwrap\n"); return 0; }
 int glGetTexParameterxv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetTexParameterxv_tempwrap\n"); return 0; }
 int glGetMaterialxv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetMaterialxv_tempwrap\n"); return 0; }
 int glGetClipPlanef_tempwrap() { fprintf(stderr, "ret0d call!!! glGetClipPlanef_tempwrap\n"); return 0; }
 int glGetFixedv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetFixedv_tempwrap\n"); return 0; }
-int glClipPlanex_tempwrap() { fprintf(stderr, "ret0d call!!! glClipPlanex_tempwrap\n"); return 0; }
 int glGetMaterialfv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetMaterialfv_tempwrap\n"); return 0; }
 int glNormal3x_tempwrap() { fprintf(stderr, "ret0d call!!! glNormal3x_tempwrap\n"); return 0; }
 int glGetTexParameteriv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetTexParameteriv_tempwrap\n"); return 0; }
 int glLightModelf_tempwrap() { fprintf(stderr, "ret0d call!!! glLightModelf_tempwrap\n"); return 0; }
-int glClipPlanef_tempwrap() { fprintf(stderr, "ret0d call!!! glClipPlanef_tempwrap\n"); return 0; }
 int glTexParameterfv_tempwrap() { fprintf(stderr, "ret0d call!!! glTexParameterfv_tempwrap\n"); return 0; }
 int glIsBuffer_tempwrap() { fprintf(stderr, "ret0d call!!! glIsBuffer_tempwrap\n"); return 0; }
-int glLineWidthx_tempwrap() { fprintf(stderr, "ret0d call!!! glLineWidthx_tempwrap\n"); return 0; }
 int glGetTexEnviv_tempwrap() { fprintf(stderr, "ret0d call!!! glGetTexEnviv_tempwrap\n"); return 0; }
 int glGetClipPlanex_tempwrap() { fprintf(stderr, "ret0d call!!! glGetClipPlanex_tempwrap\n"); return 0; }
 int glLightx_tempwrap() { fprintf(stderr, "ret0d call!!! glLightx_tempwrap\n"); return 0; }

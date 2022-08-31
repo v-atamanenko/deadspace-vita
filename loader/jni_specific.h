@@ -173,7 +173,7 @@ NameToMethodID nameToMethodId[] = {
     // EAAudioCore
     { 116, "play", METHOD_TYPE_VOID },
     { 117, "stop", METHOD_TYPE_VOID },
-    { 118, "write", METHOD_TYPE_INT }
+    { 118, "write", METHOD_TYPE_INT },
 };
 
 /*
@@ -428,14 +428,14 @@ jobject ea_blast_SystemAndroidDelegate_GetVirtualKeyboardCount(int id, va_list a
 // 	com/ea/blast/GetAppDataDirectoryDelegate/GetAppDataDirectory
 jobject GetAppDataDirectory(int id, va_list args) {
     debugPrintf("JNI: Method Call: GetAppDataDirectory() / id: %i\n", id);
-    char * dir = "ux0:data/deadspace";
+    char * dir = DATA_PATH;
     return (jobject) strdup(dir);
 }
 
 // 	com/ea/blast/GetAppDataDirectoryDelegate/GetExternalStorageDirectory
 jobject GetExternalStorageDirectory(int id, va_list args) {
     debugPrintf("JNI: Method Call: GetExternalStorageDirectory() / id: %i\n", id);
-    char * dir = "ux0:data/deadspace";
+    char * dir = DATA_PATH;
     return (jobject) strdup(dir);
 }
 
@@ -846,6 +846,15 @@ jobject methodObjectCall(int id, va_list args) {
         if (methodsObject[i].id == id) {
             debugPrintf("resolved : ");
             jobject ret = methodsObject[i].Method(id, args);
+            debugPrintf("0x%x\n", (int)ret);
+            return ret;
+        }
+    }
+
+    for (int i = 0; i < sizeof(methodsBoolean) / sizeof(MethodsBoolean); i++) {
+        if (methodsBoolean[i].id == id) {
+            debugPrintf("resolved : ");
+            jobject ret = (jobject)(int)methodsBoolean[i].Method(id, args);
             debugPrintf("0x%x\n", (int)ret);
             return ret;
         }

@@ -41,7 +41,7 @@
 #define GRAVITY_CONSTANT 9.807f
 
 unsigned int sceLibcHeapSize = 6 * 1024 * 1024;
-int _newlib_heap_size_user = 250 * 1024 * 1024;
+int _newlib_heap_size_user = 240 * 1024 * 1024;
 unsigned int _pthread_stack_default_user = 1 * 1024 * 1024;
 
 unsigned int sceUserMainThreadStackSize = 2 * 1024 * 1024;
@@ -75,7 +75,7 @@ void abort_handler(KuKernelAbortContext *ctx) {
 }
 
 int main() {
-    //kuKernelRegisterAbortHandler(abort_handler, NULL);
+    kuKernelRegisterAbortHandler(abort_handler, NULL);
 
     SceAppUtilInitParam init_param;
     SceAppUtilBootParam boot_param;
@@ -102,7 +102,7 @@ int main() {
 
     if (so_file_load(&so_mod, SO_PATH, LOAD_ADDRESS) < 0)
         fatal_error("Error could not load %s.", SO_PATH);
-    debugPrintf("so_file_load() passed.\n");
+    debugPrintf("so_file_load(%s) passed.\n", SO_PATH);
 
     so_relocate(&so_mod);
     debugPrintf("so_relocate() passed.\n");
