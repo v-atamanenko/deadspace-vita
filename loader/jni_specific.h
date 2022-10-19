@@ -479,12 +479,13 @@ int GetStdOrientation(int id, va_list args) {
 
 int GetDefaultWidth(int id, va_list args) {
     debugPrintf("JNI: Method Call: GetDefaultWidth() / id: %i\n", id);
-    return 960;
+    return 544;
 }
 
 int GetDefaultHeight(int id, va_list args) {
     debugPrintf("JNI: Method Call: GetDefaultHeight() / id: %i\n", id);
-    return 544;
+
+    return 960;
 }
 
 float GetDpiX(int id, va_list args) {

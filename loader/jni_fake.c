@@ -788,7 +788,12 @@ jobjectArray  NewObjectArray(JNIEnv* p1, jsize p2, jclass p3, jobject p4) { debu
 void         SetObjectArrayElement(JNIEnv* p1, jobjectArray p2, jsize p3, jobject p4) { debugPrintf("[JNI] SetObjectArrayElement()\n");  }
 jbooleanArray  NewBooleanArray(JNIEnv* p1, jsize p2) { debugPrintf("[JNI] NewBooleanArray(): not implemented\n"); return 0; }
 jcharArray     NewCharArray(JNIEnv* p1, jsize p2) { debugPrintf("[JNI] NewCharArray(): not implemented\n"); return 0; }
-jshortArray    NewShortArray(JNIEnv* p1, jsize p2) { debugPrintf("[JNI] NewShortArray(): not implemented\n"); return 0; }
+
+jshortArray NewShortArray(JNIEnv* env, jsize length) {
+    debugPrintf("[JNI] NewShortArray(env, size:%i)\n", length);
+    return (jshortArray*) malloc(length * sizeof(jshort));
+}
+
 jintArray      NewIntArray(JNIEnv* p1, jsize p2) { debugPrintf("[JNI] NewIntArray(): not implemented\n"); return 0; }
 jlongArray     NewLongArray(JNIEnv* p1, jsize p2) { debugPrintf("[JNI] NewLongArray(): not implemented\n"); return 0; }
 jfloatArray    NewFloatArray(JNIEnv* p1, jsize p2) { debugPrintf("[JNI] NewFloatArray(): not implemented\n"); return 0; }
@@ -818,10 +823,16 @@ void         SetBooleanArrayRegion(JNIEnv* p1, jbooleanArray p2, jsize p3, jsize
 void         SetByteArrayRegion(JNIEnv* p1, jbyteArray p2, jsize p3, jsize p4, const jbyte* p5) { debugPrintf("[JNI] SetByteArrayRegion(): not implemented\n"); }
 void         SetCharArrayRegion(JNIEnv* p1, jcharArray p2, jsize p3, jsize p4, const jchar* p5) { debugPrintf("[JNI] SetCharArrayRegion(): not implemented\n"); }
 
-extern int audio_port;
+int audio_port = -1;
+
+
 
 void         SetShortArrayRegion(JNIEnv* p1, jshortArray p2, jsize p3, jsize p4, const jshort* buf) {
-    //printf("SetShortArrayRegion %i\n", p4);
+    if (audio_port == -1) {
+        audio_port = sceAudioOutOpenPort(SCE_AUDIO_OUT_PORT_TYPE_BGM, 512, 44100, SCE_AUDIO_OUT_MODE_STEREO);
+        printf("got audio_port %i\n", audio_port);
+    }
+    
     sceAudioOutOutput(audio_port, buf);
     sceKernelDelayThread(1000);
     //SDL_QueueAudio(deviceId, buf, p4);

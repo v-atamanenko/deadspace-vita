@@ -201,7 +201,7 @@ void _AudioTrack_release() {
     printf("_AudioTrack_release\n");
 }
 
-int audio_port = 0;
+//int audio_port = 0;
 
 int EAAudioCore_AudioTrack_write(int id, va_list args) {
     //printf("AudioTrack_write\n");
@@ -211,8 +211,8 @@ int EAAudioCore_AudioTrack_write(int id, va_list args) {
 }
 
 void EAAudioCore_AudioTrack_play(int id, va_list args) {
-    audio_port = sceAudioOutOpenPort(SCE_AUDIO_OUT_PORT_TYPE_BGM, 512, 44100, SCE_AUDIO_OUT_MODE_STEREO);
-    printf("audio_port %x\n", audio_port);
+    //audio_port = sceAudioOutOpenPort(SCE_AUDIO_OUT_PORT_TYPE_BGM, 512, 44100, SCE_AUDIO_OUT_MODE_STEREO);
+    //printf("audio_port %x\n", audio_port);
 
     printf("AudioTrack_play\n");
     // ignore
