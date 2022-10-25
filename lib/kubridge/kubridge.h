@@ -8,8 +8,16 @@ extern "C" {
 #include <psp2/types.h>
 #include <psp2/kernel/sysmem.h>
 
-#define KU_KERNEL_ABORT_TYPE_DATA_ABORT 0
+#define KU_KERNEL_PROT_NONE  (0x00)
+#define KU_KERNEL_PROT_READ  (0x40)
+#define KU_KERNEL_PROT_WRITE (0x20)
+#define KU_KERNEL_PROT_EXEC  (0x10)
+
+#define KU_KERNEL_MEM_COMMIT_ATTR_HAS_BASE (0x1)
+
+#define KU_KERNEL_ABORT_TYPE_DATA_ABORT     0
 #define KU_KERNEL_ABORT_TYPE_PREFETCH_ABORT 1
+#define KU_KERNEL_ABORT_TYPE_UNDEF_INSTR    2
 
 typedef struct KuKernelAbortContext
 {
@@ -39,6 +47,17 @@ typedef struct KuKernelAbortContext
 } KuKernelAbortContext;
 
 typedef void (*KuKernelAbortHandler)(KuKernelAbortContext *);
+
+typedef struct KuKernelAbortHandlerOpt {
+  SceSize size; //!< Size of structure
+} KuKernelAbortHandlerOpt;
+
+typedef struct KuKernelMemCommitOpt {
+  SceSize size;
+  SceUInt32 attr;
+  SceUID baseBlock;
+  SceUInt32 baseOffset;
+} KuKernelMemCommitOpt;
 
 typedef struct SceKernelAddrPair {
   uint32_t addr;                  //!< Address
@@ -84,8 +103,13 @@ void kuKernelFlushCaches(const void *ptr, SceSize len);
 
 int kuKernelCpuUnrestrictedMemcpy(void *dst, const void *src, SceSize len);
 
-int kuKernelRegisterAbortHandler(KuKernelAbortHandler pHandler, KuKernelAbortHandler *pOldHandler);
+int kuKernelRegisterAbortHandler(KuKernelAbortHandler pHandler, KuKernelAbortHandler *pOldHandler, KuKernelAbortHandlerOpt *pOpt);
 void kuKernelReleaseAbortHandler();
+
+int kuKernelMemProtect(void *addr, SceSize len, SceUInt32 prot);
+SceUID kuKernelMemReserve(void **addr, SceSize size, SceKernelMemBlockType memBlockType);
+int kuKernelMemCommit(void *addr, SceSize len, SceUInt32 prot, KuKernelMemCommitOpt *pOpt);
+int kuKernelMemDecommit(void *addr, SceSize len);
 
 #ifdef __cplusplus
 }

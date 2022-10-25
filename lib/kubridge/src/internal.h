@@ -5,13 +5,21 @@
 #include <psp2kern/kernel/debug.h>
 
 #ifndef NDEBUG
-#define LOG(msg, ...) ksceDebugPrintf("[kubridge ] - %s: "msg, __FUNCTION__, ##__VA_ARGS__)
+#define LOG(msg, ...) ksceDebugPrintf("[kubridge ]: %s:%d:"msg"\n", __FUNCTION__, __LINE__, ##__VA_ARGS__)
 #else
 #define LOG(msg, ...)
 #endif
 
+#define KU_KERNEL_PROT_NONE  (0x00)
+#define KU_KERNEL_PROT_READ  (0x40)
+#define KU_KERNEL_PROT_WRITE (0x20)
+#define KU_KERNEL_PROT_EXEC  (0x10)
+
+#define KU_KERNEL_MEM_COMMIT_ATTR_HAS_BASE (0x1)
+
 #define KU_KERNEL_ABORT_TYPE_DATA_ABORT 0
 #define KU_KERNEL_ABORT_TYPE_PREFETCH_ABORT 1
+#define KU_KERNEL_ABORT_TYPE_UNDEF_INSTR 2
 
 typedef struct KuKernelAbortContext
 {
@@ -42,6 +50,20 @@ typedef struct KuKernelAbortContext
 
 typedef void (*KuKernelAbortHandler)(KuKernelAbortContext *);
 
+// Options struct for future expansion
+typedef struct KuKernelAbortHandlerOpt
+{
+    SceSize size;
+} KuKernelAbortHandlerOpt;
+
+typedef struct KuKernelMemCommitOpt
+{
+    SceSize size;
+    SceUInt32 attr;
+    SceUID baseBlock;
+    SceUInt32 baseOffset;
+} KuKernelMemCommitOpt;
+
 typedef struct ProcessAbortHandler
 {
     SceUID pid;
@@ -50,6 +72,9 @@ typedef struct ProcessAbortHandler
     struct ProcessAbortHandler *pNext;
 } ProcessAbortHandler;
 
-void SetupExceptionHandlers();
+void InitExceptionHandlers();
+
+void InitMemProtect();
+void TermMemProtect();
 
 #endif

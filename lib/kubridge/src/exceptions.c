@@ -7,12 +7,17 @@
 #include <psp2kern/kernel/sysmem/memtype.h>
 #include <psp2kern/kernel/sysroot.h>
 #include <psp2kern/kernel/threadmgr.h>
-#include <exceptions_user.h>
 
 #include <psp2/kernel/error.h>
 
 #include <taihen.h>
+
 #include "internal.h"
+#include "exceptions_user.h"
+
+#if !defined(EXCEPTION_SAFETY)
+#define EXCEPTION_SAFETY 1
+#endif
 
 typedef struct SceKernelExceptionHandler
 {
@@ -22,87 +27,84 @@ typedef struct SceKernelExceptionHandler
     SceUInt32 impl[];
 } SceKernelExceptionHandler;
 
-int ksceKernelSwitchPidContext(SceKernelProcessContext *new_context, SceKernelProcessContext *prev_context);
 int module_get_export_func(SceUID pid, const char *modname, uint32_t libnid, uint32_t funcnid, uintptr_t *func);
-void kuKernelFlushCaches(const void *ptr, SceSize len);
 
 static int (*_sceGUIDGetName)(SceUID guid, char **name);
-static int (*_sceKernelGetFaultingProcess)(SceKernelFaultingProcessInfo *);
-static int (*_sceKernelRegisterExceptionHandler)(SceExcpKind excpKind, SceUInt32 prio, void *handler);
-static void (*_sceKernelReturnFromException)(SceExcpmgrExceptionContext *context) __attribute__((__noreturn__)); // SceExcpmgrForKernel_D17EEE40 / SceExcpmgrForKernel_3E55B5C3
+static int (*_sceKernelRegisterExceptionHandler)(SceExcpKind excpKind, SceUInt32 prio, SceKernelExceptionHandler *handler);
 static void *(*_sceKernelAllocRemoteProcessHeap)(SceUID pid, SceSize size, void *pOpt);
 static void (*_sceKernelFreeRemoteProcessHeap)(SceUID pid, void *ptr);
+static int (*_sceKernelProcCopyToUserRx)(SceUID pid, void *dst, const void *src, SceSize size);
 
-extern uint32_t DabtExceptionHandler_lvl0[];
-extern uint32_t DabtExceptionHandler_lvl0_retAddr;
-extern SceKernelExceptionHandler DabtExceptionHandler_lvl1;
-extern SceKernelExceptionHandler PabtExceptionHandler_lvl1;
-SceKernelExceptionHandler *DabtExceptionHandler_default;
+extern SceKernelExceptionHandler DabtExceptionHandler_lvl0;
+extern SceKernelExceptionHandler PabtExceptionHandler_lvl0;
+extern SceKernelExceptionHandler UndefExceptionHandler_lvl0;
 
 void *userAbortBase;
+static SceUID userAbortMemBlockPid; // PID of process that owns userAbortMemBlock
 KuKernelAbortHandler defaultUserAbortHandler;
 
 static ProcessAbortHandler *handlers;
 int32_t handlersMutex = 0;
 static SceUID userAbortMemBlock = -1;
 
-__attribute__((target("arm"), __noreturn__)) void ReturnFromException(SceExcpmgrExceptionContext *excpContext)
-{
-    LOG("Returning from exception to 0x%08X\n", excpContext->address_of_faulting_instruction);
-
-    // The TPID* registers aren't set by _sceKernelReturnFromException, so we have to do it ourselves.
-    asm volatile("mcr p15, #0x0, %0, c13, c0, #0x2" :: "r" (excpContext->TPIDRURO));
-    asm volatile("mcr p15, #0x0, %0, c13, c0, #0x3" :: "r" (excpContext->TPIDRURW));
-    asm volatile("mcr p15, #0x0, %0, c13, c0, #0x4" :: "r" (excpContext->TPIDRPRW));
-    _sceKernelReturnFromException(excpContext);
-}
-
-__attribute__((target("arm"))) int CheckStackPointer(void *stackPointer)
+int CheckStackPointer(void *stackPointer)
 {
     void *stackBounds[2];
-    SceKernelFaultingProcessInfo procInfo;
-    _sceKernelGetFaultingProcess(&procInfo);
-    ksceKernelProcMemcpyFromUser(procInfo.pid, &stackBounds[0], ksceKernelGetThreadTLSAddr(procInfo.faultingThreadId, 2), sizeof(stackBounds));
-    if (stackPointer > stackBounds[0] || stackPointer < stackBounds[1])
+    uint32_t *tlsAddr;
+    asm volatile("mrc p15, 0, %0, c13, c0, #3" : "=r" (tlsAddr)); // Load TLS address from TPIDRURO register
+    if (tlsAddr == NULL)
     {
-        LOG("Invalid stack pointer 0x%08X. (0x%08X/0x%08X)", stackPointer, stackBounds[1], stackBounds[0]);
-        return 0; // Stack pointer is not valid
+        LOG("Error: Invalid TLS Address");
+        return 0;
+    }
+
+    tlsAddr -= (0x800 / sizeof(uint32_t));
+
+#if (EXCEPTION_SAFETY >= 2)
+    if (ksceKernelMemcpyFromUser(&stackBounds[0], &tlsAddr[2], sizeof(stackBounds)) < 0)
+    {
+        LOG("Error: Failed to load stack bounds from TLS");
+        return 0;
+    }
+#else
+    stackBounds[0] = (void *)tlsAddr[2];
+    stackBounds[1] = (void *)tlsAddr[3];
+#endif
+
+    if (stackPointer > stackBounds[0] || stackPointer <= stackBounds[1])
+    {
+        LOG("Error: Stack pointer for thread 0x%X is out-of-bounds (sp: %p, stack bottom: %p, stack top: %p)", ksceKernelGetThreadId(), stackPointer, stackBounds[0], stackBounds[1]);
+        return 0;
     }
 
     stackPointer -= (0x160 + 0x400); // 0x160 for the abort context, plus an extra 0x400 for use in the abort handler
-    if (stackPointer > stackBounds[0] || stackPointer < stackBounds[1])
+    if (stackPointer > stackBounds[0] || stackPointer <= stackBounds[1])
     {
-        LOG("Insufficient stack space (0x%08X/0x%08X)", stackBounds[1], stackPointer);
-        return 0; // Stack pointer is not valid
+        LOG("Insufficient stack space on thread 0x%X to call the abort handler (sp: %p, stack bottom: %p, stack top: %p)", ksceKernelGetThreadId(), stackPointer + (0x160 + 0x400), stackBounds[0], stackBounds[1]);
+        return 0;
     }
 
     return 1;
 }
 
-__attribute__((target("arm"))) void *CopyFromExcp(void *dst, const void *src, size_t len)
+uintptr_t GetProcessExitAddr()
 {
-    SceKernelFaultingProcessInfo procInfo;
-    _sceKernelGetFaultingProcess(&procInfo);
-    SceUID pid = procInfo.pid;
+    uintptr_t addr;
 
-    ksceKernelProcMemcpyToUser(pid, dst, src, len);
+    LOG("Fatal error encountered while reloading the abort context. Process will be terminated");
 
-    return dst + len;
+    module_get_export_func(ksceKernelGetProcessId(), "SceLibKernel", 0xCAE9ACE6, 0x7595D9AA, &addr); // sceKernelExitProcess
+
+    return addr;
 }
 
 void RemoveProcessAbortHandler(SceUID pid);
 ProcessAbortHandler *GetProcessAbortHandler(SceUID pid)
 {
     ProcessAbortHandler *cur = handlers;
-    SceBool fromExcp = pid == -1;
+    SceBool dontCreate = pid == -1;
 
     if (pid == -1)
-    {
-        SceKernelFaultingProcessInfo procInfo;
-        _sceKernelGetFaultingProcess(&procInfo);
-        pid = procInfo.pid;
-    }
-    else if (pid == 0)
         pid = ksceKernelGetProcessId();
 
     while (cur != NULL)
@@ -113,11 +115,14 @@ ProcessAbortHandler *GetProcessAbortHandler(SceUID pid)
         cur = cur->pNext;
     }
 
-    if (cur == NULL && !fromExcp)
+    if (cur == NULL && !dontCreate)
     {
         cur = _sceKernelAllocRemoteProcessHeap(pid, sizeof(ProcessAbortHandler), NULL);
         if (cur == NULL)
+        {
+            LOG("Failed to allocate ProcessAbortHandler for process 0x%X", pid);
             return NULL;
+        }
 
         cur->pid = pid;
         cur->pHandler = defaultUserAbortHandler;
@@ -125,23 +130,30 @@ ProcessAbortHandler *GetProcessAbortHandler(SceUID pid)
         cur->userAbortMemBlock = -1;
         handlers = cur;
 
-        SceKernelAllocMemBlockKernelOpt opt;
-        memset(&opt, 0, sizeof(opt));
-        opt.size = sizeof(opt);
-        opt.attr = SCE_KERNEL_ALLOC_MEMBLOCK_ATTR_HAS_MIRROR_BLOCKID | 0x1000000 | 0x800000; // (HAS_BASE | SHARE_PHYPAGE | SHARE_VBASE)
-        opt.mirror_blockid = userAbortMemBlock;
-        SceUID memBlock = ksceKernelAllocMemBlock("KuBridgeAbortDispatchBlock", SCE_KERNEL_MEMBLOCK_TYPE_USER_SHARED_SHARED_RX, 0x1000, &opt);
-        if (memBlock < 0)
+        if (pid != userAbortMemBlockPid)
         {
-            LOG("Failed to allocate memBlock for user abort handler dispatch\n");
-            RemoveProcessAbortHandler(pid);
-            return NULL;
+            SceKernelAllocMemBlockKernelOpt opt;
+            memset(&opt, 0, sizeof(opt));
+            opt.size = sizeof(opt);
+            opt.attr = SCE_KERNEL_ALLOC_MEMBLOCK_ATTR_HAS_PID | SCE_KERNEL_ALLOC_MEMBLOCK_ATTR_HAS_MIRROR_BLOCKID | 0x1000000 | 0x800000; // (HAS_PID | HAS_BASE | SHARE_PHYPAGE | SHARE_VBASE)
+            opt.mirror_blockid = userAbortMemBlock;
+            opt.pid = pid;
+            SceUID memBlock = ksceKernelAllocMemBlock("KuBridgeAbortDispatchBlock", SCE_KERNEL_MEMBLOCK_TYPE_USER_SHARED_SHARED_RX, 0x1000, &opt);
+            if (memBlock < 0)
+            {
+                LOG("Failed to allocate memBlock for user abort handler dispatch (0x%08X)", memBlock);
+                RemoveProcessAbortHandler(pid);
+                return NULL;
+            }
+            cur->userAbortMemBlock = memBlock;
         }
-
-        cur->userAbortMemBlock = memBlock;
+        else
+        {
+            cur->userAbortMemBlock = userAbortMemBlock;
+        }
     }
     else if (cur == NULL)
-        LOG("No abort handler found for process 0x%08X\n", pid);
+        LOG("No user abort handler found for process 0x%X", pid);
 
     return cur;
 }
@@ -151,12 +163,6 @@ void RemoveProcessAbortHandler(SceUID pid)
     ProcessAbortHandler *cur = handlers, *prev = NULL;
 
     if (pid == -1)
-    {
-        SceKernelFaultingProcessInfo procInfo;
-        _sceKernelGetFaultingProcess(&procInfo);
-        pid = procInfo.pid;
-    }
-    else if (pid == 0)
         pid = ksceKernelGetProcessId();
 
     while (cur != NULL)
@@ -175,11 +181,13 @@ void RemoveProcessAbortHandler(SceUID pid)
         else
             prev->pNext = cur->pNext;
 
-        if (cur->userAbortMemBlock != -1)
+        if (cur->userAbortMemBlock != -1 && cur->userAbortMemBlock != userAbortMemBlock)
             ksceKernelFreeMemBlock(cur->userAbortMemBlock);
 
         _sceKernelFreeRemoteProcessHeap(pid, cur);
     }
+    else
+        LOG("No user abort hanlder found for process 0x%X", pid);
 }
 
 static int CreateProcess(SceUID pid, SceProcEventInvokeParam2 *a2, int a3)
@@ -192,19 +200,20 @@ static int CreateProcess(SceUID pid, SceProcEventInvokeParam2 *a2, int a3)
         SceKernelAllocMemBlockKernelOpt opt;
         memset(&opt, 0, sizeof(opt));
         opt.size = sizeof(opt);
-        opt.attr = 0x8000000 | SCE_KERNEL_ALLOC_MEMBLOCK_ATTR_HAS_PID; // Attr 0x8000000 allocates the memBlock at the highest address possible
+        opt.attr = 0x8000000 | SCE_KERNEL_ALLOC_MEMBLOCK_ATTR_HAS_PID; // Attr 0x8000000 allocates the memBlock at the highest address available
         opt.pid = pid;
-        userAbortMemBlock = ksceKernelAllocMemBlock("KuBridgeAbortHandlerUserBlock", SCE_KERNEL_MEMBLOCK_TYPE_USER_SHARED_SHARED_RW, 0x1000, &opt);
+        userAbortMemBlock = ksceKernelAllocMemBlock("KuBridgeAbortHandlerUserBlock", SCE_KERNEL_MEMBLOCK_TYPE_USER_SHARED_SHARED_RX, 0x1000, &opt);
         if (userAbortMemBlock < 0)
         {
-            LOG("Failed to allocate memBlock for user abort handler dispatch\n");
+            LOG("Failed to allocate base memBlock for user abort handler dispatch (0x%08X)", userAbortMemBlock);
             return 0;
         }
         ksceKernelGetMemBlockBase(userAbortMemBlock, &userAbortBase);
 
-        ksceKernelProcMemcpyToUser(pid, userAbortBase, &exceptions_user_bin[0], exceptions_user_bin_len);
+        _sceKernelProcCopyToUserRx(pid, userAbortBase, &exceptions_user_bin[0], exceptions_user_bin_len);
 
-        defaultUserAbortHandler = (KuKernelAbortHandler)(userAbortBase + (sizeof(SceUInt32) * 4));
+        defaultUserAbortHandler = (KuKernelAbortHandler)(userAbortBase + (sizeof(SceUInt32) * 5));
+        userAbortMemBlockPid = pid;
     }
     return 0;
 }
@@ -220,32 +229,21 @@ static int DestroyProcess(SceUID pid, SceProcEventInvokeParam1 *a2, int a3)
     return 0;
 }
 
-void SetupExceptionHandlers()
+void InitExceptionHandlers()
 {
-    int res = module_get_export_func(KERNEL_PID, "SceExcpmgr", TAI_ANY_LIBRARY, 0x03499636, (uintptr_t *)&_sceKernelRegisterExceptionHandler); // 3.60
-    if (res < 0)
+    if (module_get_export_func(KERNEL_PID, "SceExcpmgr", TAI_ANY_LIBRARY, 0x03499636, (uintptr_t *)&_sceKernelRegisterExceptionHandler) < 0) // 3.60
         module_get_export_func(KERNEL_PID, "SceExcpmgr", TAI_ANY_LIBRARY, 0x00063675, (uintptr_t *)&_sceKernelRegisterExceptionHandler); // >= 3.63
-    res = module_get_export_func(KERNEL_PID, "SceExcpmgr", TAI_ANY_LIBRARY, 0xD17EEE40, (uintptr_t *)&_sceKernelReturnFromException);    // 3.60
-    if (res < 0)
-        module_get_export_func(KERNEL_PID, "SceExcpmgr", TAI_ANY_LIBRARY, 0x3E55B5C3, (uintptr_t *)&_sceKernelReturnFromException);          // >= 3.63
-    res = module_get_export_func(KERNEL_PID, "SceKernelThreadMgr", TAI_ANY_LIBRARY, 0xD8B9AC8D, (uintptr_t *)&_sceKernelGetFaultingProcess); // 3.60
-    if (res < 0)
-        module_get_export_func(KERNEL_PID, "SceKernelThreadMgr", TAI_ANY_LIBRARY, 0x6C1F092F, (uintptr_t *)&_sceKernelGetFaultingProcess); // >= 3.63
+
+    if (module_get_export_func(KERNEL_PID, "SceSysmem", TAI_ANY_LIBRARY, 0x30931572, (uintptr_t *)&_sceKernelProcCopyToUserRx) < 0) // 3.60
+        module_get_export_func(KERNEL_PID, "SceSysmem", TAI_ANY_LIBRARY, 0x2995558D, (uintptr_t *)&_sceKernelProcCopyToUserRx);     // >= 3.63
 
     module_get_export_func(KERNEL_PID, "SceProcessmgr", TAI_ANY_LIBRARY, 0x00B1CA0F, (uintptr_t *)&_sceKernelAllocRemoteProcessHeap);
     module_get_export_func(KERNEL_PID, "SceProcessmgr", TAI_ANY_LIBRARY, 0x9C28EA9A, (uintptr_t *)&_sceKernelFreeRemoteProcessHeap);
     module_get_export_func(KERNEL_PID, "SceSysmem", TAI_ANY_LIBRARY, 0xA78755EB, (uintptr_t *)&_sceGUIDGetName);
 
-    DabtExceptionHandler_default = (SceKernelExceptionHandler *)((((uint32_t *)ksceSysrootGetSysroot()->VBAR)[0x40 + SCE_EXCP_DABT]) - 0x8);
-
-    _sceKernelRegisterExceptionHandler(SCE_EXCP_DABT, 1, &DabtExceptionHandler_lvl1);
-    _sceKernelRegisterExceptionHandler(SCE_EXCP_PABT, 1, &PabtExceptionHandler_lvl1);
-
-    const uint32_t defaultHandlerPatch[2] = {0xE51FF004, (uintptr_t)(&DabtExceptionHandler_lvl0[0])};
-    const uint32_t *lvl0HandlerReturnAddr = (&DabtExceptionHandler_default->impl[2]);
-
-    ksceKernelCpuUnrestrictedMemcpy(&DabtExceptionHandler_default->impl[0], &defaultHandlerPatch[0], sizeof(defaultHandlerPatch));
-    ksceKernelCpuUnrestrictedMemcpy(&DabtExceptionHandler_lvl0_retAddr, &lvl0HandlerReturnAddr, sizeof(lvl0HandlerReturnAddr));
+    _sceKernelRegisterExceptionHandler(SCE_EXCP_DABT, 0, &DabtExceptionHandler_lvl0);
+    _sceKernelRegisterExceptionHandler(SCE_EXCP_PABT, 0, &PabtExceptionHandler_lvl0);
+    _sceKernelRegisterExceptionHandler(SCE_EXCP_UNDEF_INSTRUCTION, 0, &UndefExceptionHandler_lvl0);
 
     SceProcEventHandler handler;
     memset(&handler, 0, sizeof(handler));
@@ -257,36 +255,69 @@ void SetupExceptionHandlers()
     ksceKernelRegisterProcEventHandler("KuBridgeProcessHandler", &handler, 0);
 }
 
-int kuKernelRegisterAbortHandler(KuKernelAbortHandler pHandler, KuKernelAbortHandler *pOldHandler)
+int kuKernelRegisterAbortHandler(KuKernelAbortHandler pHandler, KuKernelAbortHandler *pOldHandler, KuKernelAbortHandlerOpt *pOpt)
 {
+    int ret;
     int irqState = ksceKernelCpuSpinLockIrqSave(&handlersMutex);
 
     if (pHandler == NULL)
-        return SCE_KERNEL_ERROR_INVALID_ARGUMENT;
+    {
+        LOG("Invalid pHandler");
+        ret = SCE_KERNEL_ERROR_INVALID_ARGUMENT;
+        goto exit;
+    }
 
-    ProcessAbortHandler *procHandler = GetProcessAbortHandler(0);
+    if (pOpt != NULL)
+    {
+        KuKernelAbortHandlerOpt opt;
+        ret = ksceKernelMemcpyFromUser(&opt, pOpt, sizeof(KuKernelAbortHandlerOpt));
+        if (ret < 0)
+        {
+            LOG("Invalid pOpt");
+            goto exit;
+        }
+
+        if (opt.size != sizeof(KuKernelAbortHandlerOpt))
+        {
+            LOG("pOpt->size != sizeof(KuKernelAbortHandlerOpt)");
+            ret = SCE_KERNEL_ERROR_INVALID_ARGUMENT_SIZE;
+            goto exit;
+        }
+    }
+
+    ProcessAbortHandler *procHandler = GetProcessAbortHandler(ksceKernelGetProcessId());
     if (procHandler == NULL)
-        return SCE_KERNEL_ERROR_NO_MEMORY;
+    {
+        ret = SCE_KERNEL_ERROR_NO_MEMORY;
+        goto exit;
+    }
 
     if (pOldHandler != NULL)
-        ksceKernelMemcpyToUser(pOldHandler, &procHandler->pHandler, sizeof(KuKernelAbortHandler));
-
+    {
+        ret = ksceKernelMemcpyToUser(pOldHandler, &procHandler->pHandler, sizeof(KuKernelAbortHandler));
+        if (ret < 0)
+        {
+            LOG("Invalid pOldHandler");
+            goto exit;
+        }
+    }
+        
     procHandler->pHandler = pHandler;
+    if (pHandler == defaultUserAbortHandler)
+        RemoveProcessAbortHandler(ksceKernelGetProcessId());
 
+    ret = 0;
+exit:
     ksceKernelCpuSpinLockIrqRestore(&handlersMutex, irqState);
 
-    return 0;
+    return ret;
 }
 
 void kuKernelReleaseAbortHandler()
 {
     int irqState = ksceKernelCpuSpinLockIrqSave(&handlersMutex);
 
-    ProcessAbortHandler *procHandler = GetProcessAbortHandler(0);
-    if (procHandler == NULL)
-        return;
-
-    procHandler->pHandler = defaultUserAbortHandler;
+    RemoveProcessAbortHandler(ksceKernelGetProcessId());
 
     ksceKernelCpuSpinLockIrqRestore(&handlersMutex, irqState);
 }

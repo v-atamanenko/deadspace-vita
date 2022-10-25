@@ -78,11 +78,13 @@ int module_start(SceSize args, void *argp) {
   if (res < 0)
     module_get_export_func(KERNEL_PID, "SceSysmem", TAI_ANY_LIBRARY, 0x73E895EA, (uintptr_t *)&_ksceKernelCpuIcacheAndL2WritebackInvalidateRange);
 
-  SetupExceptionHandlers();
+  InitExceptionHandlers();
+  InitMemProtect();
 
   return SCE_KERNEL_START_SUCCESS;
 }
 
 int module_stop(SceSize args, void *argp) {
+  TermMemProtect();
   return SCE_KERNEL_STOP_SUCCESS;
 }

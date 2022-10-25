@@ -50,34 +50,12 @@ int _newlib_heap_size_user = 256 * 1024 * 1024;
 
 so_module so_mod;
 
-void abort_handler(KuKernelAbortContext *ctx) {
-    printf("Crash Detected!!! (Abort Type: 0x%08X)\n", ctx->abortType);
-    printf("-----------------\n");
-    printf("PC: 0x%08X\n", ctx->pc);
-    printf("LR: 0x%08X\n", ctx->lr);
-    printf("SP: 0x%08X\n", ctx->sp);
-    printf("-----------------\n");
-    printf("REGISTERS:\n");
-    uint32_t *registers = (uint32_t *)ctx;
-    for (int i = 0; i < 13; i++) {
-        printf("R%d: 0x%08X\n", i, registers[i]);
-    }
-    printf("-----------------\n");
-    printf("VFP REGISTERS:\n");
-    for (int i = 0; i < 32; i++) {
-        printf("D%d: 0x%016llX\n", i, ctx->vfpRegisters[i]);
-    }
-    printf("-----------------\n");
-    printf("SPSR: 0x%08X\n", ctx->SPSR);
-    printf("FPSCR: 0x%08X\n", ctx->FPSCR);
-    printf("FPEXC: 0x%08X\n", ctx->FPEXC);
-    printf("FSR: 0x%08X\n", ctx->FSR);
-    printf("FAR: 0x%08X\n", *(&(ctx->FSR) + 4)); // Using ctx->FAR gives an error for some weird reason
-    //sceKernelExitProcess(0);
-}
+
+#include "vector_op_emulation.c"
+
 
 int main() {
-    //kuKernelRegisterAbortHandler(abort_handler, NULL);
+    RegisterHandler();
 
     SceAppUtilInitParam init_param;
     SceAppUtilBootParam boot_param;
@@ -273,12 +251,15 @@ void pollPad() {
     float touchX_1 = 180 + 180*lx;
     float touchY_1 = 180 + 180*(ly*-1);
     float touchX_2 = 786 + 180*rx;
-    float touchY_2 = 180 + 180*(ry*-1);
+    float touchY_2 = 180 + 110*(ry*-1);
+
+    float touchX_2_0 = 786;
+    float touchY_2_0 = 180;
 
     float lasttouchX_1 = 180 + 180*lastLx;
     float lasttouchY_1 = 180 + 180*(lastLy*-1);
-    float lasttouchX_2 = 776 + 180*lastRx;
-    float lasttouchY_2 = 180 + 180*(lastRy*-1);
+    float lasttouchX_2 = 786 + 180*lastRx;
+    float lasttouchY_2 = 180 + 110*(lastRy*-1);
 
 
 
@@ -291,7 +272,8 @@ void pollPad() {
     if ((lastRx == 0.f && lastRy == 0.f) && (rx != 0.f || ry != 0.f)) {
         // Right stick was still before and moved => touch down
         //printf("Sending right stick touch down with x:%f y:%f\n", touchX_2, touchY_2);
-        NativeOnPointerEvent(&jni, (void*)0x42424242, kIdRawPointerDown, kModuleTypeIdTouchPad, 1, touchX_2, touchY_2);
+        NativeOnPointerEvent(&jni, (void*)0x42424242, kIdRawPointerDown, kModuleTypeIdTouchPad, 1, touchX_2_0, touchY_2_0);
+        NativeOnPointerEvent(&jni, (void*)0x42424242, kIdRawPointerMove, kModuleTypeIdTouchPad, 1, touchX_2, touchY_2);
     }
 
     if ((lastLx != 0.f || lastLy != 0.f) && (lx != 0.f || ly != 0.f)) {
@@ -302,7 +284,13 @@ void pollPad() {
     if ((lastRx != 0.f || lastRy != 0.f) && (rx != 0.f || ry != 0.f)) {
         // Right stick continues movement
         //printf("Sending right stick touch move with x:%f y:%f\n", touchX_2, touchY_2);
-        NativeOnPointerEvent(&jni, (void*)0x42424242, kIdRawPointerMove, kModuleTypeIdTouchPad, 1, touchX_2, touchY_2);
+        if (fabsf(rx) > 0.88f || fabsf(ry) > 0.38f) {
+            NativeOnPointerEvent(&jni, (void*)0x42424242, kIdRawPointerUp, kModuleTypeIdTouchPad, 1, lasttouchX_2, lasttouchY_2);
+            NativeOnPointerEvent(&jni, (void*)0x42424242, kIdRawPointerDown, kModuleTypeIdTouchPad, 1, touchX_2_0, touchY_2_0);
+            NativeOnPointerEvent(&jni, (void*)0x42424242, kIdRawPointerMove, kModuleTypeIdTouchPad, 1, touchX_2, touchY_2);
+        } else {
+            NativeOnPointerEvent(&jni, (void*)0x42424242, kIdRawPointerMove, kModuleTypeIdTouchPad, 1, touchX_2, touchY_2);
+        }
     }
 
     if ((lastLx != 0.f || lastLy != 0.f) && (lx == 0.f && ly == 0.f)) {

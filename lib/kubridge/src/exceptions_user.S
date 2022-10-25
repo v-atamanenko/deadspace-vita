@@ -6,6 +6,7 @@
 .arm
 
 UserAbortDispatch:
+    mov r4, r0
     blx r1
     mov r0, r4
     mov r1, #0x0
