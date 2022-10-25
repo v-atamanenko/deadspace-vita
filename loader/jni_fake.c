@@ -829,12 +829,20 @@ int audio_port = -1;
 
 void         SetShortArrayRegion(JNIEnv* p1, jshortArray p2, jsize p3, jsize p4, const jshort* buf) {
     if (audio_port == -1) {
-        audio_port = sceAudioOutOpenPort(SCE_AUDIO_OUT_PORT_TYPE_BGM, 512, 44100, SCE_AUDIO_OUT_MODE_STEREO);
+        audio_port = sceAudioOutOpenPort(SCE_AUDIO_OUT_PORT_TYPE_BGM, 1024, 44100, SCE_AUDIO_OUT_MODE_STEREO);
         printf("got audio_port %i\n", audio_port);
     }
+
+    //if (!buf) {
+    //    printf("WARNING emptyBuf: %i\n", p4);
+    //    return;
+    //}
     
     sceAudioOutOutput(audio_port, buf);
-    sceKernelDelayThread(1000);
+    //if (r != 256) {
+    //    printf("WARNING sceAudioOutOutput: %i\n", r);
+    //}
+    //sceKernelDelayThread(1000);
     //SDL_QueueAudio(deviceId, buf, p4);
     //sceAudioOutOutput(audio_port, buf);
 }
