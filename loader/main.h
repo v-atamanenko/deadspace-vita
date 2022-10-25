@@ -21,6 +21,6 @@
 
 extern so_module so_mod;
 
-_Noreturn void *baba_main();
+_Noreturn void *deadspace_main();
 
 #endif // SOLOADER_MAIN_H
