@@ -829,7 +829,7 @@ int audio_port = -1;
 
 void         SetShortArrayRegion(JNIEnv* p1, jshortArray p2, jsize p3, jsize p4, const jshort* buf) {
     if (audio_port == -1) {
-        audio_port = sceAudioOutOpenPort(SCE_AUDIO_OUT_PORT_TYPE_BGM, 1024, 44100, SCE_AUDIO_OUT_MODE_STEREO);
+        audio_port = sceAudioOutOpenPort(SCE_AUDIO_OUT_PORT_TYPE_BGM, 512, 44100, SCE_AUDIO_OUT_MODE_STEREO);
         printf("got audio_port %i\n", audio_port);
     }
 
@@ -869,7 +869,7 @@ jint        DestroyJavaVM(JavaVM* vm) { debugPrintf("[JVM] DestroyJavaVM(): not 
 jint        DetachCurrentThread(JavaVM* vm) { debugPrintf("[JVM] DetachCurrentThread(): not implemented\n"); return 0; }
 jint        AttachCurrentThreadAsDaemon(JavaVM* vm, JNIEnv** env, void* p3) { debugPrintf("[JVM] AttachCurrentThreadAsDaemon(): not implemented\n"); return 0; }
 
-void init_jni() {
+void jni_init() {
     _jvm = (struct JNIInvokeInterface *) malloc(sizeof(struct JNIInvokeInterface));
     _jvm->DestroyJavaVM = DestroyJavaVM;
     _jvm->AttachCurrentThread = AttachCurrentThread;
