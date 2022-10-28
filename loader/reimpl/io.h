@@ -17,6 +17,11 @@
 
 #include <stdio.h>
 #include <sys/dirent.h>
+#include <sys/syslimits.h>
+
+#ifndef PATH_MAX
+#define PATH_MAX 1024
+#endif
 
 typedef struct __attribute__((__packed__)) stat64_bionic {
     unsigned long long st_dev;
@@ -66,7 +71,6 @@ typedef struct __attribute__((__packed__)) dirent64_bionic {
     char d_name[256]; // 256 bytes // offset 0x13
 } dirent64_bionic;
 
-
 // vitasdk lacks proper definition of open() although it has its implementation
 int open(const char *pathname, int flags);
 
@@ -93,6 +97,12 @@ int stat_soloader(char *pathname, stat64_bionic *statbuf);
 int fseeko_soloader(FILE * a, off_t b, int c);
 
 off_t ftello_soloader(FILE * a);
+
+int fcntl_soloader(int fd, int cmd, ... /* arg */ );
+
+int fsync_soloader(int fd);
+
+off_t lseek_soloader(int fildes, off_t offset, int whence);
 
 /*
  * Stuff related to in-memory assets preloading.
