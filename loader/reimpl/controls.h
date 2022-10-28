@@ -9,7 +9,7 @@
 
 #include "jni_fake.h"
 
-#define GRAVITY_CONSTANT 9.807f
+#define GRAVITY_CONSTANT 0.726f
 
 #define kIdRawPointerCancel 0xc
 #define kIdRawPointerDown 0x6000c

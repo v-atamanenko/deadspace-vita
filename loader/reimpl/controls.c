@@ -88,10 +88,13 @@ void pollPad() {
 
         for (int i = 0; i < sizeof(mapping) / sizeof(ButtonMapping); i++) {
             if (pressed_buttons & mapping[i].sce_button) {
-                NativeOnKeyDown(&jni, (void *) 0x42424242, 600, mapping[i].android_button, 0);
+                //debugPrintf("NativeOnKeyDown %i\n", mapping[i].android_button);
+                NativeOnKeyDown(&jni, (void *) 0x42424242, 600, mapping[i].android_button, 1);
             }
-            if (released_buttons & mapping[i].sce_button)
-                NativeOnKeyUp(&jni, (void *) 0x42424242, 600, mapping[i].android_button, 0);
+            if (released_buttons & mapping[i].sce_button) {
+                //debugPrintf("NativeOnKeyUp %i\n", mapping[i].android_button);
+                NativeOnKeyUp(&jni, (void *) 0x42424242, 600, mapping[i].android_button, 1);
+            }
         }
     }
 
@@ -108,8 +111,8 @@ void pollPad() {
 
     lx = ((float)pad.lx - 128.0f) / 128.0f;
     ly = ((float)pad.ly - 128.0f) / 128.0f;
-    rx = ((float)pad.rx - 128.0f) / 128.0f;
-    ry = ((float)pad.ry - 128.0f) / 128.0f;
+    rx = (((float)pad.rx - 128.0f) / 128.0f) * 0.9f;
+    ry = (((float)pad.ry - 128.0f) / 128.0f) * 0.9f;
 
     if (fabsf(lx) < 0.14f)
         lx = 0.0f;
@@ -125,7 +128,7 @@ void pollPad() {
 
     float touchLx_base = 180;
     float touchLy_base = 180;
-    float touchRx_base = 786;
+    float touchRx_base = 720;
     float touchRy_base = 180;
 
     float touchLx = touchLx_base + touchX_radius * lx;
@@ -141,7 +144,7 @@ void pollPad() {
     if ((lastLx == 0.f && lastLy == 0.f) && (lx != 0.f || ly != 0.f)) {
         // Left stick was still before and moved => touch down
         NativeOnPointerEvent(&jni, (void*)0x42424242, kIdRawPointerDown, kModuleTypeIdTouchPad, 0, touchLx_base, touchLy_base);
-        NativeOnPointerEvent(&jni, (void*)0x42424242, kIdRawPointerMove, kModuleTypeIdTouchPad, 0, touchLx, touchLy);
+        //NativeOnPointerEvent(&jni, (void*)0x42424242, kIdRawPointerMove, kModuleTypeIdTouchPad, 0, touchLx, touchLy);
     }
     if ((lastRx == 0.f && lastRy == 0.f) && (rx != 0.f || ry != 0.f)) {
         // Right stick was still before and moved => touch down
@@ -155,7 +158,7 @@ void pollPad() {
     }
     if ((lastRx != 0.f || lastRy != 0.f) && (rx != 0.f || ry != 0.f)) {
         // Right stick continues movement
-        if (fabsf(rx) > 0.88f || fabsf(ry) > 0.38f) {
+        if (fabsf(rx) > 0.68f || fabsf(ry) > 0.68f) {
             NativeOnPointerEvent(&jni, (void*)0x42424242, kIdRawPointerUp, kModuleTypeIdTouchPad, 1, touchRx_last, touchRy_last);
             NativeOnPointerEvent(&jni, (void*)0x42424242, kIdRawPointerDown, kModuleTypeIdTouchPad, 1, touchRx_base, touchRy_base);
             NativeOnPointerEvent(&jni, (void*)0x42424242, kIdRawPointerMove, kModuleTypeIdTouchPad, 1, touchRx, touchRy);
