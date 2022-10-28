@@ -6,3 +6,5 @@ lib/libc_bridge/out/Makefile
 lib/libc_bridge/out/*.S
 lib/libc_bridge/out/*.o
 lib/libc_bridge/out/*.wo
+lib/libc_bridge/out/*.a
+apk/
