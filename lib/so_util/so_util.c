@@ -560,7 +560,7 @@ static int so_symbol_index(so_module *mod, const char *symbol)
  * range: maximum range from allocation to dst (ignored if NULL)
  * dst: destination address
 */
-static uintptr_t so_alloc_arena(so_module *so, uintptr_t range, uintptr_t dst, size_t sz) {
+uintptr_t so_alloc_arena(so_module *so, uintptr_t range, uintptr_t dst, size_t sz) {
     // Is address in range?
 #define inrange(lsr, gtr, range) \
 		(((uintptr_t)(range) == (uintptr_t)NULL) || ((uintptr_t)(range) >= ((uintptr_t)(gtr) - (uintptr_t)(lsr))))

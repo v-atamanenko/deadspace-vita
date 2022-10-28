@@ -21,26 +21,22 @@
 #include <sys/unistd.h>
 
 #include "default_dynlib.h"
-#include "fios.h"
-#include "glutil.h"
+#include "utils/glutil.h"
 #include "jni_fake.h"
-#include "patch_game.h"
+#include "patch.h"
 #include "utils/dialog.h"
 
-#include "../lib/kubridge/kubridge.h"
-#include "EAAudioCore.h"
+#include "android/EAAudioCore.h"
 #include "reimpl/controls.h"
+#include "vfpvector/vfp_vector.h"
 
 // Disable IDE complaints about _identifiers and unused variables
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 #pragma ide diagnostic ignored "bugprone-reserved-identifier"
 
-int _newlib_heap_size_user = 256 * 1024 * 1024;
+int _newlib_heap_size_user = MEMORY_NEWLIB_MB * 1024 * 1024;
 
 so_module so_mod;
-
-
-#include "vector_op_emulation.c"
 
 int main() {
     RegisterHandler();
@@ -70,8 +66,8 @@ int main() {
     resolve_imports(&so_mod);
     debugPrintf("so_resolve() passed.\n");
 
-    patch_game();
-    debugPrintf("patch_game() passed.\n");
+    so_patch();
+    debugPrintf("so_patch() passed.\n");
 
     so_flush_caches(&so_mod);
     debugPrintf("so_flush_caches() passed.\n");
@@ -82,11 +78,8 @@ int main() {
     so_initialize(&so_mod);
     debugPrintf("so_initialize() passed.\n");
 
-    init_jni();
-    debugPrintf("init_jni() passed.\n");
-
-    gl_init();
-    debugPrintf("gl_init() passed.\n");
+    jni_init();
+    debugPrintf("jni_init() passed.\n");
 
     // Running the .so in a thread with enlarged stack size.
     pthread_t t;
@@ -102,12 +95,17 @@ void (*Java_com_ea_EAIO_EAIO_Startup)(JNIEnv*, void*, jobject);
 void (*Java_com_ea_EAAudioCore_AndroidEAAudioCore_Init)(JNIEnv* env, jobject* obj, AudioTrack audioTrack, int i, int i2, int i3);
 void (*Java_com_ea_EAAudioCore_AndroidEAAudioCore_Release)(JNIEnv* env);
 
+so_module *so_find_module_by_addr(uintptr_t addr) {
+    return &so_mod;
+}
+
 _Noreturn void *deadspace_main() {
     Java_com_ea_EAIO_EAIO_Startup = (void*)so_symbol(&so_mod,"Java_com_ea_EAIO_EAIO_Startup");
     int (*JNI_OnLoad)(JavaVM* jvm) = (void*)so_symbol(&so_mod,"JNI_OnLoad");
-    void (*Java_com_ea_blast_MainActivity_NativeOnCreate)(void) = (void*)so_symbol(&so_mod,"Java_com_ea_blast_MainActivity_NativeOnCreate");
-    void (*Java_com_ea_blast_AndroidRenderer_NativeOnSurfaceCreated)(void) = (void*)so_symbol(&so_mod,"Java_com_ea_blast_AndroidRenderer_NativeOnSurfaceCreated");
-    void (*Java_com_ea_blast_AndroidRenderer_NativeOnDrawFrame)(void) = (void*)so_symbol(&so_mod,"Java_com_ea_blast_AndroidRenderer_NativeOnDrawFrame");
+    void (*NativeOnCreate)(void) = (void*)so_symbol(&so_mod,"Java_com_ea_blast_MainActivity_NativeOnCreate");
+    void (*NativeOnSurfaceCreated)(void) = (void*)so_symbol(&so_mod,"Java_com_ea_blast_AndroidRenderer_NativeOnSurfaceCreated");
+    void (*NativeOnVisibilityChanged)(JNIEnv* jniEnv, jobject obj, int moduleId, int hardKeyboardHidden) = (void*)so_symbol(&so_mod,"Java_com_ea_blast_KeyboardAndroid_NativeOnVisibilityChanged");
+    void (*NativeOnDrawFrame)(void) = (void*)so_symbol(&so_mod,"Java_com_ea_blast_AndroidRenderer_NativeOnDrawFrame");
 
     Java_com_ea_EAAudioCore_AndroidEAAudioCore_Init = (void*)so_symbol(&so_mod,"Java_com_ea_EAAudioCore_AndroidEAAudioCore_Init");
     Java_com_ea_EAAudioCore_AndroidEAAudioCore_Release = (void*)so_symbol(&so_mod,"Java_com_ea_EAAudioCore_AndroidEAAudioCore_Release");
@@ -118,22 +116,22 @@ _Noreturn void *deadspace_main() {
     EAAudioCore__Startup();
     debugPrintf("EAAudioCore__Startup() passed.\n");
 
-    Java_com_ea_blast_MainActivity_NativeOnCreate();
+    NativeOnCreate();
     debugPrintf("Java_com_ea_blast_MainActivity_NativeOnCreate() passed.\n");
 
     controls_init();
 
-    Java_com_ea_blast_AndroidRenderer_NativeOnSurfaceCreated();
+    gl_init();
+    debugPrintf("gl_init() passed.\n");
 
+    NativeOnSurfaceCreated();
     debugPrintf("Java_com_ea_blast_AndroidRenderer_NativeOnSurfaceCreated() passed.\n");
 
-    void (*NativeOnVisibilityChanged)(JNIEnv* jniEnv, jobject obj, int moduleId, int hardKeyboardHidden) = (void*)so_symbol(&so_mod,"Java_com_ea_blast_KeyboardAndroid_NativeOnVisibilityChanged");
     NativeOnVisibilityChanged(&jni, (void*)0x42424242, 600, 1);
-
-    debugPrintf("NativeOnVisibilityChanged() passed.\n");
+    debugPrintf("Java_com_ea_blast_KeyboardAndroid_NativeOnVisibilityChanged() passed.\n");
 
     while (1) {
-        Java_com_ea_blast_AndroidRenderer_NativeOnDrawFrame();
+        NativeOnDrawFrame();
         gl_swap();
         controls_poll();
     }
