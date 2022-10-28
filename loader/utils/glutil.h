@@ -29,8 +29,6 @@
 #include <GLES/glext.h>
 #include <EGL/egl1_4.h>
 #include <EGL/eglext.h>
-
-
 #else
 #include <vitaGL.h>
 #endif

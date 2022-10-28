@@ -34,6 +34,8 @@ int check_kubridge(void);
 
 int string_ends_with(const char * str, const char * suffix);
 
+void strprepend(char* s, const char* t);
+
 __attribute__((unused)) inline int string_starts_with(const char *pre,
                                                       const char *str) {
     char cp;

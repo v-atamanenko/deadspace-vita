@@ -26,7 +26,7 @@ typedef struct FakeJavaClass {
 
 extern jint GetEnv(JavaVM *vm, void **env, jint r2);
 
-void init_jni();
+void jni_init();
 
 
 /// DYNAMICALLY ALLOCATED ARRAYS

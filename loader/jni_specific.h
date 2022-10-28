@@ -10,9 +10,9 @@ extern "C" {
 
 #include <pthread.h>
 #include "jni_fake.h"
-#include "java.io.InputStream.h"
+#include "android/java.io.InputStream.h"
 
-#include "EAAudioCore.h"
+#include "android/EAAudioCore.h"
 
 typedef enum FIELD_TYPE {
     FIELD_TYPE_UNKNOWN   = 0,

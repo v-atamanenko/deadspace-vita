@@ -10,7 +10,7 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-#include "patch_game.h"
+#include "patch.h"
 
 #include <stdio.h>
 #include <so_util.h>
@@ -28,7 +28,7 @@ int SusThread(void* arg) {
     SO_CONTINUE(int, susthread_hook, arg);
 }
 
-void patch_game(void) {
+void so_patch(void) {
     // Always fail check for "appbundle:" in filename ==> don't use JNI IO funcs.
     uint32_t fix = 0xea000007;
     kuKernelCpuUnrestrictedMemcpy((void *)(so_mod.text_base + 0x0022bf6c), &fix, sizeof(fix));

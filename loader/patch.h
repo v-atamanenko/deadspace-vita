@@ -18,8 +18,6 @@
 #include "config.h"
 #include "utils/utils.h"
 
-extern void (* gl_flush_cache)(void); // _Z14gl_flush_cachev
-
-void patch_game();
+void so_patch();
 
 #endif // SOLOADER_PATCH_GAME_H

@@ -143,6 +143,16 @@ char* strreplace(char *target, const char *needle, const char *replacement) {
     return target;
 }
 
+/* Prepends t into s. Assumes s has enough space allocated
+** for the combined string.
+*/
+void strprepend(char* s, const char* t)
+{
+    size_t len = strlen(t);
+    memmove(s + len, s, strlen(s) + 1);
+    memcpy(s, t, len);
+}
+
 void check_init_mutex(pthread_mutex_t* mut) {
     if (!mut) {
         fprintf(stderr, "MUTEX INIT!!!\n");

@@ -37,7 +37,7 @@
 #include <dirent.h>
 #include <utime.h>
 
-#include "glutil.h"
+#include "utils/glutil.h"
 #include "libc_bridge.h"
 
 #include "reimpl/env.h"
@@ -931,7 +931,7 @@ so_default_dynlib default_dynlib[] = {
         { "exp", (uintptr_t)&exp },
         { "expf", (uintptr_t)&expf },
         { "fclose", (uintptr_t)&fclose },
-        { "fcntl", (uintptr_t)&ret0 },
+        { "fcntl", (uintptr_t)&fcntl_soloader },
         { "fflush", (uintptr_t)&fflush },
         { "fgetc", (uintptr_t)&fgetc },
         { "fgets", (uintptr_t)&fgets },
@@ -947,7 +947,7 @@ so_default_dynlib default_dynlib[] = {
         { "freeaddrinfo", (uintptr_t)&freeaddrinfo},
         { "fseek", (uintptr_t)&fseek },
         { "fstat", (uintptr_t)&fstat_soloader },
-        { "fsync", (uintptr_t)&fsync},
+        { "fsync", (uintptr_t)&fsync_soloader},
         { "ftell", (uintptr_t)&ftell },
         { "ftruncate", (uintptr_t)&ftruncate},
         { "fwide", (uintptr_t)&fwide},
@@ -1353,7 +1353,7 @@ so_default_dynlib default_dynlib[] = {
         { "logf", (uintptr_t)&logf},
         { "longjmp", (uintptr_t)&longjmp },
         { "lrand48", (uintptr_t)&lrand48 },
-        { "lseek", (uintptr_t)&lseek },
+        { "lseek", (uintptr_t)&lseek_soloader },
         { "malloc", (uintptr_t)&malloc },
         { "memcmp", (uintptr_t)&memcmp },
         { "memcpy", (uintptr_t)&memcpy },

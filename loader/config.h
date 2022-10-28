@@ -22,9 +22,7 @@
 
 #define LOAD_ADDRESS 0xA8000000
 
-#define MEMORY_NEWLIB_MB 240
-#define MEMORY_LIBC_MB 12
-#define STACK_PTHREAD_MB 2
+#define MEMORY_NEWLIB_MB 256
 
 #define GLSL_PATH DATA_PATH
 #define GXP_PATH "app0:shaders"

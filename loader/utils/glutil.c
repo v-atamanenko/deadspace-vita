@@ -11,7 +11,7 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-#include "glutil.h"
+#include "utils/glutil.h"
 #include "utils/dialog.h"
 #include "sha1.h"
 
@@ -48,7 +48,7 @@ void gl_preload() {
 #else
     if (!file_exists("ur0:/data/libshacccg.suprx")
         && !file_exists("ur0:/data/external/libshacccg.suprx")) {
-        fatal_error("Error libshacccg.suprx is not installed.");
+        fatal_error("Error: libshacccg.suprx is not installed. Google \"ShaRKBR33D\" for quick installation.");
     }
 #endif
 }
