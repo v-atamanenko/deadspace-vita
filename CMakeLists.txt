@@ -11,7 +11,7 @@ endif()
 if(DEFINED ENV{PSVITAIP})
   set(PSVITAIP "$ENV{PSVITAIP}")
 else()
-  set(PSVITAIP "192.168.1.21")
+  set(PSVITAIP "192.168.1.16")
   message(WARNING "PSVITAIP environment variable is not set, using default IP ${PSVITAIP}")
 endif()
 
@@ -58,14 +58,14 @@ set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -std=gnu++11")
 
 add_executable(so_loader
         loader/main.c
-        loader/EAAudioCore.c
-        loader/java.io.InputStream.c
+        loader/android/EAAudioCore.c
+        loader/android/java.io.InputStream.c
         loader/default_dynlib.c
         loader/utils/dialog.c
-        loader/glutil.c
+        loader/utils/glutil.c
         loader/jni_fake.c
         #loader/utils/loading_screen.c
-        loader/patch_game.c
+        loader/patch.c
         loader/utils/utils.c
         loader/reimpl/controls.c
         loader/reimpl/ctype_patch.c
@@ -75,9 +75,13 @@ add_executable(so_loader
         loader/reimpl/mem.c
         loader/reimpl/pthr.c
         loader/reimpl/sys.c
-        lib/fios/fios.c
         lib/sha1/sha1.c
         lib/so_util/so_util.c
+        lib/vfpvector/vfp_f32_emu.c
+        lib/vfpvector/vfp_f64_emu.c
+        lib/vfpvector/vfp_gen.c
+        lib/vfpvector/vfp_vector.c
+        lib/vfpvector/vfp_vector.h
 )
 
 set(EXCEPTION_SAFETY 1)
@@ -90,6 +94,7 @@ target_include_directories(so_loader SYSTEM
         PUBLIC ${CMAKE_SOURCE_DIR}/lib/sha1
         PUBLIC ${CMAKE_SOURCE_DIR}/lib/so_util
         PUBLIC ${CMAKE_SOURCE_DIR}/lib/stb
+        PUBLIC ${CMAKE_SOURCE_DIR}/lib
 )
 
 target_include_directories(so_loader
@@ -153,7 +158,8 @@ vita_create_vpk(${VITA_VPKNAME}.vpk ${VITA_TITLEID} eboot.bin
         VERSION ${VITA_VERSION}
         NAME ${VITA_APP_NAME}
         FILE ${CMAKE_SOURCE_DIR}/livearea/icon0.png sce_sys/icon0.png
-          ${CMAKE_SOURCE_DIR}/livearea/default_gate.png sce_sys/livearea/contents/default_gate.png
+          ${CMAKE_SOURCE_DIR}/livearea/pic0.png sce_sys/pic0.png
+          ${CMAKE_SOURCE_DIR}/livearea/startup.png sce_sys/livearea/contents/startup.png
           ${CMAKE_SOURCE_DIR}/livearea/bg0.png sce_sys/livearea/contents/bg0.png
           ${CMAKE_SOURCE_DIR}/livearea/template.xml sce_sys/livearea/contents/template.xml
           ${VPK_INCLUDES}
