@@ -89,20 +89,20 @@ Example of correct resulting path: `ux0:data/deadspace/assets/published/data/ach
 Controls
 -----------------
 
-|       Button        | Action                                   |
-|:-------------------:|:-----------------------------------------|
-| ![joysl] / ![joysr] | Move / Control camera                    |
-| ![trigl] / ![trigr] | Aim / Fire                               |
-|      ![dpadh]       | Previous / Next Weapon                   |
-|      ![dpadv]       | Plasma Saw Attack / Locator              |
-|      ![cross]       | Interact with doors, items               |
-|      ![circl]       | Activate Kinesis                         |
-|      ![squar]       | Reload weapon                            |
-|      ![trian]       | Quick Turn / Statis (when aiming)        |
-|      ![selec]       | Show HUD                                 |
-|      ![start]       | Open Menu                                |
-| Accelerometer Tilt  | Switch weapon fire mode                  |
-| Accelerometer Shake | Jump in Zero-G                           |
+|       Button        | Action                                  |
+|:-------------------:|:----------------------------------------|
+| ![joysl] / ![joysr] | Move / Control camera                   |
+| ![trigl] / ![trigr] | Aim / Fire                              |
+|      ![dpadh]       | Previous / Next Weapon                  |
+|      ![dpadv]       | Plasma Saw Attack / Locator             |
+|      ![cross]       | Interact with doors, items              |
+|      ![circl]       | Activate Kinesis                        |
+|      ![squar]       | Reload weapon                           |
+|      ![trian]       | Quick Turn / Statis (when aiming)       |
+|      ![selec]       | Show HUD                                |
+|      ![start]       | Open Menu                               |
+| Accelerometer Tilt  | Switch weapon fire mode                 |
+| Accelerometer Shake | Jump in Zero-G                          |
 
 Known Issues
 ----------------
@@ -112,10 +112,12 @@ Known Issues
 fixed, seems to be the game's own caveat.
 3. While the game has a subtitles option, it's recommended not to use them
 because in some scenes they skip immediately. Most likely, can not be fixed.
-4. Rarely (as it seems so far, maybe once in two hours or even less often),
-it can randomly crash with a Prefetch Abort exception.
-5. When entering the tram at the end of Chapter 5, audio may stop working. If it
-happens, complete the tram ride and restart the game after getting to Chapter 6.
+4. Rarely (as it seems so far, maybe once an hour or even less often),
+it can randomly crash with a Prefetch Abort / Data Abort exception. Game creates
+checkpoint saves pretty often, so you shouldn't lose any substantial progress.
+6. When entering the tram at the end of Chapter 5/9/10, audio may stop working.
+If it happens, complete the tram ride and restart the game after getting to the
+next chapter.
 
 Build Instructions (For Developers)
 ----------------
