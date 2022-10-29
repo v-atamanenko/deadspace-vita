@@ -252,7 +252,7 @@ void EAAudioCore__Startup() {
         //sAudioTrack = new AudioTrack(3, samplerate, channelConfig, 2, bufsize, 1);
 
         // bufsize / (2 * channels), channels, samplerate
-        Java_com_ea_EAAudioCore_AndroidEAAudioCore_Init(&jni, (void*)0x42424242, sAudioTrack, 8192, 2, 44100);
+        Java_com_ea_EAAudioCore_AndroidEAAudioCore_Init(&jni, (void*)0x42424242, sAudioTrack, 16384, 2, 44100);
 
         sInit = true;
 
