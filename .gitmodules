@@ -1,0 +1,7 @@
+[submodule "kubridge_v3"]
+	path = lib/kubridge
+	url = https://github.com/bythos14/kubridge/
+	branch = exceptions_mprotect
+[submodule "vfpvector_v2"]
+	path = lib/VFPVector
+	url = git@github.com:bythos14/VFPVector.git

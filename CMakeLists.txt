@@ -11,7 +11,7 @@ endif()
 if(DEFINED ENV{PSVITAIP})
   set(PSVITAIP "$ENV{PSVITAIP}")
 else()
-  set(PSVITAIP "192.168.1.16")
+  set(PSVITAIP "192.168.1.17")
   message(WARNING "PSVITAIP environment variable is not set, using default IP ${PSVITAIP}")
 endif()
 
@@ -77,11 +77,11 @@ add_executable(so_loader
         loader/reimpl/sys.c
         lib/sha1/sha1.c
         lib/so_util/so_util.c
-        lib/vfpvector/vfp_f32_emu.c
-        lib/vfpvector/vfp_f64_emu.c
-        lib/vfpvector/vfp_gen.c
-        lib/vfpvector/vfp_vector.c
-        lib/vfpvector/vfp_vector.h
+        lib/VFPVector/vfp_f32_emu.c
+        lib/VFPVector/vfp_f64_emu.c
+        lib/VFPVector/vfp_gen.c
+        lib/VFPVector/vfp_vector.c
+        lib/VFPVector/vfp_vector.h
 )
 
 set(EXCEPTION_SAFETY 1)
@@ -93,7 +93,6 @@ target_include_directories(so_loader SYSTEM
         PUBLIC ${CMAKE_SOURCE_DIR}/lib/libc_bridge
         PUBLIC ${CMAKE_SOURCE_DIR}/lib/sha1
         PUBLIC ${CMAKE_SOURCE_DIR}/lib/so_util
-        PUBLIC ${CMAKE_SOURCE_DIR}/lib/stb
         PUBLIC ${CMAKE_SOURCE_DIR}/lib
 )
 

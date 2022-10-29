@@ -28,7 +28,7 @@
 
 #include "android/EAAudioCore.h"
 #include "reimpl/controls.h"
-#include "vfpvector/vfp_vector.h"
+#include "VFPVector/vfp_vector.h"
 
 // Disable IDE complaints about _identifiers and unused variables
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
