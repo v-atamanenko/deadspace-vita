@@ -98,7 +98,7 @@ Controls
 |      ![cross]       | Interact with doors, items              |
 |      ![circl]       | Activate Kinesis                        |
 |      ![squar]       | Reload weapon                           |
-|      ![trian]       | Quick Turn / Statis (when aiming)       |
+|      ![trian]       | Quick Turn / Stasis (when aiming)       |
 |      ![selec]       | Show HUD                                |
 |      ![start]       | Open Menu                               |
 | Accelerometer Tilt  | Switch weapon fire mode                 |
@@ -192,7 +192,7 @@ the MIT license. See the [LICENSE](LICENSE) file for details.
 [kubridge]: https://github.com/bythos14/kubridge/releases/
 [fdfix]: https://github.com/TheOfficialFloW/FdFix/releases/
 [unpack-on-phone]: https://stackoverflow.com/questions/11012976/how-do-i-get-the-apk-of-an-installed-app-without-root-access
-[shrkbrd]: https://github.com/Rinnegatamante/ShaRKBR33D
+[shrkbrd]: https://github.com/Rinnegatamante/ShaRKBR33D/releases/latest
 
 [flow]: https://github.com/TheOfficialFloW/
 [rinne]: https://github.com/Rinnegatamante/
