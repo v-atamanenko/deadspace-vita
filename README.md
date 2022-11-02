@@ -51,11 +51,17 @@ precisely:
   ur0:tai/fd_fix.skprx
 ```
 
-> ⚠️ Don't install `fd_fix.skprx` if you're using the rePatch plugin!
+> 
 
-> ⚠️ Even if you had `kubridge.skprx` installed before, most likely you still
-> need to update it, since a new version of the plugin was released at the same
-> time as this port.
+```diff
+! ⚠️ Don't install `fd_fix.skprx` if you're using the rePatch plugin!
+```
+
+```diff
+- ⚠️ Even if you had `kubridge.skprx` installed before, most likely you still
+- need to update it, since a new version of the plugin was released at the same
+- time as this port. kubridge of version v0.3 or later is required to run the game!
+```
 
 - Make sure you have `libshacccg.suprx` in the `ur0:/data/` folder on your
 console. If you don't, use [ShaRKBR33D][shrkbrd] to get it quickly and easily.
