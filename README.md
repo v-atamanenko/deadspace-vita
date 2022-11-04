@@ -121,7 +121,7 @@ didn't reboot your console. Reboot is required after any modifications in kernel
 plugins. If the problem persists after reboot, please [post a new issue][issue].
 
 
-❓ **How to I change the language of the game?**<br>
+❓ **How do I change the language of the game?**<br>
 ❕ You can change the language in Settings but only if you open them from
 **Main Menu**. So if you start a fresh playthrough that begins with
 the cinematic, wait till its end, quit to the main menu, and change the language
