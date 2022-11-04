@@ -233,44 +233,9 @@ void EAAudioCore_AudioTrack_stop(int id, va_list args) {
 
 
 void EAAudioCore__Startup() {
-    if (!sInit) {
-        int channels = EAAudioCore_nChannels;
-
-        if (channels > 2) {
-            channels = 2;
-        }
-
-        int samplerate = EAAudioCore_NativeOutputSampleRate;
-        int channelConfig = 3;
-        if (channels == 1) {
-            channelConfig = 2;
-        }
-        int bufsize = AudioTrack__getMinBufferSize(samplerate, channelConfig, 2);
-        sAudioTrack = malloc(sizeof(struct _AudioTrack));
-        sAudioTrack->flush = _AudioTrack_flush;
-        sAudioTrack->release = _AudioTrack_release;
-        //sAudioTrack = new AudioTrack(3, samplerate, channelConfig, 2, bufsize, 1);
-
-        // bufsize / (2 * channels), channels, samplerate
-        Java_com_ea_EAAudioCore_AndroidEAAudioCore_Init(&jni, (void*)0x42424242, sAudioTrack, 16384, 2, 44100);
-
-        sInit = true;
-
-
-        /*pthread_t t;
-        pthread_attr_t attr;
-        pthread_attr_init(&attr);
-        pthread_attr_setstacksize(&attr, 0xA00000);
-        pthread_create(&t, &attr, audio_player_thread, NULL);
-        pthread_join(t, NULL);*/
-    }
+    Java_com_ea_EAAudioCore_AndroidEAAudioCore_Init(&jni, (void*)0x42424242, (void*)0x69696969, 65536, 2, 44100);
 }
 
 void EAAudioCore__Shutdown() {
-    if (sInit) {
-        sAudioTrack->flush();
-        sAudioTrack->release();
-        Java_com_ea_EAAudioCore_AndroidEAAudioCore_Release(&jni);
-        sInit = false;
-    }
+    Java_com_ea_EAAudioCore_AndroidEAAudioCore_Release(&jni);
 }
