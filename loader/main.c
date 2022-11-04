@@ -22,6 +22,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <psp2/vshbridge.h>
+#include <psp2/kernel/threadmgr.h>
 
 #include "default_dynlib.h"
 #include "utils/glutil.h"
@@ -139,6 +140,16 @@ so_module *so_find_module_by_addr(uintptr_t addr) {
     return &so_mod;
 }
 
+_Noreturn void * controls_thread() {
+    sceKernelDelayThread(5000000);
+    while (1) {
+        pollTouch();
+        pollAccel();
+        pollPad();
+        sceKernelDelayThread(2000);
+    }
+}
+
 _Noreturn void *deadspace_main() {
     Java_com_ea_EAIO_EAIO_Startup = (void*)so_symbol(&so_mod,"Java_com_ea_EAIO_EAIO_Startup");
     int (*JNI_OnLoad)(JavaVM* jvm) = (void*)so_symbol(&so_mod,"JNI_OnLoad");
@@ -170,9 +181,16 @@ _Noreturn void *deadspace_main() {
     NativeOnVisibilityChanged(&jni, (void*)0x42424242, 600, 1);
     debugPrintf("Java_com_ea_blast_KeyboardAndroid_NativeOnVisibilityChanged() passed.\n");
 
+    pthread_t t;
+    pthread_attr_t attr;
+    pthread_attr_init(&attr);
+    pthread_attr_setstacksize(&attr, 16*1024);
+    pthread_create(&t, &attr, controls_thread, NULL);
+    pthread_detach(t);
+
     while (1) {
         NativeOnDrawFrame();
         gl_swap();
-        controls_poll();
     }
 }
+

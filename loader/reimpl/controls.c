@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <psp2/kernel/threadmgr.h>
 #include "main.h"
 #include "controls.h"
 
@@ -79,39 +81,16 @@ float lx = 0.0f, ly = 0.0f, rx = 0.0f, ry = 0.0f;
 int lActive = 0, rActive = 0, lastLActive = 0, lastRActive = 0;
 int fingerIdL = 0, fingerIdR = 1;
 
-void checkActive() {
-    lastLActive = lActive;
-    lastRActive = rActive;
+int rDown = 0;
 
-    if ((lastLx == 0.f && lastLy == 0.f) && (lx != 0.f || ly != 0.f)) {
-        // Left stick was still before and moved => touch down
-        lActive = 1;
-    }
-    if ((lastRx == 0.f && lastRy == 0.f) && (rx != 0.f || ry != 0.f)) {
-        // Right stick was still before and moved => touch down
-        rActive = 1;
+float touchRx_last, touchRy_last, touchLx_last, touchLy_last;
+
+int pollPad() {
+    if (rDown == 1) {
+        NativeOnPointerEvent(&jni, (void *) 0x42424242, kIdRawPointerUp, kModuleTypeIdTouchPad, fingerIdR+1, touchRx_last, touchRy_last);
+        rDown = 0;
     }
 
-    if ((lastLx != 0.f || lastLy != 0.f) && (lx != 0.f || ly != 0.f)) {
-        // Left stick continues movement
-        lActive = 1;
-    }
-    if ((lastRx != 0.f || lastRy != 0.f) && (rx != 0.f || ry != 0.f)) {
-        // Right stick continues movement
-        rActive = 1;
-    }
-
-    if ((lastLx != 0.f || lastLy != 0.f) && (lx == 0.f && ly == 0.f)) {
-        // Left stick is back to 0:0 => touch up
-        lActive = 0;
-    }
-    if ((lastRx != 0.f || lastRy != 0.f) && (rx == 0.f && ry == 0.f)) {
-        // Right stick is back to 0:0 => touch up
-        rActive = 0;
-    }
-}
-
-void pollPad() {
     SceCtrlData pad;
     sceCtrlPeekBufferPositiveExt2(0, &pad, 1);
 
@@ -146,93 +125,74 @@ void pollPad() {
 
     lx = ((float)pad.lx - 128.0f) / 128.0f;
     ly = ((float)pad.ly - 128.0f) / 128.0f;
-    rx = (((float)pad.rx - 128.0f) / 128.0f);
-    ry = (((float)pad.ry - 128.0f) / 128.0f);
+    rx = ((float)pad.rx - 128.0f) / 128.0f;
+    ry = ((float)pad.ry - 128.0f) / 128.0f;
 
-    if (fabsf(lx) < 0.12f)
+    if (fabsf(lx) < 0.10f)
         lx = 0.0f;
-    if (fabsf(ly) < 0.12f)
+    if (fabsf(ly) < 0.10f)
         ly = 0.0f;
-    if (fabsf(rx) < 0.12f)
+    if (fabsf(rx) < 0.10f)
         rx = 0.0f;
-    if (fabsf(ry) < 0.12f)
+    if (fabsf(ry) < 0.10f)
         ry = 0.0f;
 
-    float touchX_radius = 175;
-    float touchY_radius = 115;
+    float touchLx_radius = 178;
+    float touchLy_radius = 178;
+    float touchRx_radius = 150;
+    float touchRy_radius = 100;
 
     float touchLx_base = 180;
     float touchLy_base = 180;
-    float touchRx_base = 700;
+    float touchRx_base = 786;
     float touchRy_base = 180;
 
-    float touchLx = touchLx_base + touchX_radius * lx;
-    float touchLy = touchLy_base + touchY_radius * (ly * -1);
-    float touchRx = touchRx_base + touchX_radius * rx;
-    float touchRy = touchRy_base + touchY_radius * (ry * -1);
+    float touchLx = touchLx_base + (touchLx_radius * lx);
+    float touchLy = touchLy_base + (touchLy_radius * (ly));
+    float touchRx = touchRx_base + (touchRx_radius * rx);
+    float touchRy = touchRy_base + (touchRy_radius * (ry * -1));
 
-    float touchLx_last = touchLx_base + touchX_radius * lastLx;
-    float touchLy_last = touchLy_base + touchY_radius * (lastLy * -1);
-    float touchRx_last = touchRx_base + touchX_radius * lastRx;
-    float touchRy_last = touchRy_base + touchY_radius * (lastRy * -1);
-
-    checkActive();
-
-    if (lActive && !lastLActive) {
-        if (rActive) fingerIdL = !fingerIdR;
-        if (!rActive) fingerIdL = 0;
+    if (fabsf(rx) > 0.f || fabsf(ry) > 0.f) {
+        rActive = 1;
+    } else {
+        rActive = 0;
     }
 
-    if (rActive && !lastRActive) {
-        if (lActive) fingerIdR = !fingerIdL;
-        if (!lActive) fingerIdR = 0;
+    if (fabsf(lx) > 0.f || fabsf(ly) > 0.f) {
+        lActive = 1;
+    } else if (lActive) {
+        NativeOnPointerEvent(&jni, (void*)0x42424242, kIdRawPointerUp, kModuleTypeIdTouchScreen, fingerIdL+1, touchLx_last, touchLy_last);
+        lActive = 0;
     }
 
-    if ((lastLx == 0.f && lastLy == 0.f) && (lx != 0.f || ly != 0.f)) {
-        // Left stick was still before and moved => touch down
-        NativeOnPointerEvent(&jni, (void*)0x42424242, kIdRawPointerDown, kModuleTypeIdTouchPad, fingerIdL, touchLx_base, touchLy_base);
-        //NativeOnPointerEvent(&jni, (void*)0x42424242, kIdRawPointerMove, kModuleTypeIdTouchPad, 0, touchLx, touchLy);
-    }
-    if ((lastRx == 0.f && lastRy == 0.f) && (rx != 0.f || ry != 0.f)) {
-        // Right stick was still before and moved => touch down
-        NativeOnPointerEvent(&jni, (void*)0x42424242, kIdRawPointerDown, kModuleTypeIdTouchPad, fingerIdR, touchRx_base, touchRy_base);
-        NativeOnPointerEvent(&jni, (void*)0x42424242, kIdRawPointerMove, kModuleTypeIdTouchPad, fingerIdR, touchRx, touchRy);
+    if ((fabsf(rx) > 0.f || fabsf(ry) > 0.f) && !rDown) {
+        NativeOnPointerEvent(&jni, (void *) 0x42424242, kIdRawPointerDown, kModuleTypeIdTouchPad, fingerIdR+1, touchRx_base, touchRy_base);
+        NativeOnPointerEvent(&jni, (void *) 0x42424242, kIdRawPointerMove, kModuleTypeIdTouchPad, fingerIdR+1, touchRx, touchRy);
+        rDown = 1;
     }
 
-    if ((lastLx != 0.f || lastLy != 0.f) && (lx != 0.f || ly != 0.f)) {
-        // Left stick continues movement
-        NativeOnPointerEvent(&jni, (void*)0x42424242, kIdRawPointerMove, kModuleTypeIdTouchPad, fingerIdL, touchLx, touchLy);
-    }
-    if ((lastRx != 0.f || lastRy != 0.f) && (rx != 0.f || ry != 0.f)) {
-        // Right stick continues movement
-        if (!((fabsf(lastRx) - fabsf(rx) > 0.2f) || (fabsf(lastRy) - fabsf(ry) > 0.2f))) {
-            if (fabsf(rx) > 0.68f || fabsf(ry) > 0.68f) {
-                NativeOnPointerEvent(&jni, (void *) 0x42424242, kIdRawPointerUp, kModuleTypeIdTouchPad, fingerIdR,
-                                     touchRx_last, touchRy_last);
-                NativeOnPointerEvent(&jni, (void *) 0x42424242, kIdRawPointerDown, kModuleTypeIdTouchPad, fingerIdR,
-                                     touchRx_base, touchRy_base);
-                NativeOnPointerEvent(&jni, (void *) 0x42424242, kIdRawPointerMove, kModuleTypeIdTouchPad, fingerIdR,
-                                     touchRx, touchRy);
-            } else {
-                NativeOnPointerEvent(&jni, (void *) 0x42424242, kIdRawPointerMove, kModuleTypeIdTouchPad, fingerIdR,
-                                     touchRx, touchRy);
-            }
+    if (fabsf(lx) > 0.f || fabsf(ly) > 0.f) {
+        if (!lastLActive) {
+            NativeOnPointerEvent(&jni, (void *) 0x42424242, kIdRawPointerDown, kModuleTypeIdTouchScreen, fingerIdL+1, touchLx_base, touchLy_base);
         }
+        NativeOnPointerEvent(&jni, (void *) 0x42424242, kIdRawPointerMove, kModuleTypeIdTouchScreen, fingerIdL+1, touchLx, touchLy);
     }
 
-    if ((lastLx != 0.f || lastLy != 0.f) && (lx == 0.f && ly == 0.f)) {
-        // Left stick is back to 0:0 => touch up
-        NativeOnPointerEvent(&jni, (void*)0x42424242, kIdRawPointerUp, kModuleTypeIdTouchPad, fingerIdL, touchLx_last, touchLy_last);
-    }
-    if ((lastRx != 0.f || lastRy != 0.f) && (rx == 0.f && ry == 0.f)) {
-        // Right stick is back to 0:0 => touch up
-        NativeOnPointerEvent(&jni, (void*)0x42424242, kIdRawPointerUp, kModuleTypeIdTouchPad, fingerIdR, touchRx_last, touchRy_last);
-    }
+    lastLActive = lActive;
+    lastRActive = rActive;
 
     lastLx = lx;
     lastLy = ly;
     lastRx = rx;
     lastRy = ry;
+
+    touchRx_last = touchRx_base + touchRx_radius * lastRx;
+    touchRy_last = touchRy_base + touchRy_radius * (lastRy * (-1));
+
+    touchLx_last = touchLx_base + touchLx_radius * lastLx;
+    touchLy_last = touchLy_base + touchLy_radius * (lastLy);
+
+    return 1;
 }
 
 uint64_t lastUpdate = 0;

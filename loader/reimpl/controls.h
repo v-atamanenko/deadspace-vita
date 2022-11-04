@@ -51,7 +51,7 @@ typedef struct {
 void controls_init();
 void controls_poll();
 void pollTouch();
-void pollPad();
+int pollPad();
 void pollAccel();
 
 #endif // SOLOADER_CONTROLS_H
