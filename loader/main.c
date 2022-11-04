@@ -146,7 +146,7 @@ _Noreturn void * controls_thread() {
         pollTouch();
         pollAccel();
         pollPad();
-        sceKernelDelayThread(2000);
+        sceKernelDelayThread(4000);
     }
 }
 
@@ -171,8 +171,6 @@ _Noreturn void *deadspace_main() {
     debugPrintf("Java_com_ea_blast_MainActivity_NativeOnCreate() passed.\n");
 
     controls_init();
-
-
 
     NativeOnSurfaceCreated();
     debugPrintf("Java_com_ea_blast_AndroidRenderer_NativeOnSurfaceCreated() passed.\n");

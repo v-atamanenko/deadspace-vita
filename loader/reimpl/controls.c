@@ -137,13 +137,13 @@ int pollPad() {
     if (fabsf(ry) < 0.10f)
         ry = 0.0f;
 
-    float touchLx_radius = 178;
-    float touchLy_radius = 178;
+    float touchLx_radius = 99;
+    float touchLy_radius = 99;
     float touchRx_radius = 150;
     float touchRy_radius = 100;
 
-    float touchLx_base = 180;
-    float touchLy_base = 180;
+    float touchLx_base = 100;
+    float touchLy_base = 100;
     float touchRx_base = 786;
     float touchRy_base = 180;
 
@@ -175,6 +175,7 @@ int pollPad() {
         if (!lastLActive) {
             NativeOnPointerEvent(&jni, (void *) 0x42424242, kIdRawPointerDown, kModuleTypeIdTouchScreen, fingerIdL+1, touchLx_base, touchLy_base);
         }
+
         NativeOnPointerEvent(&jni, (void *) 0x42424242, kIdRawPointerMove, kModuleTypeIdTouchScreen, fingerIdL+1, touchLx, touchLy);
     }
 
