@@ -66,6 +66,8 @@ char* strreplace(char *target, const char *needle, const char *replacement);
 
 void check_init_mutex(pthread_mutex_t* mut);
 
+uint64_t currenttime_ms();
+
 int8_t is_dir(char* p);
 
 #endif // SOLOADER_UTILS_H

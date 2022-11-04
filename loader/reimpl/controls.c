@@ -111,16 +111,16 @@ void pollPad() {
 
     lx = ((float)pad.lx - 128.0f) / 128.0f;
     ly = ((float)pad.ly - 128.0f) / 128.0f;
-    rx = (((float)pad.rx - 128.0f) / 128.0f) * 0.9f;
-    ry = (((float)pad.ry - 128.0f) / 128.0f) * 0.9f;
+    rx = (((float)pad.rx - 128.0f) / 128.0f);
+    ry = (((float)pad.ry - 128.0f) / 128.0f);
 
-    if (fabsf(lx) < 0.14f)
+    if (fabsf(lx) < 0.12f)
         lx = 0.0f;
-    if (fabsf(ly) < 0.14f)
+    if (fabsf(ly) < 0.12f)
         ly = 0.0f;
-    if (fabsf(rx) < 0.14f)
+    if (fabsf(rx) < 0.12f)
         rx = 0.0f;
-    if (fabsf(ry) < 0.14f)
+    if (fabsf(ry) < 0.12f)
         ry = 0.0f;
 
     float touchX_radius = 180;
@@ -182,12 +182,48 @@ void pollPad() {
     lastRy = ry;
 }
 
-void pollAccel() {
-    SceMotionSensorState sensor;
-    sceMotionGetSensorState(&sensor, 1);
+uint64_t lastUpdate = 0;
+float accel_last_x;
+float accel_last_y;
+float accel_last_z;
 
-    float x = sensor.accelerometer.x*GRAVITY_CONSTANT;
-    float y = sensor.accelerometer.y*GRAVITY_CONSTANT;
-    float z = sensor.accelerometer.z*GRAVITY_CONSTANT;
-    NativeOnAcceleration(&jni, (void*)0x42424242, x, y, z);
+#define SHAKE_THRESHOLD 300
+
+void pollAccel() {
+    uint64_t curTime = currenttime_ms();
+
+    if (lastUpdate == 0) {
+        lastUpdate = curTime;
+
+        SceMotionSensorState sensor;
+        sceMotionGetSensorState(&sensor, 1);
+        accel_last_x = sensor.accelerometer.x*GRAVITY_CONSTANT;
+        accel_last_y = sensor.accelerometer.y*GRAVITY_CONSTANT;
+        accel_last_z = sensor.accelerometer.z*GRAVITY_CONSTANT;
+        return;
+    }
+
+    if ((curTime - lastUpdate) > 75) {
+        float diffTime = (float)(curTime - lastUpdate);
+        lastUpdate = curTime;
+
+        SceMotionSensorState sensor;
+        sceMotionGetSensorState(&sensor, 1);
+
+        float x = sensor.accelerometer.x*GRAVITY_CONSTANT;
+        float y = (sensor.accelerometer.y + 1.0f)*GRAVITY_CONSTANT;
+        float z = sensor.accelerometer.z*GRAVITY_CONSTANT;
+
+        float speed = fabsf(x + y + z - accel_last_x - accel_last_y - accel_last_z) / diffTime * 10000;
+
+        if (speed > SHAKE_THRESHOLD) {
+            NativeOnAcceleration(&jni, (void*)0x42424242, x, y, z);
+        } else {
+            NativeOnAcceleration(&jni, (void*)0x42424242, accel_last_x, accel_last_y, accel_last_z);
+        }
+
+        accel_last_x = x;
+        accel_last_y = y;
+        accel_last_z = z;
+    }
 }
