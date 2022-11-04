@@ -172,8 +172,7 @@ _Noreturn void *deadspace_main() {
 
     controls_init();
 
-    gl_init();
-    debugPrintf("gl_init() passed.\n");
+
 
     NativeOnSurfaceCreated();
     debugPrintf("Java_com_ea_blast_AndroidRenderer_NativeOnSurfaceCreated() passed.\n");
@@ -188,9 +187,19 @@ _Noreturn void *deadspace_main() {
     pthread_create(&t, &attr, controls_thread, NULL);
     pthread_detach(t);
 
+    int frameNum = 1;
     while (1) {
+        if (frameNum == 2) {
+            // Delay gl_init() to second frame so that we can avoid
+            // the long black screen and keep showing pic0.png
+            gl_init();
+            debugPrintf("gl_init() passed.\n");
+        }
+
         NativeOnDrawFrame();
         gl_swap();
+
+        if (frameNum < 3) frameNum++;
     }
 }
 

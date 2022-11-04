@@ -53,7 +53,7 @@ add_definitions(-DSO_PATH="${SO_PATH}")
 
 add_definitions(-D_GNU_SOURCE) # makes sincos, sincosf, etc. visible
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wl,-q -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wl,-q -O3 -mfpu=neon -ftree-vectorize -ffast-math -mfloat-abi=softfp")
 set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -std=gnu++11")
 
 add_executable(so_loader
