@@ -30,7 +30,9 @@ int file_exists(const char *path);
 
 int debugPrintf(char *text, ...);
 
-int check_kubridge(void);
+char * get_file_sha1(const char* path);
+
+void check_kubridge();
 
 int string_ends_with(const char * str, const char * suffix);
 

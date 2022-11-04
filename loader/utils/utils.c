@@ -11,6 +11,7 @@
  */
 
 #include "utils.h"
+#include "dialog.h"
 
 #include <psp2/io/stat.h>
 
@@ -22,6 +23,7 @@
 #include <pthread.h>
 #include <sys/dirent.h>
 #include <dirent.h>
+#include <sha1.h>
 
 #pragma ide diagnostic ignored "bugprone-reserved-identifier"
 
@@ -74,9 +76,71 @@ int debugPrintf(char *text, ...) {
     return 0;
 }
 
-int check_kubridge(void) {
+char * get_file_sha1(const char* path) {
+    FILE *f = fopen(path, "rb");
+    if (!f) {
+        return NULL;
+    }
+
+    fseek(f, 0, SEEK_END);
+    long size = ftell(f);
+    fseek(f, 0, SEEK_SET);
+    void *buf = malloc(size);
+    fread(buf, 1, size, f);
+    fclose(f);
+
+    uint8_t sha1[20];
+    SHA1_CTX ctx;
+    sha1_init(&ctx);
+    sha1_update(&ctx, (uint8_t *)buf, size);
+    sha1_final(&ctx, (uint8_t *)sha1);
+    free(buf);
+
+    char hash[42];
+    memset(hash, 0, sizeof(hash));
+
+    int i;
+    for (i = 0; i < 20; i++) {
+        char string[4];
+        sprintf(string, "%02X", sha1[i]);
+        strcat(hash, string);
+    }
+
+    hash[41] = '\0';
+    return strdup(hash);
+}
+
+void check_kubridge() {
     int search_unk[2];
-    return _vshKernelSearchModuleByName("kubridge", search_unk);
+    if (_vshKernelSearchModuleByName("kubridge", search_unk) < 0) {
+        fatal_error("You need to install kubridge.skprx to play this game. "
+                    "You can download it at https://github.com/bythos14/kubridge/releases");
+    }
+
+    // Checking for kubridge version
+    char *kubridge_hash = get_file_sha1("ux0:/tai/kubridge.skprx");
+    if (!kubridge_hash) kubridge_hash = get_file_sha1("ur0:/tai/kubridge.skprx");
+    if (!kubridge_hash) kubridge_hash = get_file_sha1("vs0:/tai/kubridge.skprx");
+    if (!kubridge_hash) kubridge_hash = get_file_sha1("uma0:/tai/kubridge.skprx");
+
+    if (!kubridge_hash) {
+        fatal_error("Could not find kubridge.skprx file despite the plugin "
+                    "itself being active. Please put it in either ur0:/tai or "
+                    "ux0:/tai folder.");
+    }
+
+    debugPrintf("kubridge hash: %s\n", kubridge_hash);
+
+    if (strcmp(kubridge_hash, "6CFC985904F9BBE3A4F54DD96197F5DF3E523DCB") == 0 ||
+        strcmp(kubridge_hash, "E033D76A90C9B8F2D496735C2692AFD8C3ED32FE") == 0)
+    {
+        free(kubridge_hash);
+        fatal_error("You need to update kubridge.skprx to version v0.3 or higher to play this game. "
+                    "Currently installed version: v0.2. "
+                    "You can download the update at https://github.com/bythos14/kubridge/releases");
+    }
+
+    free(kubridge_hash);
 }
 
 int string_ends_with(const char * str, const char * suffix)

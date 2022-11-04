@@ -19,6 +19,9 @@
 #include <psp2/apputil.h>
 #include <psp2/power.h>
 #include <sys/unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <psp2/vshbridge.h>
 
 #include "default_dynlib.h"
 #include "utils/glutil.h"
@@ -39,6 +42,9 @@ int _newlib_heap_size_user = MEMORY_NEWLIB_MB * 1024 * 1024;
 so_module so_mod;
 
 int main() {
+    check_kubridge();
+    debugPrintf("check_kubridge() passed.\n");
+
     RegisterHandler();
 
     SceAppUtilInitParam init_param;
@@ -52,12 +58,46 @@ int main() {
     scePowerSetGpuClockFrequency(222);
     scePowerSetGpuXbarClockFrequency(166);
 
-    if (check_kubridge() < 0)
-        fatal_error("Error kubridge.skprx is not installed.");
-    debugPrintf("check_kubridge() passed.\n");
+    SceKernelSystemSwVersion ver;
+    ver.size = sizeof(SceKernelSystemSwVersion);
+    _vshSblGetSystemSwVersion(&ver);
+
+    sceClibPrintf("Firmware version: %s\n", ver.versionString);
+    if (!strstr(ver.versionString, "60") && !strstr(ver.versionString, "65")) {
+        fatal_error("Sorry, your firmware version is not supported by this "
+                    "game. Either version 3.60 or 3.65 HENkaku Enso is "
+                    "required, but you have version %s. Please update or "
+                    "downgrade accordingly. Check out https://vita.hack.guide/ "
+                    "for a relevant guide.", ver.versionString);
+    }
+
+    if (!file_exists(SO_PATH)) {
+        fatal_error("Looks like you haven't installed the data files for this "
+                    "port, or they are in an incorrect location. Please make "
+                    "sure that you have %s file exactly at that path.", SO_PATH);
+    }
+
+    char p[512];
+    snprintf(p, sizeof(p), "%spublished/data/achievements.sb", DATA_PATH_INT);
+    if (!file_exists(p)) {
+        fatal_error("Looks like you haven't installed the data files for this "
+                    "port, or they are in an incorrect location. Please make "
+                    "sure that you put the \"published\" directory into "
+                    "%s.", DATA_PATH_INT);
+    }
+
+    char* so_hash = get_file_sha1(SO_PATH);
+    if (strcmp(so_hash, "0ED42B611415015807F759EC9B5457857143CE39") != 0) {
+        fatal_error("Looks like you installed a wrong version of the game that "
+                    "doesn't work with this port. Please make sure that you're "
+                    "using the Xperia Play release v1.1.33. Expected SHA1: "
+                    "0ED42B611415015807F759EC9B5457857143CE39, actual SHA1: "
+                    "%s.", so_hash);
+    }
+    free(so_hash);
 
     if (so_file_load(&so_mod, SO_PATH, LOAD_ADDRESS) < 0)
-        fatal_error("Error could not load %s.", SO_PATH);
+        fatal_error("Error: could not load %s.", SO_PATH);
     debugPrintf("so_file_load(%s) passed.\n", SO_PATH);
 
     so_relocate(&so_mod);
