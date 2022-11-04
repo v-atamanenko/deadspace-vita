@@ -5,6 +5,7 @@ Dead Space · PSVita Port
 <p align="center">
   <a href="#setup-instructions-for-players">How to install</a> •
   <a href="#controls">Controls</a> •
+  <a href="#faq">FAQ</a> •
   <a href="#known-issues">Known Issues</a> •
   <a href="#build-instructions-for-developers">How to compile</a> •
   <a href="#credits">Credits</a> •
@@ -110,20 +111,53 @@ Controls
 | Accelerometer Tilt  | Switch weapon fire mode                 |
 | Accelerometer Shake | Jump in Zero-G                          |
 
+FAQ
+----------------
+
+❓ **As soon as I run the app, I get "An error has occured in the following
+application. (C2-12828-1)" message. What to do?**<br>
+❕ Most likely, it means that after updating/installing the kubridge plugin, you
+didn't reboot your console. Reboot is required after any modifications in kernel
+plugins. If the problem persists after reboot, please [post a new issue][issue].
+
+
+❓ **How to I change the language of the game?**<br>
+❕ You can change the language in Settings but only if you open them from
+**Main Menu**. So if you start a fresh playthrough that begins with
+the cinematic, wait till its end, quit to the main menu, and change the language
+in settings.
+
+❓ **I reached the Zero-G zone and can not jump, no matter how hard I shake the
+Vita. How to pass it?**<br>
+❕ First, make sure that you are actually looking at a platform you can jump on.
+If you are, your crosshair must turn green. Then, instead of shaking, tilt the
+top part of the console towards you in a fast motion. Make sure you are not
+actually aiming using ![trigl]; you need to only *look* at the target, not aim
+with a weapon.
+
+❓ **How to defeat the boss in Chapter 6? He runs towars me and kills in one
+or two hits, making it impossible to damage him.**<br>
+❕ Use Stasis (aim with ![trigl] and press ![trian]) to incapacitate the boss.
+Then walk behind him (this is crucial since he takes little to no damage from
+the front) and aim and shoot at his limb joint to cut them. Line Gun is
+recommended as it deals more damage than Plasma Cutter.
+
+❓ **Any other question?**<br>
+❕ Check the following "Known Issues" section. If nothing there looks like the
+problem you're having, please [post a new issue][issue], and I'll try my best
+to help you.
+
 Known Issues
 ----------------
 
-1. Accelerometer controls may feel a little too sensitive. Fix may be made.
-2. Analog sticks controls may sometimes "snap" a little. Most likely, can not be
-fixed, seems to be the game's own caveat.
-3. While the game has a subtitles option, it's recommended not to use them
+1. While the game has a subtitles option, it's recommended not to use them
 because in some scenes they skip immediately. Most likely, can not be fixed.
-4. Rarely (as it seems so far, maybe once an hour or even less often),
+2. Rarely (maybe about once an hour or sometimes during new levels/saves loading),
 it can randomly crash with a Prefetch Abort / Data Abort exception. Game creates
 checkpoint saves pretty often, so you shouldn't lose any substantial progress.
-6. When entering the tram at the end of Chapter 5/9/10, audio may stop working.
-If it happens, complete the tram ride and restart the game after getting to the
-next chapter.
+3. Sometimes (most oftenly reported when entering the tram at the end of
+Chapters 5/9/10), audio may stop working. If it happens, play until the next
+checkpoint if you wish and restart the game (as in quit and open the app again).
 
 Build Instructions (For Developers)
 ----------------
@@ -199,6 +233,7 @@ the MIT license. See the [LICENSE](LICENSE) file for details.
 [fdfix]: https://github.com/TheOfficialFloW/FdFix/releases/
 [unpack-on-phone]: https://stackoverflow.com/questions/11012976/how-do-i-get-the-apk-of-an-installed-app-without-root-access
 [shrkbrd]: https://github.com/Rinnegatamante/ShaRKBR33D/releases/latest
+[issue]: https://github.com/v-atamanenko/deadspace-vita/issues/new
 
 [flow]: https://github.com/TheOfficialFloW/
 [rinne]: https://github.com/Rinnegatamante/
