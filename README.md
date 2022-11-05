@@ -18,9 +18,9 @@ of original Dead Space and prior to the events of Dead Space 2 and shows
 how the Necromorph outbreak began and spread through the Titan Sprawl.
 
 This repository contains a loader of **the Xperia Play release of Dead Space**,
-based on the [Android SO Loader by TheFloW](https://github.com/TheOfficialFloW/gtasa_vita).
-The loader provides a tailored, minimalistic Android-like environment to run
-the official ARMv6 game executable on the PS Vita.
+based on the [Android SO Loader by TheFloW][gtasa]. The loader provides
+a tailored, minimalistic Android-like environment to run the official ARMv6
+game executable on the PS Vita.
 
 Disclaimer
 ----------------
@@ -52,8 +52,6 @@ precisely:
   ur0:tai/fd_fix.skprx
 ```
 
-> 
-
 ```diff
 ! ⚠️ Don't install `fd_fix.skprx` if you're using the rePatch plugin!
 ```
@@ -61,7 +59,7 @@ precisely:
 ```diff
 - ⚠️ Even if you had `kubridge.skprx` installed before, most likely you still
 - need to update it, since a new version of the plugin was released at the same
-- time as this port. kubridge of version v0.3 or later is required to run the game!
+- time as this port. kubridge v0.3 or newer is required to run the game!
 ```
 
 - Make sure you have `libshacccg.suprx` in the `ur0:/data/` folder on your
@@ -77,7 +75,7 @@ EA Store back in 2012).
         [get all the required files directly from it][unpack-on-phone]
         or by using any APK extractor you can find on Google Play.
 
-> ℹ️ Verify that your build is exactly the correct one using **sha1sum** (can also
+> ℹ️ Verify that your build is the correct one using **sha1sum** (can also
 > be found as an online tool). sha1sum for `lib/armeabi/libEAMGameDeadSpace.so`
 > must be `0ed42b611415015807f759ec9b5457857143ce39`
 
@@ -91,7 +89,7 @@ required files, and then you can find them at `/sdcard/ea/deadspace/published`.
 Copy the `published` folder to `ux0:data/deadspace/assets/` on your Vita.
 Example of correct resulting path: `ux0:data/deadspace/assets/published/data/achievements.sb`
 
-- Install `DeadSpace.vpk` (from [Releases](https://github.com/v-atamanenko/deadspace-vita/releases/latest)).
+- Install `DeadSpace.vpk` (from [Releases][latest-release]).
 
 Controls
 -----------------
@@ -142,6 +140,11 @@ Then walk behind him (this is crucial since he takes little to no damage from
 the front) and aim and shoot at his limb joint to cut them. Line Gun is
 recommended as it deals more damage than Plasma Cutter.
 
+❓ **Is PlayStation TV supported?**<br>
+❕ Yes, but you'd have to install [DSMotion][dsmotion] and [DS4Touch][ds4touch]
+to be able to navigate the menus (they don't support gamepad controls) and use
+accelerometer.
+
 ❓ **Any other question?**<br>
 ❕ Check the following "Known Issues" section. If nothing there looks like the
 problem you're having, please [post a new issue][issue], and I'll try my best
@@ -152,8 +155,8 @@ Known Issues
 
 1. While the game has a subtitles option, it's recommended not to use them
 because in some scenes they skip immediately. Most likely, can not be fixed.
-2. Rarely (maybe about once an hour or sometimes during new levels/saves loading),
-it can randomly crash with a Prefetch Abort / Data Abort exception. Game creates
+2. Rarely (about once an hour or sometimes during new levels/saves loading),
+the game can randomly crash or freeze. You'll have to restart it. Game creates
 checkpoint saves pretty often, so you shouldn't lose any substantial progress.
 3. Sometimes (most oftenly reported when entering the tram at the end of
 Chapters 5/9/10), audio may stop working. If it happens, play until the next
@@ -229,11 +232,15 @@ the MIT license. See the [LICENSE](LICENSE) file for details.
 [trigl]: https://raw.githubusercontent.com/v-atamanenko/sdl2sand/master/img/trigger-left.svg "Left Trigger"
 [trigr]: https://raw.githubusercontent.com/v-atamanenko/sdl2sand/master/img/trigger-right.svg "Right Trigger"
 
+[gtasa]: https://github.com/TheOfficialFloW/gtasa_vita
 [kubridge]: https://github.com/bythos14/kubridge/releases/
 [fdfix]: https://github.com/TheOfficialFloW/FdFix/releases/
 [unpack-on-phone]: https://stackoverflow.com/questions/11012976/how-do-i-get-the-apk-of-an-installed-app-without-root-access
 [shrkbrd]: https://github.com/Rinnegatamante/ShaRKBR33D/releases/latest
+[latest-release]: https://github.com/v-atamanenko/deadspace-vita/releases/latest
 [issue]: https://github.com/v-atamanenko/deadspace-vita/issues/new
+[dsmotion]: https://github.com/OperationNT414C/DSMotion/releases
+[ds4touch]: https://github.com/MERLev/ds4Touch/releases
 
 [flow]: https://github.com/TheOfficialFloW/
 [rinne]: https://github.com/Rinnegatamante/
