@@ -64,13 +64,6 @@ int main() {
     _vshSblGetSystemSwVersion(&ver);
 
     sceClibPrintf("Firmware version: %s\n", ver.versionString);
-    if (!strstr(ver.versionString, "60") && !strstr(ver.versionString, "65")) {
-        fatal_error("Sorry, your firmware version is not supported by this "
-                    "game. Either version 3.60 or 3.65 HENkaku Enso is "
-                    "required, but you have version %s. Please update or "
-                    "downgrade accordingly. Check out https://vita.hack.guide/ "
-                    "for a relevant guide.", ver.versionString);
-    }
 
     if (!file_exists(SO_PATH)) {
         fatal_error("Looks like you haven't installed the data files for this "

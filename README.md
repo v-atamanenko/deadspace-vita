@@ -42,6 +42,12 @@ Setup Instructions (For Players)
 In order to properly install the game, you'll have to follow these steps
 precisely:
 
+- (Recommended) Make sure that you are either on 3.60 enso or 3.65 enso firmware
+version. Other versions may work too, but no support are provided for them! If
+you experience any issues apart from described in the
+<a href="#known-issues">Known Issues</a> section, please upgrade or downgrade
+your firmware before asking for support.
+
 - Install or update [kubridge][kubridge] and [FdFix][fdfix] by copying
 `kubridge.skprx` and `fd_fix.skprx` to your taiHEN plugins folder
 (usually `ur0:tai`) and adding two entries to your `config.txt` under `*KERNEL`:
