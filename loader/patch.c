@@ -24,7 +24,7 @@ so_hook susthread_hook;
 int SusThread(void* arg) {
     printf("SusThread wants to run with arg 0x%x, delaying\n", arg);
     sus_thread_count++;
-    sceKernelDelayThread(sus_thread_count * 4 * 1000 * 1000); // delay 4xThreadNum seconds
+    sceKernelDelayThread(sus_thread_count * 5 * 1000 * 1000); // delay 5xThreadNum seconds
     SO_CONTINUE(int, susthread_hook, arg);
 }
 

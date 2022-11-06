@@ -141,12 +141,10 @@ so_module *so_find_module_by_addr(uintptr_t addr) {
 }
 
 _Noreturn void * controls_thread() {
-    sceKernelDelayThread(5000000);
+    sceKernelDelayThread(6000000);
     while (1) {
-        pollTouch();
-        pollAccel();
-        pollPad();
-        sceKernelDelayThread(4000);
+
+        sceKernelDelayThread(1000);
     }
 }
 
@@ -170,20 +168,18 @@ _Noreturn void *deadspace_main() {
     NativeOnCreate();
     debugPrintf("Java_com_ea_blast_MainActivity_NativeOnCreate() passed.\n");
 
-    controls_init();
-
     NativeOnSurfaceCreated();
     debugPrintf("Java_com_ea_blast_AndroidRenderer_NativeOnSurfaceCreated() passed.\n");
 
     NativeOnVisibilityChanged(&jni, (void*)0x42424242, 600, 1);
     debugPrintf("Java_com_ea_blast_KeyboardAndroid_NativeOnVisibilityChanged() passed.\n");
 
-    pthread_t t;
+    /*pthread_t t;
     pthread_attr_t attr;
     pthread_attr_init(&attr);
-    pthread_attr_setstacksize(&attr, 16*1024);
+    pthread_attr_setstacksize(&attr, 4*1024);
     pthread_create(&t, &attr, controls_thread, NULL);
-    pthread_detach(t);
+    pthread_detach(t);*/
 
     int frameNum = 1;
     while (1) {
@@ -192,12 +188,21 @@ _Noreturn void *deadspace_main() {
             // the long black screen and keep showing pic0.png
             gl_init();
             debugPrintf("gl_init() passed.\n");
+            controls_init();
+            debugPrintf("controls_init() passed.\n");
+        }
+
+        if (frameNum >= 3) {
+            pollPad();
+            pollAccel();
+            pollTouch();
         }
 
         NativeOnDrawFrame();
-        gl_swap();
 
-        if (frameNum < 3) frameNum++;
+        if (frameNum < 3) frameNum++; else {
+            gl_swap();
+        }
     }
 }
 
