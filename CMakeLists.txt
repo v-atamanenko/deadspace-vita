@@ -29,7 +29,7 @@ include("${VITASDK}/share/vita.cmake" REQUIRED)
 set(VITA_APP_NAME "Dead Space")
 set(VITA_TITLEID  "DEADSPACE")
 set(VITA_VPKNAME  "DEADSPACE")
-set(VITA_VERSION  "01.10")
+set(VITA_VERSION  "01.20")
 set(VITA_MKSFOEX_FLAGS "-d ATTRIBUTE2=12")
 
 option(DEBUG "Print debug information to stdout" OFF)
