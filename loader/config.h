@@ -22,7 +22,7 @@
 
 #define LOAD_ADDRESS 0xA0000000
 
-#define MEMORY_NEWLIB_MB 256
+#define MEMORY_NEWLIB_MB 250
 
 #define GLSL_PATH DATA_PATH
 #define GXP_PATH "app0:shaders"

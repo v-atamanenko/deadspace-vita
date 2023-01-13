@@ -6,7 +6,14 @@
 	</livearea-background>
 	 
 	<gate>
-		<startup-image>startup.png</startup-image>
+		<startup-image>marker.png</startup-image>
 	</gate>
+
+	<frame id="frame3">
+		<liveitem>
+			<target>psla:-config</target>
+			<image>conf.png</image>
+		</liveitem>
+	</frame>	
 	
 </livearea>

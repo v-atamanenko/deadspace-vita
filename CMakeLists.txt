@@ -11,7 +11,7 @@ endif()
 if(DEFINED ENV{PSVITAIP})
   set(PSVITAIP "$ENV{PSVITAIP}")
 else()
-  set(PSVITAIP "192.168.1.24")
+  set(PSVITAIP "192.168.1.98")
   message(WARNING "PSVITAIP environment variable is not set, using default IP ${PSVITAIP}")
 endif()
 
@@ -29,7 +29,7 @@ include("${VITASDK}/share/vita.cmake" REQUIRED)
 set(VITA_APP_NAME "Dead Space")
 set(VITA_TITLEID  "DEADSPACE")
 set(VITA_VPKNAME  "DEADSPACE")
-set(VITA_VERSION  "01.20")
+set(VITA_VERSION  "01.30")
 set(VITA_MKSFOEX_FLAGS "-d ATTRIBUTE2=12")
 
 option(DEBUG "Print debug information to stdout" OFF)
@@ -53,7 +53,7 @@ add_definitions(-DSO_PATH="${SO_PATH}")
 
 add_definitions(-D_GNU_SOURCE) # makes sincos, sincosf, etc. visible
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wl,-q -O1 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wl,-q -g -O3 -mfloat-abi=softfp")
 set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -std=gnu++11")
 
 add_executable(so_loader
@@ -64,9 +64,9 @@ add_executable(so_loader
         loader/utils/dialog.c
         loader/utils/glutil.c
         loader/jni_fake.c
-        #loader/utils/loading_screen.c
         loader/patch.c
         loader/utils/utils.c
+        loader/utils/settings.c
         loader/reimpl/controls.c
         loader/reimpl/ctype_patch.c
         loader/reimpl/env.c
@@ -152,15 +152,45 @@ target_link_libraries(so_loader
         SceVshBridge_stub
 )
 
+add_executable(companion
+        companion/main.cpp
+)
+
+target_link_libraries(companion
+        imgui
+        vitaGL
+        vitashark
+        SceShaccCgExt
+        m
+        mathneon
+        taihen_stub
+        SceAppMgr_stub
+        SceAudio_stub
+        SceCtrl_stub
+        SceCommonDialog_stub
+        SceDisplay_stub
+        SceKernelDmacMgr_stub
+        SceGxm_stub
+        SceShaccCg_stub
+        SceSysmodule_stub
+        SceTouch_stub
+        SceVshBridge_stub
+)
+
+vita_create_self(companion.bin companion UNSAFE)
+
 vita_create_self(eboot.bin so_loader UNSAFE)
 vita_create_vpk(${VITA_VPKNAME}.vpk ${VITA_TITLEID} eboot.bin
         VERSION ${VITA_VERSION}
         NAME ${VITA_APP_NAME}
         FILE ${CMAKE_SOURCE_DIR}/livearea/icon0.png sce_sys/icon0.png
           ${CMAKE_SOURCE_DIR}/livearea/pic0.png sce_sys/pic0.png
-          ${CMAKE_SOURCE_DIR}/livearea/startup.png sce_sys/livearea/contents/startup.png
+          ${CMAKE_SOURCE_DIR}/livearea/marker.png sce_sys/livearea/contents/marker.png
+          ${CMAKE_SOURCE_DIR}/livearea/conf.png sce_sys/livearea/contents/conf.png
           ${CMAKE_SOURCE_DIR}/livearea/bg0.png sce_sys/livearea/contents/bg0.png
           ${CMAKE_SOURCE_DIR}/livearea/template.xml sce_sys/livearea/contents/template.xml
+          ${CMAKE_SOURCE_DIR}/livearea/configurator-bg.png data/configurator-bg.png
+          ${CMAKE_BINARY_DIR}/companion.bin companion.bin
           ${VPK_INCLUDES}
 )
 
