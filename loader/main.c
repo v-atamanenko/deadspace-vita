@@ -23,12 +23,15 @@
 #include <stdlib.h>
 #include <psp2/vshbridge.h>
 #include <psp2/kernel/threadmgr.h>
+#include <psp2/appmgr.h>
+#include <psp2/kernel/processmgr.h>
 
 #include "default_dynlib.h"
 #include "utils/glutil.h"
 #include "jni_fake.h"
 #include "patch.h"
 #include "utils/dialog.h"
+#include "utils/settings.h"
 
 #include "android/EAAudioCore.h"
 #include "reimpl/controls.h"
@@ -48,11 +51,17 @@ int main() {
 
     RegisterHandler();
 
-    SceAppUtilInitParam init_param;
-    SceAppUtilBootParam boot_param;
-    memset(&init_param, 0, sizeof(SceAppUtilInitParam));
-    memset(&boot_param, 0, sizeof(SceAppUtilBootParam));
-    sceAppUtilInit(&init_param, &boot_param);
+    // Check if we want to start the companion app
+    sceAppUtilInit(&(SceAppUtilInitParam){}, &(SceAppUtilBootParam){});
+    SceAppUtilAppEventParam eventParam;
+    sceClibMemset(&eventParam, 0, sizeof(SceAppUtilAppEventParam));
+    sceAppUtilReceiveAppEvent(&eventParam);
+    if (eventParam.type == 0x05) {
+        char buffer[2048];
+        sceAppUtilAppEventParseLiveArea(&eventParam, buffer);
+        if (strstr(buffer, "-config"))
+            sceAppMgrLoadExec("app0:/companion.bin", NULL, NULL);
+    }
 
     scePowerSetArmClockFrequency(444);
     scePowerSetBusClockFrequency(222);
@@ -115,6 +124,8 @@ int main() {
     jni_init();
     debugPrintf("jni_init() passed.\n");
 
+    loadSettings();
+
     // Running the .so in a thread with enlarged stack size.
     pthread_t t;
     pthread_attr_t attr;
@@ -167,34 +178,58 @@ _Noreturn void *deadspace_main() {
     NativeOnVisibilityChanged(&jni, (void*)0x42424242, 600, 1);
     debugPrintf("Java_com_ea_blast_KeyboardAndroid_NativeOnVisibilityChanged() passed.\n");
 
-    /*pthread_t t;
-    pthread_attr_t attr;
-    pthread_attr_init(&attr);
-    pthread_attr_setstacksize(&attr, 4*1024);
-    pthread_create(&t, &attr, controls_thread, NULL);
-    pthread_detach(t);*/
+    if (fpsLock > 0) {
+        uint32_t last_render_time = sceKernelGetProcessTimeLow();
+        uint32_t delta = (1000000 / (fpsLock+1));
 
-    int frameNum = 1;
-    while (1) {
-        if (frameNum == 2) {
-            // Delay gl_init() to second frame so that we can avoid
-            // the long black screen and keep showing pic0.png
-            gl_init();
-            debugPrintf("gl_init() passed.\n");
-            controls_init();
-            debugPrintf("controls_init() passed.\n");
+        int frameNum = 1;
+        while (1) {
+            if (frameNum == 2) {
+                // Delay gl_init() to second frame so that we can avoid
+                // the long black screen and keep showing pic0.png
+                gl_init();
+                debugPrintf("gl_init() passed.\n");
+                controls_init();
+                debugPrintf("controls_init() passed.\n");
+            }
+
+            if (frameNum >= 3) {
+                pollPad();
+                pollAccel();
+                pollTouch();
+            }
+
+            NativeOnDrawFrame();
+
+            while (sceKernelGetProcessTimeLow() - last_render_time < delta) {
+                sched_yield();
+            }
+
+            last_render_time = sceKernelGetProcessTimeLow();
+
+            if (frameNum < 3) frameNum++; else gl_swap();
         }
+    } else {
+        int frameNum = 1;
+        while (1) {
+            if (frameNum == 2) {
+                // Delay gl_init() to second frame so that we can avoid
+                // the long black screen and keep showing pic0.png
+                gl_init();
+                debugPrintf("gl_init() passed.\n");
+                controls_init();
+                debugPrintf("controls_init() passed.\n");
+            }
 
-        if (frameNum >= 3) {
-            pollPad();
-            pollAccel();
-            pollTouch();
-        }
+            if (frameNum >= 3) {
+                pollPad();
+                pollAccel();
+                pollTouch();
+            }
 
-        NativeOnDrawFrame();
+            NativeOnDrawFrame();
 
-        if (frameNum < 3) frameNum++; else {
-            gl_swap();
+            if (frameNum < 3) frameNum++; else gl_swap();
         }
     }
 }
