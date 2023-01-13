@@ -233,7 +233,7 @@ void EAAudioCore_AudioTrack_stop(int id, va_list args) {
 
 
 void EAAudioCore__Startup() {
-    Java_com_ea_EAAudioCore_AndroidEAAudioCore_Init(&jni, (void*)0x42424242, (void*)0x69696969, 128 * 1024, 2, 44100);
+    Java_com_ea_EAAudioCore_AndroidEAAudioCore_Init(&jni, (void*)0x42424242, (void*)0x69696969, 1024 * 1024, 2, 44100);
 }
 
 void EAAudioCore__Shutdown() {
