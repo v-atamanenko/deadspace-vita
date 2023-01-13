@@ -83,7 +83,7 @@ EA Store back in 2012).
 
 > ℹ️ Verify that your build is the correct one using **sha1sum** (can also
 > be found as an online tool). sha1sum for `lib/armeabi/libEAMGameDeadSpace.so`
-> must be `0ed42b611415015807f759ec9b5457857143ce39`
+> **must** be `0ed42b611415015807f759ec9b5457857143ce39`
 
 - Open the `.apk` with any zip explorer (like [7-Zip](https://www.7-zip.org/))
 and extract all folders from the `.apk` into `ux0:data/deadspace` on your Vita.
@@ -96,6 +96,10 @@ Copy the `published` folder to `ux0:data/deadspace/assets/` on your Vita.
 Example of correct resulting path: `ux0:data/deadspace/assets/published/data/achievements.sb`
 
 - Install `DeadSpace.vpk` (from [Releases][latest-release]).
+
+- (Optional) Tap **Settings** in the bottom left corner of the port's LiveArea
+to adjust some settings. Namely, you can change analog sticks dead zones,
+rebind accelerometer actions to D-Pad Up, and enable FPS Limiter.
 
 Controls
 -----------------
@@ -122,14 +126,22 @@ FAQ
 application. (C2-12828-1)" message. What to do?**<br>
 ❕ Most likely, it means that after updating/installing the kubridge plugin, you
 didn't reboot your console. Reboot is required after any modifications in kernel
-plugins. If the problem persists after reboot, please [post a new issue][issue].
+plugins.
+
+Another possibility is that you are using some conflicting or too heavy plugins
+and kubridge can not run correctly. Try disabling everything but the most
+necessary *kernel* plugins, reboot, and try again.
+
+If the problem persists after reboot, please [post a new issue][issue].
 
 
 ❓ **How do I change the language of the game?**<br>
 ❕ You can change the language in Settings but only if you open them from
 **Main Menu**. So if you start a fresh playthrough that begins with
 the cinematic, wait till its end, quit to the main menu, and change the language
-in settings.
+in settings. You can then start a new game again to experience the cinematic in
+your language.
+
 
 ❓ **I reached the Zero-G zone and can not jump, no matter how hard I shake the
 Vita. How to pass it?**<br>
@@ -139,17 +151,26 @@ top part of the console towards you in a fast motion. Make sure you are not
 actually aiming using ![trigl]; you need to only *look* at the target, not aim
 with a weapon.
 
+Alternatively, with the configurator app, you can rebind Zero-G jump
+(as well as weapon rotation) to D-Pad Up, which will make this much more
+easier.
+
+
 ❓ **How to defeat the boss in Chapter 6? He runs towars me and kills in one
 or two hits, making it impossible to damage him.**<br>
 ❕ Use Stasis (aim with ![trigl] and press ![trian]) to incapacitate the boss.
 Then walk behind him (this is crucial since he takes little to no damage from
-the front) and aim and shoot at his limb joint to cut them. Line Gun is
+the front) and aim and shoot at his limb joints to cut them. Line Gun is
 recommended as it deals more damage than Plasma Cutter.
 
+
 ❓ **Is PlayStation TV supported?**<br>
-❕ Yes, but you'd have to install [DSMotion][dsmotion] and [DS4Touch][ds4touch]
-to be able to navigate the menus (they don't support gamepad controls) and use
-accelerometer.
+❕ Yes, but you'd have to install [DS4Touch][ds4touch] to be able to navigate
+the menus (they don't support gamepad controls). Also, to use accelerometer
+actions like rotating the weapons or Zero-G jump, you can either install
+[DSMotion][dsmotion] and use the gamepad's built-int gyroscope, or rebind
+these actions to D-Pad Up in the configurator app.
+
 
 ❓ **Any other question?**<br>
 ❕ Check the following "Known Issues" section. If nothing there looks like the
