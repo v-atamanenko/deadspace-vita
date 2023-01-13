@@ -239,6 +239,8 @@ deserved, but the one we need.
 keeponjammin, Long-nose, Maplesyrup6661, maxbarno, mmtechnodrone, NeoTechni,
 ReAnimation9, Shaitan, stayntruebreal, thenoble1, Tibmyyy: backers of the
 [bounty][bounty] that gave me motivation and made this port possible.
+— Dieter B., CatoTheYounger, Arka Mukherjee, Edgar Morales, Sergey Galdin:
+my dearest [Patrons](https://patreon.com/gl33ntwine/).
 
 License
 ----------------
